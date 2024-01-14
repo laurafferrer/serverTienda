@@ -84,7 +84,7 @@ CREATE TABLE `product` (
 CREATE TABLE `purchaseDetail` (
   `id` bigint NOT NULL,
   `quantity` int NOT NULL,
-  `price` int NOT NULL,
+  `price` double NOT NULL,
   `idProduct` bigint NOT NULL,
   `idOrdering` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
