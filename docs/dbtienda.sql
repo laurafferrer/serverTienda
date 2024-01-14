@@ -17,8 +17,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE DATABASE `dbtienda`;
-USE DATABASE `dbtienda`;
+CREATE DATABASE IF NOT EXISTS `dbtienda`;
+USE `dbtienda`;
 --
 -- Base de datos: `dbtienda`
 --
