@@ -69,7 +69,7 @@ CREATE TABLE `product` (
   `id` bigint NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` double NOT NULL,
   `stock` bigint NOT NULL,
   `image` longblob NOT NULL,
   `idCategory` bigint NOT NULL
