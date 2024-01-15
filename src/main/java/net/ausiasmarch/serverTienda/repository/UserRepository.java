@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsernameAndPassword(String username, String password);
 
+    Optional<UserEntity> findById(Long id);
+
     // USO AL IMPLEMENTAR CAMBIO DE CONTRASEÑA POR EMAIL. NO BORRAR
     //Optional<UserEntity> findByEmail(String email);
 
