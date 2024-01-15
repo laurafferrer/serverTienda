@@ -122,7 +122,7 @@ public class ProductEntity {
         this.image = image;
     }
 
-    public CategoryEntity category() {
+    public CategoryEntity getCategory() {
         return category;
     }
 
