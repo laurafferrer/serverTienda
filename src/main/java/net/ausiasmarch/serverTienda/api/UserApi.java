@@ -29,7 +29,7 @@ import net.ausiasmarch.serverTienda.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserApi {
-    
+    /*
     @Autowired
     UserService oUserService;
 
@@ -52,5 +52,5 @@ public class UserApi {
     public ResponseEntity<Long> createForUsers(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.createForUsers(oUserEntity));
     }
-
+*/
 }
