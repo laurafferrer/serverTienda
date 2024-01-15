@@ -1,5 +1,25 @@
 package net.ausiasmarch.serverTienda.repository;
 
-public class OrderingRepository {
+import java.time.LocalDate;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import net.ausiasmarch.serverTienda.entity.OrderingEntity;
+
+public interface OrderingRepository extends JpaRepository<OrderingEntity, Long> {
     
+    Optional<OrderingEntity> findById(Long id);
+
+    @Query(value = "SELECT * FROM ordering WHERE dateOrder LIKE %?1%", nativeQuery = true)
+    Page<OrderingEntity> findOrderingByDateOrderContaining(LocalDate dateOrder, Pageable pageable);
+
+    @Modifying
+    @Query(value = "ALTER TABLE ordering AUTO_INCREMENT = 1", nativeQuery = true)
+    void resetAutoIncrement();
 }
