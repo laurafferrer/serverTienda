@@ -16,9 +16,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     Optional <ProductEntity> findById(Long id);
 
+    @Query(value = "SELECT * FROM product WHERE idCategory = ?1", nativeQuery = true)
     Page <ProductEntity> findByIdCategory(Long id);
-
-    Page <ProductEntity> findBySize(String size);
 
     @Query(value = "SELECT * FROM product WHERE name LIKE %?1%", nativeQuery = true)
     Page <ProductEntity> findByName(String name);
