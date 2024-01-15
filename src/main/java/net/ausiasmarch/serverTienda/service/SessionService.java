@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.serverTienda.bean.UserBean;
+import net.ausiasmarch.serverTienda.entity.CategoryEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.exception.UnauthorizedException;
 import net.ausiasmarch.serverTienda.helper.JWTHelper;
+import net.ausiasmarch.serverTienda.repository.CategoryRepository;
 import net.ausiasmarch.serverTienda.repository.UserRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class SessionService {
     
     @Autowired
     UserRepository oUserRepository;
+
+    @Autowired
+    CategoryRepository oCategoryRepository;
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
@@ -113,6 +118,41 @@ public class SessionService {
             throw new UnauthorizedException("Only admins or users can do this");
         }
     }
+
+
+    /* REVISAR */
+    public String getSessionCategory() {
+        Object idAttribute = oHttpServletRequest.getAttribute("id");
+    
+        if (idAttribute instanceof Integer) {
+            return idAttribute.toString();
+        } else {
+            return null;
+        }
+    }
+    
+    public Boolean isCategory() {
+        String sessionCategoryId = this.getSessionCategory();
+    
+        if (sessionCategoryId != null) {
+            try {
+                // Intenta convertir el id de la sesión a Long y busca la categoría en el repositorio
+                Long categoryId = Long.parseLong(sessionCategoryId);
+                CategoryEntity oCategoryEntityInSession = (CategoryEntity) oCategoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+    
+                // Verifica si la categoría encontrada tiene un id válido
+                return oCategoryEntityInSession.getId() != null;
+            } catch (NumberFormatException e) {
+                // Manejar la excepción si el id de la sesión no es un número válido
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    /* NI IDEA DE QUE HE HECHO :) */
+    
 
     // Falta captcha.
 
