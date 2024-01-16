@@ -2,6 +2,7 @@ package net.ausiasmarch.serverTienda.api;
 
 import java.util.UUID;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -29,7 +30,7 @@ import net.ausiasmarch.serverTienda.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserApi {
-    /*
+    
     @Autowired
     UserService oUserService;
 
@@ -48,9 +49,44 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.create(oUserEntity));
     }
 
+    /* ???
     @PostMapping("/forusers")
     public ResponseEntity<Long> createForUsers(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.createForUsers(oUserEntity));
     }
-*/
+    */
+    /* Confirm email!
+    @RequestMapping(value = "/confirm-account", method = { RequestMethod.GET, RequestMethod.POST })
+    public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String confirmationToken, @RequestParam("password") String password) {
+        return ResponseEntity.ok(oUserService.confirmEmail(confirmationToken, password));
+    }
+    */
+
+    @PutMapping("")
+    public ResponseEntity<UserEntity> update(@RequestBody UserEntity oUserEntity) {
+        return ResponseEntity.ok(oUserService.update(oUserEntity));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(oUserService.delete(id));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Page<UserEntity>> getPage(
+            Pageable oPageable,
+            @RequestParam(name = "filter", required = false) String strFilter) {
+        return ResponseEntity.ok(oUserService.getPage(oPageable));
+    }
+
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oUserService.populate(amount));
+    }
+
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oUserService.empty());
+    }
+
 }

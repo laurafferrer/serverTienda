@@ -102,8 +102,6 @@ public class DataGenerationHelper {
     public static int getRandomPostalCode() {
         int postalCode = (int) (Math.random() * 90000) + 10000;
         return postalCode;
-    }
-
-    
+    }    
 
 }
