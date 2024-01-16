@@ -1,17 +1,29 @@
 package net.ausiasmarch.serverTienda.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import jakarta.transaction.Transactional;
+
+import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
 import net.ausiasmarch.serverTienda.bean.UserBean;
+
+import net.ausiasmarch.serverTienda.entity.CaptchaEntity;
 import net.ausiasmarch.serverTienda.entity.CategoryEntity;
+import net.ausiasmarch.serverTienda.entity.PendentEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
+
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.exception.UnauthorizedException;
+import net.ausiasmarch.serverTienda.helper.DataGenerationHelper;
 import net.ausiasmarch.serverTienda.helper.JWTHelper;
+
 import net.ausiasmarch.serverTienda.repository.CategoryRepository;
+import net.ausiasmarch.serverTienda.repository.PendentRepository;
 import net.ausiasmarch.serverTienda.repository.UserRepository;
 
 @Service
@@ -25,6 +37,12 @@ public class SessionService {
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
+
+    @Autowired
+    CaptchaService oCaptchaService;
+
+    @Autowired
+    PendentRepository oPendentRepository;
 
     public String login(UserBean oUserBean) {
         oUserRepository.findByUsernameAndPassword(oUserBean.getUsername(), oUserBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Wrong User or password"));
@@ -154,7 +172,20 @@ public class SessionService {
     /* NI IDEA DE QUE HE HECHO :) */
     
 
-    // Falta captcha.
+    @Transactional
+    public CaptchaResponseBean prelogin() {
+        CaptchaEntity oCaptchaEntity = oCaptchaService.getRandomCaptcha();
+
+        PendentEntity oPendentEntity = new PendentEntity();
+        oPendentEntity.setCaptcha(oCaptchaEntity);
+        oPendentEntity.setTimecode(LocalDateTime.now());
+        PendentEntity oNewPendentEntity = oPendentRepository.save(oPendentEntity);
+
+        oNewPendentEntity.setToken(DataGenerationHelper.getSHA256(
+            String.valueOf(oNewPendentEntity.getId()) 
+            + String.valueOf(oCaptchaEntity.getId())
+            + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
+    }
 
 
 }
