@@ -18,8 +18,9 @@ public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEn
     @Query(value = "SELECT * FROM purchaseDetail WHERE quantity LIKE %?1%", nativeQuery = true)
     Optional<PurchaseDetailEntity> findByQuantity(String quantity);
 
+    // Method to reset the auto-increment counter for the user table
     @Modifying
-    @Query(value = "ALTER TABLE purchaseDetail AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
     
 }

@@ -23,8 +23,9 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
     @Query(value = "SELECT p.*, count c(c.id) FROM cart c, product p WHERE c.id = p.idProduct GROUP BY c.id ORDER BY count(c.id) DESC", nativeQuery = true)
     Page<CartEntity> findCartByProductDesc(Pageable pageable);
 
+    // Method to reset the auto-increment counter for the user table
     @Modifying
-    @Query(value = "ALTER TABLE cart AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
     
 }

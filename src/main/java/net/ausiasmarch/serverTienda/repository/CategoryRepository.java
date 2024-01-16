@@ -19,8 +19,9 @@ public interface CategoryRepository extends JpaRepository<CategoryRepository, Lo
     @Query(value = "SELECT c.*, count p(p.id) FROM category c, product p WHERE c.id = p.idCategory GROUP BY c.id ORDER BY count(c.id) DESC", nativeQuery = true)
     Page <ProductEntity> findCategoryByProductDesc(Pageable pageable);
 
+    // Method to reset the auto-increment counter for the user table
     @Modifying
-    @Query(value = "ALTER TABLE category AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
     
 }

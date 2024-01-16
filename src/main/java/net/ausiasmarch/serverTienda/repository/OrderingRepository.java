@@ -22,7 +22,8 @@ public interface OrderingRepository extends JpaRepository<OrderingEntity, Long> 
     @Query(value = "SELECT d.*, count o(o.id) FROM purchaseDetail d, ordering o WHERE o.id = d.idOrdering GROUP BY o.id ORDER BY count(o.id) DESC, nativeQuery = true")
     Page<OrderingEntity> findOrderingByPurchaseDetailDesc(Pageable pageable);
 
+    // Method to reset the auto-increment counter for the user table
     @Modifying
-    @Query(value = "ALTER TABLE ordering AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE user AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
 }
