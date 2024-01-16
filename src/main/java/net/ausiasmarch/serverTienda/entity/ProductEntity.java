@@ -90,7 +90,7 @@ public class ProductEntity {
         this.name = name;
     }
 
-    public String description() {
+    public String getDescription() {
         return description;
     }
 
@@ -98,7 +98,7 @@ public class ProductEntity {
         this.description = description;
     }
 
-    public Double price() {
+    public Double getPrice() {
         return price;
     }
 
@@ -106,7 +106,7 @@ public class ProductEntity {
         this.price = price;
     }
 
-    public int stock() {
+    public int getStock() {
         return stock;
     }
 
@@ -114,7 +114,7 @@ public class ProductEntity {
         this.stock = stock;
     }
 
-    public byte[] image() {
+    public byte[] getImage() {
         return image;
     }
 

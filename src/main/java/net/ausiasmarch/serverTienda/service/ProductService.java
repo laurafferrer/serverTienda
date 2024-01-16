@@ -1,17 +1,18 @@
 package net.ausiasmarch.serverTienda.service;
 
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import jakarta.servlet.http.HttpServletRequest;
-import net.ausiasmarch.serverTienda.entity.CategoryEntity;
-import net.ausiasmarch.serverTienda.entity.OrderingEntity;
+import jakarta.transaction.Transactional;
+
 import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
-import net.ausiasmarch.serverTienda.repository.CategoryRepository;
 import net.ausiasmarch.serverTienda.repository.ProductRepository;
 
 @Service
@@ -24,78 +25,95 @@ public class ProductService {
     HttpServletRequest oHttpServletRequest;
 
     @Autowired
-    CategoryService oCategoryService;
-
-    @Autowired
-    CategoryRepository oCategoryRepository;
-
-    @Autowired
     SessionService oSessionService;
 
+    // get product by ID
     public ProductEntity get(Long id) {
         return oProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
-    public Page<ProductEntity> getPage(Pageable oPageable, String filter, Long idCategory) {
-        Page<ProductEntity> oPage;
+    // Get a page or products
+    public Page<ProductEntity> getPage(Pageable oPageable) {
+        return oProductRepository.findAll(oPageable);
+    }    
 
-        if (idCategory != null && idCategory != 0) {
-            if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
-                oPage = oProductRepository.findByIdCategory(idCategory);
-            } else {
-                oPage = oProductRepository.findByName(filter);
-            }
-        } else {
-            if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
-                oPage = oProductRepository.findAll(oPageable);
-            } else {
-                oPage = oProductRepository.findByName(filter);
-            }
+    // Create new product
+    public Long create(ProductEntity oProductEntity) {
+        oSessionService.onlyAdmins();
+        oProductEntity.setId(null);
+        return oProductRepository.save(oProductEntity).getId();
+    }
+
+    // Update existing product
+    public ProductEntity update(ProductEntity oProductEntity) {
+        oSessionService.onlyAdmins();
+        return oProductRepository.save(oProductEntity);
+    }
+
+    // Delete existing product
+    public Long delete(Long id) {
+        oSessionService.onlyAdmins();
+        oProductRepository.deleteById(id);
+        return id;
+    }
+
+    // Get random product
+    public ProductEntity getRandom() {
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oProductRepository.count()), 1);
+        return oProductRepository.findAll(oPageable).getContent().get(0);
+    }
+
+    // Get products by category Id
+    public Optional<ProductEntity> getByCategory(Long idCategory, Pageable oPageable) {
+        return oProductRepository.findByIdCategory(idCategory, oPageable);
+    }
+
+    // Get products by stock ascending
+    public Page<ProductEntity> getByStockAsc(Pageable oPageable) {
+        return oProductRepository.findByStockAsc(oPageable);
+    }
+
+    // Get products by price ascending
+    public Page<ProductEntity> getByPriceAsc(Pageable oPageable) {
+        return oProductRepository.findByPriceAsc(oPageable);
+    }
+
+    // Get products by price descending
+    public Page<ProductEntity> getByPriceDesc(Pageable oPageable) {
+        return oProductRepository.findByPriceDesc(oPageable);
+    }
+
+    // Get products by price ascending and category
+    public Page<ProductEntity> getByPriceAscAndIdCategory(Long idCategory, Pageable oPageable) {
+        return oProductRepository.findByPriceAscAndIdCategory(idCategory, oPageable);
+    }
+
+    // Get products by price descending and category
+    public Page<ProductEntity> getByPriceDescAndIdCategory(Long idCategory, Pageable oPageable) {
+        return oProductRepository.findByPriceDescAndIdCategory(idCategory, oPageable);
+    }
+
+    // Empty the product table
+    public Long emptyTable() {
+        oProductRepository.deleteAll();
+        oProductRepository.resetAutoIncrement();
+        oProductRepository.flush();
+        return oProductRepository.count();
+    }
+    
+    // Update stock product and check if depleted
+    @Transactional
+    public ProductEntity updateStock(Long id, int quantity) {
+        ProductEntity product = oProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        int updatedStock = product.getStock() - quantity;
+        if (updatedStock < 0) {
+            throw new RuntimeException("Stock insufficient for product with ID: " + id);
         }
-        return oPage;
+
+        product.setStock(updatedStock);
+        oProductRepository.save(product);
+        return product;
     }
-
-    /* NO ENTIENDO!!!
-    public Page<OrderingEntity> getPageByPurchaseDetailDesc(Pageable oPageable) {
-        Page<OrderingEntity> oPage;
-
-        oPage = oProductRepository.findProductByPurchaseDetailDesc(oPageable);
-
-        return oPage;
-    }
-    */
-
-    /* NI IDEA SI ESTA BIEN :( */
-    public Long create(ProductEntity productEntity) {
-        // Asegurarse de que el ID sea nulo para garantizar la creación de un nuevo producto
-        productEntity.setId(null);
-    
-        // Verificar los permisos del usuario actual a través del servicio de sesión
-        oSessionService.onlyAdminsOrUsers();
-    
-        // Verificar si se ha establecido una categoría en la sesión
-        if (!oSessionService.isCategory()) {
-            // Si no hay una categoría en la sesión y el producto no tiene una categoría válida,
-            // establecer la categoría de la sesión en el producto
-            if (productEntity.getCategory() == null || productEntity.getCategory().getId() == null) {
-                // Convertir el identificador de la sesión a Long
-                Long sessionCategoryId = Long.parseLong(oSessionService.getSessionCategory());
-    
-                // Obtener la categoría a partir del identificador convertido
-                CategoryEntity sessionCategory = (CategoryEntity) oCategoryRepository.findById(sessionCategoryId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-    
-                // Establecer la categoría en el producto
-                productEntity.setCategory(sessionCategory);
-            }
-        }
-    
-        // Guardar el producto en el repositorio y devolver su ID
-        return oProductRepository.save(productEntity).getId();
-    }
-    
-
-    /* FALTA UPDATE, DELETE POPULATE, GETRANDOM Y EMPTY */
-    
 
 }
