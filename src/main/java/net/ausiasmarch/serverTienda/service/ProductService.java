@@ -58,7 +58,7 @@ public class ProductService {
     }
 
     // Get random product
-    public ProductEntity getRandom() {
+    public ProductEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oProductRepository.count()), 1);
         return oProductRepository.findAll(oPageable).getContent().get(0);
     }
