@@ -37,28 +37,22 @@ public class UserService {
     @Autowired
     EmailService oEmailService;
     
+    // Get user by ID
     public UserEntity get(Long id) {
         return oUserRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("user not found"));
     }
 
+    // Get user by username
     public UserEntity getByUsername(String username) {
         return oUserRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found by username"));
     }
 
-
-    public Page<UserEntity> getPage(Pageable oPageable, String filter) {
-        oSessionService.onlyAdmins();
-
-        Page<UserEntity> oPage;
-
-        if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
-            oPage = oUserRepository.findAll(oPageable);
-        } else {
-            oPage = oUserRepository.findByUserByNameOrLastnameContainingIgnoreClase(filter, filter, filter, filter, null);
-        }
-        return oPage;
+    // get a page of users
+    public Page<UserEntity> getPage(Pageable oPageable) {
+        return oUserRepository.findAll(oPageable);
     }
 
+    // Create a new user
     public Long create (UserEntity oUserEntity) {
         oSessionService.onlyAdmins();
         oUserEntity.setId(null);
@@ -69,17 +63,67 @@ public class UserService {
         return oUserEntity.getId();
     }
 
-    public Long createForUsers(UserEntity oUserEntity) {
-        oUserEntity.setId(null);
-        oUserEntity.setPassword(tiendaPASSWORD);
-        //POSIBLE TOKEN -> oUserEntity.setToken(UUID.randomUUID().toString()); // genero el token
-        oUserEntity.setRole(true); // role = true -> user
-        oUserRepository.save(oUserEntity);
-        //POSIBLE RECUPERAR CONTRASEÑA POR CORREO -> this.sendEmail(oUserEntity); // envio el email
-        return oUserEntity.getId();
+    // Update an existing user
+    public UserEntity update(UserEntity oUserEntity) {
+        oSessionService.onlyAdmins();
+        UserEntity oUserEntityFromDatabase = this.get(oUserEntity.getId());
+        oUserEntity.setPassword(oUserEntityFromDatabase.getPassword());
+        oUserEntity.setRole(oUserEntityFromDatabase.getRole());
+        return oUserRepository.save(oUserEntity);
     }
 
-    /*
+    // Delete user by ID
+    public Long delete(Long id) {
+       oSessionService.onlyAdmins();
+       oUserRepository.deleteById(id);
+       return id;
+    }
+
+    // Get one random user
+    public UserEntity getOneRandom() {
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oUserRepository.count()), 1);
+        return oUserRepository.findAll(oPageable).getContent().get(0);
+    }
+
+    // Get users in order desc with orders
+    public Page<UserEntity> getUsersByOrderingDesc(Pageable oPageable) {
+        return oUserRepository.findUsersByOrderingDesc(oPageable);
+    }
+
+    // Populate the database with random users
+    public Long populate(Integer amount) {
+        oSessionService.onlyAdmins();
+        for (int i = 0; i < amount; i++) {
+            String dni = DataGenerationHelper.getRandomDni();
+            String name = DataGenerationHelper.getRandomName();
+            String lastName1 = DataGenerationHelper.getRandomLastName();
+            String lastName2 = DataGenerationHelper.getRandomLastName();
+            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + lastName1.substring(1, 3) + lastName2.substring(1, 2) + i).toLowerCase();
+            LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
+            String numberPhone = DataGenerationHelper.getRandomNumberPhone();
+            String email = (name.substring(0, 3) + lastName1.substring(0, 3) + lastName2.substring(0, 3) + i).toLowerCase() + "@gmail.com";
+            String address = DataGenerationHelper.getRandomAddress();
+            String city = DataGenerationHelper.getRandomCity();
+            int postalCode = DataGenerationHelper.getRandomPostalCode();
+            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, lastName1, lastName2, birthDate, numberPhone, email, address, city, postalCode, true));
+        }
+        return oUserRepository.count();
+    }
+
+    // Empty the user table and two sample users.
+    @Transactional
+    public Long empty() {
+        oSessionService.onlyAdmins();
+        oUserRepository.deleteAll();
+        oUserRepository.resetAutoIncrement();
+        UserEntity oUserAdministrado = new UserEntity(1L, "00000000A", "marmarzo", tiendaPASSWORD, "Mario", "Marzo", "Cruz", LocalDate.of(1990, 10, 23), "666666666", "marmarzo@gmail.com", "Calle Mayor 1A", "Madrid", 28001, false);
+        oUserRepository.save(oUserAdministrado);
+        UserEntity oUser = new UserEntity(2L, "00000000B", "pepperez", tiendaPASSWORD, "Pepe", "Perez", "Cara", LocalDate.of(2000, 06, 13), "777777777", "pepperez@gmail.com", "Calle Menor 1A", "Barcelona", 28051, true);
+        oUserRepository.save(oUser);
+        return oUserRepository.count();
+    }
+
+     /*
      * POSIBLE USO DE RECUPERACIÓN DE CONTRASEÑA POR CORREO
      * 
      * Send email to user with token
@@ -106,63 +150,5 @@ public class UserService {
     }
      * 
      */
-
-
-    public UserEntity update(UserEntity oUserEntityToSet) {
-        UserEntity oUserEntityFromDatabase = this.get(oUserEntityToSet.getId());
-        oSessionService.onlyAdminsOrUsersWithIisOwnData(oUserEntityFromDatabase.getId());
-        if( oSessionService.isUser()) {
-            oUserEntityToSet.setRole(oUserEntityFromDatabase.getRole());
-            oUserEntityToSet.setPassword(tiendaPASSWORD);
-            return oUserRepository.save(oUserEntityToSet);
-        } else {
-            oUserEntityToSet.setPassword(tiendaPASSWORD);
-            return oUserRepository.save(oUserEntityToSet);
-        }
-    }
-
-    public Long delete(Long id) {
-       oSessionService.onlyAdmins();
-       oUserRepository.deleteById(id);
-       return id;
-    }
-
-    public UserEntity getOneRandom() {
-        oSessionService.onlyAdmins();
-        Pageable oPageable = PageRequest.of((int) (Math.random() * oUserRepository.count()), 1);
-        return oUserRepository.findAll(oPageable).getContent().get(0);
-    }
-
-    public Long populate(Integer amount) {
-        oSessionService.onlyAdmins();
-        for (int i = 0; i < amount; i++) {
-            String dni = DataGenerationHelper.getRandomDni();
-            String name = DataGenerationHelper.getRandomName();
-            String lastName1 = DataGenerationHelper.getRandomLastName();
-            String lastName2 = DataGenerationHelper.getRandomLastName();
-            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + lastName1.substring(1, 3) + lastName2.substring(1, 2) + i).toLowerCase();
-            LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
-            String numberPhone = DataGenerationHelper.getRandomNumberPhone();
-            String email = (name.substring(0, 3) + lastName1.substring(0, 3) + lastName2.substring(0, 3) + i).toLowerCase() + "@gmail.com";
-            String address = DataGenerationHelper.getRandomAddress();
-            String city = DataGenerationHelper.getRandomCity();
-            int postalCode = DataGenerationHelper.getRandomPostalCode();
-            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, lastName1, lastName2, birthDate, numberPhone, email, address, city, postalCode, true));
-        }
-        return oUserRepository.count();
-    }
-
-    @Transactional
-    public Long empty() {
-        oSessionService.onlyAdmins();
-        oUserRepository.deleteAll();
-        oUserRepository.resetAutoIncrement();
-        UserEntity oUserEntity1 = new UserEntity(1L, "00000000A", "marmarzo", tiendaPASSWORD, "Mario", "Marzo", "Cruz", LocalDate.of(1990, 10, 23), "666666666", "marmarzo@gmail.com", "Calle Mayor 1A", "Madrid", 28001, false);
-        oUserRepository.save(oUserEntity1);
-        UserEntity oUserEntity2 = new UserEntity(2L, "00000000B", "pepperez", tiendaPASSWORD, "Pepe", "Perez", "Cara", LocalDate.of(2000, 06, 13), "777777777", "pepperez@gmail.com", "Calle Menor 1A", "Barcelona", 28051, true);
-        oUserRepository.save(oUserEntity2);
-        return oUserRepository.count();
-    }
-
     
 }
