@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,20 @@ public class OrderingService {
     // Create a new ordering
     public OrderingEntity create(OrderingEntity oOrderingEntity) {
         oSessionService.onlyAdmins();
+
+        // Validation num of bill are more than 0
+        if (oOrderingEntity.getNumBill() <= 0) {
+            throw new IllegalArgumentException("The num of bill must be more than 0");
+        }
+
+        // Validation date of bill are before or current date 
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dateBill = oOrderingEntity.getDateBill();
+
+        if (dateBill == null || dateBill.isAfter(currentDate)) {
+            throw new IllegalArgumentException("The date of bill must be before or current date");
+        }
+
         oOrderingEntity.setId(null);
         return oOrderingRepository.save(oOrderingEntity);
     }

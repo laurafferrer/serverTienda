@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "ordering")
 public class OrderingEntity {
@@ -23,28 +25,32 @@ public class OrderingEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dateOrder;
 
-    @ManyToOne
-    @JoinColumn(name = "idUser")
-    private UserEntity user;
+    @NotNull
+    private Long numBill;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate dateBill;
 
     @ManyToOne
-    @JoinColumn(name = "idPurchase")
-    private PurchaseDetailEntity purchase;
+    @JoinColumn(name = "idUser")
+    private UserEntity idUser;
 
     public OrderingEntity() {
     }
 
-    public OrderingEntity(Long id, LocalDate dateOrder, UserEntity user, PurchaseDetailEntity purchase) {
+    public OrderingEntity(Long id, LocalDate dateOrder, Long numBill, LocalDate dateBill, UserEntity idUser) {
         this.id = id;
         this.dateOrder = dateOrder;
-        this.user = user;
-        this.purchase = purchase;
+        this.numBill = numBill;
+        this.dateBill = dateBill;
+        this.idUser = idUser;
     }
 
-    public OrderingEntity(LocalDate dateOrder, UserEntity user, PurchaseDetailEntity purchase) {
+    public OrderingEntity(LocalDate dateOrder,  Long numBill, LocalDate dateBill, UserEntity idUser) {
         this.dateOrder = dateOrder;
-        this.user = user;
-        this.purchase = purchase;
+        this.numBill = numBill;
+        this.dateBill = dateBill;
+        this.idUser = idUser;
     }
 
     public Long getId() {
@@ -63,20 +69,28 @@ public class OrderingEntity {
         this.dateOrder = dateOrder;
     }
 
+    public Long getNumBill() {
+        return numBill;
+    }
+
+    public void setNumBill(Long numBill) {
+        this.numBill = numBill;
+    }
+
+    public LocalDate getDateBill() {
+        return dateBill;
+    }
+
+    public void setDateBill(LocalDate dateBill) {
+        this.dateBill = dateBill;
+    }
+
     public UserEntity getUser() {
-        return user;
+        return idUser;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public PurchaseDetailEntity getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(PurchaseDetailEntity purchase) {
-        this.purchase = purchase;
+    public void setUser(UserEntity idUser) {
+        this.idUser = idUser;
     }
     
 }
