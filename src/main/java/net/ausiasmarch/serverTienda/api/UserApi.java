@@ -34,19 +34,19 @@ public class UserApi {
     @Autowired
     UserService oUserService;
 
-    // get user by id
+    // Get user by id
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oUserService.get(id));
     }
 
-    // get user by username
+    // Get user by username
     @GetMapping("/byUsername/{username}")
     public ResponseEntity<UserEntity> get(@PathVariable("username") String username) {
         return ResponseEntity.ok(oUserService.getByUsername(username));
     }
 
-    // create new user
+    // Create new user
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.create(oUserEntity));
@@ -65,19 +65,19 @@ public class UserApi {
     }
     */
 
-    // update user
+    // Update existing user
     @PutMapping("")
     public ResponseEntity<UserEntity> update(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.update(oUserEntity));
     }
 
-    // delete user
+    // Delete existing user
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oUserService.delete(id));
     }
 
-    // get all users
+    // Get all users
     @GetMapping("")
     public ResponseEntity<Page<UserEntity>> getPage(
             Pageable oPageable,
@@ -85,19 +85,19 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.getPage(oPageable));
     }
 
-    // generate random users (bajo una cantidad dada)
+    // Generate random users (bajo una cantidad dada)
     @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oUserService.populate(amount));
     }
 
-    // remove all users
+    // Remove all users
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oUserService.empty());
     }
 
-    // get users by order desc with orders
+    // Get users by order desc with orders
     @GetMapping("/byOrderingDesc")
     public ResponseEntity<Page<UserEntity>> getUsersByOrderingDesc(Pageable oPageable) {
         return ResponseEntity.ok(oUserService.getUsersByOrderingDesc(oPageable));
