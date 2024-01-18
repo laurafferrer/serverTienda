@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.serverTienda.entity.CartEntity;
+import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.repository.CartRepository;
 
@@ -18,6 +19,8 @@ public class CartService {
     @Autowired
     CartRepository oCartRepository;
 
+    @Autowired
+    ProductService oProductService;
     @Autowired
     HttpServletRequest oHttpServletRequest;
 
@@ -39,9 +42,22 @@ public class CartService {
         return oCartRepository.findByUser(idUser, oPageable);
     }
 
-    // Create new cart
+    // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
         oSessionService.onlyUsers();
+
+        // Validate amount is positive
+        if (oCartEntity.getAmount() <= 0){
+            throw new IllegalArgumentException("Amount must be positive");
+        }
+
+        // Validate amount are menor or equal to stock in table product
+        Long idProduct = oCartEntity.getIdProduct().getId();
+        ProductEntity product = oProductService.get(idProduct);
+        if (oCartEntity.getAmount() > product.getStock()) {
+            throw new IllegalArgumentException("Amount must be less or equal to stock");
+        }
+
         oCartEntity.setId(null);
         return oCartRepository.save(oCartEntity).getId();
     }

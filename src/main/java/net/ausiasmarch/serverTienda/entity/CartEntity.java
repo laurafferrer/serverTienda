@@ -8,6 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "cart")
 public class CartEntity {
@@ -16,26 +18,36 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Amount cannot be null")
+    private int amount;
+
     @ManyToOne
     @JoinColumn(name = "idUser")
-    private UserEntity user;
+    private UserEntity idUser;
 
     @ManyToOne
     @JoinColumn(name = "idProduct")
-    private ProductEntity product;
+    private ProductEntity idProduct;
 
     public CartEntity() {
     }
 
-    public CartEntity(Long id, UserEntity user, ProductEntity product) {
+    public CartEntity(Long id, int amount, UserEntity idUser, ProductEntity idProduct) {
         this.id = id;
-        this.user = user;
-        this.product = product;
+        this.amount = amount;
+        this.idUser = idUser;
+        this.idProduct = idProduct;
     }
 
-    public CartEntity(UserEntity user, ProductEntity product) {
-        this.user = user;
-        this.product = product;
+    public CartEntity(int amount, UserEntity idUser, ProductEntity idProduct) {
+        this.amount = amount;
+        this.idUser = idUser;
+        this.idProduct = idProduct;
+    }
+
+    public CartEntity(UserEntity idUser, ProductEntity idProduct) {
+        this.idUser = idUser;
+        this.idProduct = idProduct;
     }
 
     public Long getId() {
@@ -46,20 +58,28 @@ public class CartEntity {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public ProductEntity getProduct() {
-        return product;
+    public UserEntity getIdUser() {
+        return idUser;
     }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
+    public void setIdUser(UserEntity idUser) {
+        this.idUser = idUser;
+    }
+
+    public ProductEntity getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(ProductEntity idProduct) {
+        this.idProduct = idProduct;
     }
 
 }
