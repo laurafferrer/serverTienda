@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.entity.OrderingEntity;
-import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.service.OrderingService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
