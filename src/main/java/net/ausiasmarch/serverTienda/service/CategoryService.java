@@ -62,8 +62,8 @@ public class CategoryService {
     }
 
     // Get categories by quantity products
-    public Page<CategoryEntity> findByQuantityProducts(Pageable oPageable) {
-        return oCategoryRepository.findByQuantityProducts(oPageable);
+    public Page<CategoryEntity> findByQuantityProductsAsc(Pageable oPageable) {
+        return oCategoryRepository.findByQuantityProductsAsc(oPageable);
     }
 
     // Empty the category table
