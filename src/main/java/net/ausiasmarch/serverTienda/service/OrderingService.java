@@ -31,8 +31,8 @@ public class OrderingService {
     }
 
     // Get a page of orderings
-    public Page<OrderingEntity> getPage(int page, int size) {
-        return oOrderingRepository.findAll(PageRequest.of(page, size));
+    public Page<OrderingEntity> getPage(Pageable oPageable) {
+        return oOrderingRepository.findAll(oPageable);
     }
 
     // Create a new ordering
