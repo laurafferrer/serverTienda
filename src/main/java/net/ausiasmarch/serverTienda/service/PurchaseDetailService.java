@@ -64,8 +64,8 @@ public class PurchaseDetailService {
     }
 
     // Find purchase details by ordering id
-    public Optional<PurchaseDetailEntity> findByIdOrering(Long idOrdering, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByIdOrering(idOrdering, oPageable);
+    public Optional<PurchaseDetailEntity> findByIdOrdering(Long idOrdering, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByIdOrdering(idOrdering, oPageable);
     }
 
     // Find purchase details by product id
@@ -74,8 +74,8 @@ public class PurchaseDetailService {
     }
 
     // Find purchase details by ordering id and product id
-    public Optional<PurchaseDetailEntity> findByIdOreringAndIdProduct(Long idOrdering, Long idProduct, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByIdOreringAndIdProduct(idOrdering, idProduct, oPageable);
+    public Optional<PurchaseDetailEntity> findByIdOrderingAndIdProduct(Long idOrdering, Long idProduct, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByIdOrderingAndIdProduct(idOrdering, idProduct, oPageable);
     }
 
     // Find and order purchase details by price in descending order

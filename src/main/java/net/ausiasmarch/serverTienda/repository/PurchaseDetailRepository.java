@@ -12,18 +12,15 @@ import org.springframework.data.jpa.repository.Query;
 import net.ausiasmarch.serverTienda.entity.PurchaseDetailEntity;
 
 public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEntity, Long> {
-/*
-    // Find purchase details by id
-    Optional <PurchaseDetailEntity> findById(Long id);
-*/
+
     // Find purchase details by ordering id
-    Optional <PurchaseDetailEntity> findByIdOrering(Long idOrdering, Pageable oPageable);
+    Optional <PurchaseDetailEntity> findByIdOrdering(Long idOrdering, Pageable oPageable);
 
     // Find purchase details by product id
     Optional <PurchaseDetailEntity> findByIdProduct(Long idProduct, Pageable oPageable);
 
     // Find purchase details by ordering id and product id
-    Optional <PurchaseDetailEntity> findByIdOreringAndIdProduct(Long idOrdering, Long idProduct, Pageable oPageable);
+    Optional <PurchaseDetailEntity> findByIdOrderingAndIdProduct(Long idOrdering, Long idProduct, Pageable oPageable);
 
     // Find and order purchase details by price in descending order
     @Query(value = "SELECT * FROM purchaseDetail ORDER BY price DESC", nativeQuery = true)
