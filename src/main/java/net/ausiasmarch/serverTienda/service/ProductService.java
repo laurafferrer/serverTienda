@@ -29,12 +29,12 @@ public class ProductService {
     @Autowired
     SessionService oSessionService;
 
-    // get product by ID
+    // Get product by ID
     public ProductEntity get(Long id) {
         return oProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
-    // Get a page or products
+    // Get a page of products
     public Page<ProductEntity> getPage(Pageable oPageable) {
         return oProductRepository.findAll(oPageable);
     }    
