@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 12-01-2024 a las 11:34:10
--- Versión del servidor: 8.1.0
--- Versión de PHP: 8.2.11
+-- Tiempo de generación: 18-01-2024 a las 17:49:14
+-- Versión del servidor: 8.2.0
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -17,11 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE DATABASE IF NOT EXISTS `dbtienda`;
-USE `dbtienda`;
 --
 -- Base de datos: `dbtienda`
 --
+CREATE DATABASE IF NOT EXISTS `dbtienda`;
+USE `dbtienda`;
 
 -- --------------------------------------------------------
 
@@ -31,6 +31,7 @@ USE `dbtienda`;
 
 CREATE TABLE `cart` (
   `id` bigint NOT NULL,
+  `amount` int NOT NULL,
   `idProduct` bigint NOT NULL,
   `idUser` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -55,6 +56,8 @@ CREATE TABLE `category` (
 CREATE TABLE `ordering` (
   `id` bigint NOT NULL,
   `dateOrder` date NOT NULL,
+  `numBill` bigint NOT NULL,
+  `dateBill` datetime NOT NULL,
   `idUser` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -213,6 +216,7 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `ordering`
   ADD CONSTRAINT `ordering_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+
 --
 -- Filtros para la tabla `product`
 --
@@ -225,6 +229,7 @@ ALTER TABLE `product`
 ALTER TABLE `purchaseDetail`
   ADD CONSTRAINT `purchaseDetail_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`idOrdering`) REFERENCES `ordering` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
