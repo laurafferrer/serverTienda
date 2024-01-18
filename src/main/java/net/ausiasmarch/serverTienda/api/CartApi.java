@@ -53,7 +53,43 @@ public class CartApi {
         return ResponseEntity.ok(oCartService.getPageByUser(idUser, oPageable));
     }
 
+    // Get specific item in the cart base on user Id and product Id
+    @GetMapping("/byUserAndIdProduct/{idUser}/{idProduct}")
+    public ResponseEntity<CartEntity> getByUserAndIdProduct(
+        @PathVariable("idUser") Long idUser,
+        @PathVariable("idProduct") Long idProduct) {
+        return ResponseEntity.ok(oCartService.findByUserAndIdProduct(idUser, idProduct));
+    }
+
     // Create new cart
+    @PostMapping("")
+    public ResponseEntity<Long> create(@RequestBody CartEntity oCartEntity) {
+        return ResponseEntity.ok(oCartService.create(oCartEntity));
+    }
+
+    // Update existing cart
+    @PutMapping("")
+    public ResponseEntity<CartEntity> update(@RequestBody CartEntity oCartEntity) {
+        return ResponseEntity.ok(oCartService.update(oCartEntity));
+    }
+
+    // Delete existing cart
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(oCartService.delete(id));
+    }
+
+    // Remove all carts
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oCartService.emptyTable());
+    }
     
+    // Delete all carts for a specific user
+    @DeleteMapping("/byUser/{idUser}")
+    public ResponseEntity<?> deleteByIdUser(@PathVariable("idUser") Long idUser) {
+        oCartService.deleteByIdUser(idUser);
+        return ResponseEntity.ok().build();
+    }
     
 }
