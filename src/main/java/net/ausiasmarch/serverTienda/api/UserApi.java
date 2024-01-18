@@ -46,10 +46,48 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.getByUsername(username));
     }
 
+    // Get all users
+    @GetMapping("")
+    public ResponseEntity<Page<UserEntity>> getPage(
+            Pageable oPageable,
+            @RequestParam(name = "filter", required = false) String strFilter) {
+        return ResponseEntity.ok(oUserService.getPage(oPageable));
+    }
+
     // Create new user
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody UserEntity oUserEntity) {
         return ResponseEntity.ok(oUserService.create(oUserEntity));
+    }
+
+    // Update existing user
+    @PutMapping("")
+    public ResponseEntity<UserEntity> update(@RequestBody UserEntity oUserEntity) {
+        return ResponseEntity.ok(oUserService.update(oUserEntity));
+    }
+
+    // Delete existing user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(oUserService.delete(id));
+    }
+
+    // Remove all users
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oUserService.empty());
+    }
+
+    // Generate random users (bajo una cantidad dada)
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oUserService.populate(amount));
+    }
+
+    // Get users by order desc with orders
+    @GetMapping("/byOrderingDesc")
+    public ResponseEntity<Page<UserEntity>> getUsersByOrderingDesc(Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getUsersByOrderingDesc(oPageable));
     }
 
     /* ???
@@ -64,43 +102,5 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.confirmEmail(confirmationToken, password));
     }
     */
-
-    // Update existing user
-    @PutMapping("")
-    public ResponseEntity<UserEntity> update(@RequestBody UserEntity oUserEntity) {
-        return ResponseEntity.ok(oUserService.update(oUserEntity));
-    }
-
-    // Delete existing user
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(oUserService.delete(id));
-    }
-
-    // Get all users
-    @GetMapping("")
-    public ResponseEntity<Page<UserEntity>> getPage(
-            Pageable oPageable,
-            @RequestParam(name = "filter", required = false) String strFilter) {
-        return ResponseEntity.ok(oUserService.getPage(oPageable));
-    }
-
-    // Generate random users (bajo una cantidad dada)
-    @PostMapping("/populate/{amount}")
-    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
-        return ResponseEntity.ok(oUserService.populate(amount));
-    }
-
-    // Remove all users
-    @DeleteMapping("/empty")
-    public ResponseEntity<Long> empty() {
-        return ResponseEntity.ok(oUserService.empty());
-    }
-
-    // Get users by order desc with orders
-    @GetMapping("/byOrderingDesc")
-    public ResponseEntity<Page<UserEntity>> getUsersByOrderingDesc(Pageable oPageable) {
-        return ResponseEntity.ok(oUserService.getUsersByOrderingDesc(oPageable));
-    }
 
 }
