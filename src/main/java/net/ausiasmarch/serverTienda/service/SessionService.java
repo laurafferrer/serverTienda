@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.transaction.Transactional;
-
+import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
 import net.ausiasmarch.serverTienda.bean.UserBean;
 
@@ -185,6 +186,40 @@ public class SessionService {
             String.valueOf(oNewPendentEntity.getId()) 
             + String.valueOf(oCaptchaEntity.getId())
             + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
+
+        oPendentRepository.save(oNewPendentEntity);
+
+        CaptchaResponseBean oCaptchaResponseBean = new CaptchaResponseBean();
+        oCaptchaResponseBean.setToken(oNewPendentEntity.getToken());
+        oCaptchaResponseBean.setCaptchaImage(oNewPendentEntity.getCaptcha().getImage());
+
+        return oCaptchaResponseBean;
+    }
+
+    public String loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
+         if (oCaptchaBean.getUsername() != null && oCaptchaBean.getPassword() != null) {
+            UserEntity oUserEntity = oUserRepository.findByUsernameAndPassword(oCaptchaBean.getUsername(), oCaptchaBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Wrong User or password"));
+            if (oUserEntity!=null) {
+                PendentEntity oPendentEntity = oPendentRepository.findByToken(oCaptchaBean.getToken()).orElseThrow(() -> new ResourceNotFoundException("Pendent not found"));
+
+                LocalDateTime timecode = oPendentEntity.getTimecode();
+
+                if (LocalDateTime.now().isAfter(timecode.plusSeconds(120))) {
+                    throw new UnauthorizedException("Captcha expired");
+                }
+
+                if (oPendentEntity.getCaptcha().getText().trim().equals(oCaptchaBean.getAnswer().trim())) {
+                    oPendentRepository.delete(oPendentEntity);
+                    return JWTHelper.generateJWT(oCaptchaBean.getUsername());
+                } else {
+                    throw new UnauthorizedException("Wrong captcha");
+                }
+            } else {
+                throw new UnauthorizedException("Wrong User or password");
+            }        
+        } else {
+            throw new UnauthorizedException("User or password not found");
+        }
     }
 
 

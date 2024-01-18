@@ -1,9 +1,21 @@
 package net.ausiasmarch.serverTienda.helper;
 
+import java.nio.charset.StandardCharsets;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import java.time.LocalDate;
+
+import java.util.Random;
+
+import javax.xml.bind.DatatypeConverter;
+
+import net.ausiasmarch.serverTienda.exception.CannotPerformOperationException;
 
 public class DataGenerationHelper {
 
+    /* RANDOMS PARA EL USER */
     private static final String[] aNames = { 
             "Pepe", "Juan", "Antonio", "Manuel", "Jose", "Francisco", "David", "Jose Antonio", "Jose Luis",
             "Javier", "Jesus", "Francisco Javier", "Carlos", "Daniel", "Miguel", "Rafael", "Pedro", "Jose Manuel",
@@ -104,4 +116,20 @@ public class DataGenerationHelper {
         return postalCode;
     }    
 
+    /* RANDOM PARA EL CAPTCHA */
+    public static int getRandomInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
+
+    public static String getSHA256(String strToHash) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(strToHash.getBytes(StandardCharsets.UTF_8));
+            return DatatypeConverter.printHexBinary(digest).toLowerCase();
+        } catch (NoSuchAlgorithmException ex) {
+            throw new CannotPerformOperationException("no such algorithm: sha256");
+        }
+    }
 }
