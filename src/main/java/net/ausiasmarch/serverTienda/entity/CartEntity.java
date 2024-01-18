@@ -23,31 +23,31 @@ public class CartEntity {
 
     @ManyToOne
     @JoinColumn(name = "idUser")
-    private UserEntity idUser;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "idProduct")
-    private ProductEntity idProduct;
+    private ProductEntity product;
 
     public CartEntity() {
     }
 
-    public CartEntity(Long id, int amount, UserEntity idUser, ProductEntity idProduct) {
+    public CartEntity(Long id, int amount, UserEntity user, ProductEntity product) {
         this.id = id;
         this.amount = amount;
-        this.idUser = idUser;
-        this.idProduct = idProduct;
+        this.user = user;
+        this.product = product;
     }
 
-    public CartEntity(int amount, UserEntity idUser, ProductEntity idProduct) {
+    public CartEntity(int amount, UserEntity user, ProductEntity product) {
         this.amount = amount;
-        this.idUser = idUser;
-        this.idProduct = idProduct;
+        this.user = user;
+        this.product = product;
     }
 
-    public CartEntity(UserEntity idUser, ProductEntity idProduct) {
-        this.idUser = idUser;
-        this.idProduct = idProduct;
+    public CartEntity(UserEntity user, ProductEntity product) {
+        this.user = user;
+        this.product = product;
     }
 
     public Long getId() {
@@ -67,19 +67,19 @@ public class CartEntity {
     }
 
     public UserEntity getIdUser() {
-        return idUser;
+        return user;
     }
 
-    public void setIdUser(UserEntity idUser) {
-        this.idUser = idUser;
+    public void setIdUser(UserEntity user) {
+        this.user = user;
     }
 
     public ProductEntity getIdProduct() {
-        return idProduct;
+        return product;
     }
 
-    public void setIdProduct(ProductEntity idProduct) {
-        this.idProduct = idProduct;
+    public void setIdProduct(ProductEntity product) {
+        this.product = product;
     }
 
 }

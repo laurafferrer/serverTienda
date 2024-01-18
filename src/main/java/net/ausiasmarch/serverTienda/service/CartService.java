@@ -38,8 +38,8 @@ public class CartService {
     }
 
     // Get page of cart for a specific user
-    public Page<CartEntity> getPageByUser(Long idUser, Pageable oPageable) {
-        return oCartRepository.findByUser(idUser, oPageable);
+    public Page<CartEntity> getPageByIdUser(Long idUser, Pageable oPageable) {
+        return oCartRepository.findByIdUser(idUser, oPageable);
     }
 
     // Create new cart with validation
@@ -76,8 +76,8 @@ public class CartService {
     }
 
     // Find specific item in the cart base on user Id and product Id
-    public CartEntity findByUserAndIdProduct(Long idUser, Long idProduct) {
-        return oCartRepository.findByUserAndIdProduct(idUser, idProduct).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+    public CartEntity findByIdUserAndIdProduct(Long idUser, Long idProduct) {
+        return oCartRepository.findByIdUserAndIdProduct(idUser, idProduct).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Remove all cart items for a specific user

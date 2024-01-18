@@ -87,7 +87,7 @@ public class UserEntity {
 
     private Boolean role = false;
 
-    @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
+    @OneToMany(mappedBy = "idUser", fetch = jakarta.persistence.FetchType.LAZY)
     private List<CartEntity> carts;
 
     public UserEntity() {
@@ -250,6 +250,10 @@ public class UserEntity {
 
     public List<CartEntity> getCarts() {
         return carts;
+    }
+
+    public void setCarts (List<CartEntity> carts) {
+        this.carts = carts;
     }
 
 }

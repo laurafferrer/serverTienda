@@ -50,7 +50,7 @@ public class CartApi {
         @PathVariable("idUser") Long idUser,
         Pageable oPageable,
         @RequestParam(name = "filter", required = false) String strFilter) {
-        return ResponseEntity.ok(oCartService.getPageByUser(idUser, oPageable));
+        return ResponseEntity.ok(oCartService.getPageByIdUser(idUser, oPageable));
     }
 
     // Get specific item in the cart base on user Id and product Id
@@ -58,7 +58,7 @@ public class CartApi {
     public ResponseEntity<CartEntity> getByUserAndIdProduct(
         @PathVariable("idUser") Long idUser,
         @PathVariable("idProduct") Long idProduct) {
-        return ResponseEntity.ok(oCartService.findByUserAndIdProduct(idUser, idProduct));
+        return ResponseEntity.ok(oCartService.findByIdUserAndIdProduct(idUser, idProduct));
     }
 
     // Create new cart

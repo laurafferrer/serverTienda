@@ -14,10 +14,10 @@ import net.ausiasmarch.serverTienda.entity.CartEntity;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     // Get page of cart for a specific user
-    Page<CartEntity> findByUser(Long idUser, Pageable oPageable);
+    Page<CartEntity> findByIdUser(Long idUser, Pageable oPageable);
 
     // Find specific item in the cart base on user Id and product Id
-    Optional<CartEntity> findByUserAndIdProduct(Long idUser, Long idProduct);
+    Optional<CartEntity> findByIdUserAndIdProduct(Long idUser, Long idProduct);
 
     // Remove all cart items for a specific user
     @Query(value = "DELETE FROM cart WHERE idUser = ?1", nativeQuery = true)
