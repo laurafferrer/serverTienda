@@ -73,7 +73,7 @@ public class SessionService {
             return false;
         }
     }
-
+/* 
     // Admins y Users.
     public Boolean isAdmin() {
         if (this.getSessionUsername() != null) {
@@ -84,7 +84,8 @@ public class SessionService {
             return false;
         }
     }
-
+*/
+/*
     public Boolean isUser() {
         if (this.getSessionUsername() != null) {
             UserEntity oUserEntityInSession = oUserRepository.findByUsername(this.getSessionUsername())
@@ -94,25 +95,29 @@ public class SessionService {
             return false;
         }
     }
-
+*/
+/*
     public void onlyAdmins() {
         if (!this.isAdmin()) {
             throw new UnauthorizedException("Only admins can do this");
         }
     }
-
+*/
+/*
     public void onlyUsers() {
         if (!this.isUser()) {
             throw new UnauthorizedException("Only users can do this");
         }
     }
-
+*/
+/*
     public void onlyAdminsOrUsers() {
         if (!this.isSessionActive()) {
             throw new UnauthorizedException("Only admins or users can do this");
         }
     }
-
+*/
+/*
     // Throw unauthorized exception if the current user is not the target user
     public void onlyUsersWithTheirData(Long userId) {
         if (!this.isUser()) {
@@ -122,7 +127,8 @@ public class SessionService {
             throw new UnauthorizedException("You can only access your own data");
         }
     }
-
+*/
+/*
     // Throw unauthorized exception if the current user is neither an admin nor the target user
     public void onlyAdminsOrUsersWithTheirData(Long userId) {
         if (this.isSessionActive()) {
@@ -139,7 +145,7 @@ public class SessionService {
             throw new UnauthorizedException("You must log in to perform this action");
         }
     }
-
+*/
 /*
 REVISAR 
     public String getSessionCategory() {

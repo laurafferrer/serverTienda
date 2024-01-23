@@ -45,10 +45,10 @@ public class OrderingApi {
 
     // Get ordering by user_id
     @GetMapping("/byuser_id/{user_id}")
-    public ResponseEntity<Page<OrderingEntity>> findByuser_id(
+    public ResponseEntity<Page<OrderingEntity>> findByUserId(
             Pageable oPageable,
             @PathVariable("user_id") Long user_id) {
-        return ResponseEntity.ok(oOrderingService.findByuser_id(user_id, oPageable));
+        return ResponseEntity.ok(oOrderingService.findByUserId(user_id, oPageable));
     }
 
     // Create new ordering

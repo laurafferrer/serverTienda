@@ -12,7 +12,7 @@ import net.ausiasmarch.serverTienda.entity.OrderingEntity;
 public interface OrderingRepository extends JpaRepository<OrderingEntity, Long> {
 
     // Find orders by user Id
-    Page<OrderingEntity> findByuser_id (Long user_id, Pageable oPageable);
+    Page<OrderingEntity> findByUserId (Long user_id, Pageable oPageable);
 
     // Find orders by date order desc
     @Query(value = "SELECT * FROM ordering WHERE date_order DESC", nativeQuery = true)

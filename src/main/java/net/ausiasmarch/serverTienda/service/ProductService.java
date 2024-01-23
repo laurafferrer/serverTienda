@@ -39,20 +39,20 @@ public class ProductService {
 
     // Create new product
     public Long create(ProductEntity oProductEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oProductEntity.setId(null);
         return oProductRepository.save(oProductEntity).getId();
     }
 
     // Update existing product
     public ProductEntity update(ProductEntity oProductEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oProductRepository.save(oProductEntity);
     }
 
     // Delete existing product
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oProductRepository.deleteById(id);
         return id;
     }

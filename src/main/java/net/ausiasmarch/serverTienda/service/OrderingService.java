@@ -39,7 +39,7 @@ public class OrderingService {
 
     // Create a new ordering
     public OrderingEntity create(OrderingEntity oOrderingEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
         if (oOrderingEntity.getnum_bill() <= 0) {
@@ -60,13 +60,13 @@ public class OrderingService {
 
     // Update an existing ordering
     public OrderingEntity update(OrderingEntity oOrderingEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oOrderingRepository.save(oOrderingEntity);
     }
 
     // Delete an existing ordering
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oOrderingRepository.deleteById(id);
         return id;
     }
@@ -78,8 +78,8 @@ public class OrderingService {
     }
 
     // Find orderings by user Id
-    public Page<OrderingEntity> findByuser_id(Long user_id, Pageable oPageable) {
-        return oOrderingRepository.findByuser_id(user_id, oPageable);
+    public Page<OrderingEntity> findByUserId(Long user_id, Pageable oPageable) {
+        return oOrderingRepository.findByUserId(user_id, oPageable);
     }
 
     // Find orderings by date order desc

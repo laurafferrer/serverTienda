@@ -37,20 +37,20 @@ public class PurchaseDetailService {
 
     // create a new purchase detail
     public Long create (PurchaseDetailEntity oPurchaseDetailEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oPurchaseDetailEntity.setId(null);
         return oPurchaseDetailRepository.save(oPurchaseDetailEntity).getId();
     }
 
     // update an existing purchase detail 
     public PurchaseDetailEntity update(PurchaseDetailEntity oPurchaseDetailEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oPurchaseDetailRepository.save(oPurchaseDetailEntity);
     }
 
     // delete an existing purchase detail by Id
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oPurchaseDetailRepository.deleteById(id);
         return id;
     }

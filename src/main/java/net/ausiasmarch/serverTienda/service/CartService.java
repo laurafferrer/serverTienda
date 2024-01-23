@@ -42,17 +42,17 @@ public class CartService {
 
     // Get cart by user id
     public List<CartEntity> getByUser(Long user_id) {
-        return oCartRepository.findByUser_Id(user_id);
+        return oCartRepository.findByUserId(user_id);
     }
 
     // Get all carts for a specific user
     public List<CartEntity> getAllByIdUser(Long user_id) {
-        return oCartRepository.findAllByUser_Id(user_id);
+        return oCartRepository.findAllByUserId(user_id);
     }
 
     // Get cart by user id and product id
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
-        return oCartRepository.findByUser_IdAndProduct_Id(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+        return oCartRepository.findByUserIdAndProductId(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Get a page or carts
@@ -65,7 +65,7 @@ public class CartService {
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
-        Optional<CartEntity> cartFromDatabase = oCartRepository.findByUser_IdAndProduct_Id(oUserEntity.getId(), oProductEntity.getId());
+        Optional<CartEntity> cartFromDatabase = oCartRepository.findByUserIdAndProductId(oUserEntity.getId(), oProductEntity.getId());
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
@@ -89,14 +89,14 @@ public class CartService {
 
     // Delete existing cart by ID
     public Long delete(Long id) {
-        oSessionService.onlyUsers();
+        //oSessionService.onlyUsers();
         oCartRepository.deleteById(id);
         return id;
     }
 
     // Delete all cart items for a specific user
     public void deleteByUser(Long user_id) {
-        oCartRepository.findAllByUser_Id(user_id);
+        oCartRepository.findAllByUserId(user_id);
     }
 
     // Empty the cart table

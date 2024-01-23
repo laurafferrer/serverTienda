@@ -37,20 +37,20 @@ public class CategoryService {
 
     //Create new category
     public Long create(CategoryEntity oCategoryEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oCategoryEntity.setId(null);
         return oCategoryRepository.save(oCategoryEntity).getId();
     }
 
     // Update an existing category
     public CategoryEntity update(CategoryEntity oCategoryEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oCategoryRepository.save(oCategoryEntity);
     }
 
     // Delete an existing category by ID
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oCategoryRepository.deleteById(id);
         return id;
     }

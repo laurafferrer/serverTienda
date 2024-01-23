@@ -12,18 +12,18 @@ import net.ausiasmarch.serverTienda.entity.CartEntity;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     // Get page of cart for a specific user
-    List<CartEntity> findByUser_Id(Long userId);
+    List<CartEntity> findByUserId(Long userId);
 
     // Find specific item in the cart based on user Id and product Id
-    Optional<CartEntity> findByUser_IdAndProduct_Id(Long userId, Long productId);
+    Optional<CartEntity> findByUserIdAndProductId(Long userId, Long productId);
 
     // Remove all cart for a specific user
     @Query(value = "DELETE FROM cart WHERE user_id = ?1", nativeQuery = true)
-    void deleteByUser_Id(Long userId);
+    void deleteByUserId(Long userId);
 
     // Find all carts for a specific user
     @Query(value = "SELECT * FROM cart WHERE user_id = ?1", nativeQuery = true)
-    List<CartEntity> findAllByUser_Id(Long userId);
+    List<CartEntity> findAllByUserId(Long userId);
 
     // Method to reset the auto-increment counter for the cart table
     @Modifying

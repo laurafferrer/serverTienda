@@ -56,7 +56,7 @@ public class UserService {
 
     // Create a new user
     public Long create (UserEntity oUserEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oUserEntity.setId(null);
         oUserEntity.setPassword(tiendaPASSWORD);
         //POSIBLE TOKEN -> oUserEntity.setToken(UUID.randomUUID().toString());
@@ -67,7 +67,7 @@ public class UserService {
 
     // Update an existing user
     public UserEntity update(UserEntity oUserEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         UserEntity oUserEntityFromDatabase = this.get(oUserEntity.getId());
         oUserEntity.setPassword(oUserEntityFromDatabase.getPassword());
         oUserEntity.setRole(oUserEntityFromDatabase.getRole());
@@ -76,7 +76,7 @@ public class UserService {
 
     // Delete user by ID
     public Long delete(Long id) {
-       oSessionService.onlyAdmins();
+       //oSessionService.onlyAdmins();
        oUserRepository.deleteById(id);
        return id;
     }
@@ -99,7 +99,7 @@ public class UserService {
 
     // Populate the database with random users
     public Long populate(Integer amount) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             String dni = DataGenerationHelper.getRandomDni();
             String name = DataGenerationHelper.getRandomName();
@@ -120,7 +120,7 @@ public class UserService {
     // Empty the user table and two sample users.
     @Transactional
     public Long empty() {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oUserRepository.deleteAll();
         oUserRepository.resetAutoIncrement();
         UserEntity oUserAdministrado = new UserEntity(1L, "00000000A", "marmarzo", tiendaPASSWORD, "Mario", "Marzo", "Cruz", LocalDate.of(1990, 10, 23), "666666666", "marmarzo@gmail.com", "Calle Mayor 1A", "Madrid", 28001, false);
