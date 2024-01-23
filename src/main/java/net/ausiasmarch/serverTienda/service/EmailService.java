@@ -1,4 +1,4 @@
-package net.ausiasmarch.serverTienda.service;
+/*package net.ausiasmarch.serverTienda.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,3 +21,4 @@ public class EmailService {
         javaMailSender.send(email);
     }
 }
+*/
