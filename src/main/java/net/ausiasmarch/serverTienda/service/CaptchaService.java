@@ -25,6 +25,7 @@ public class CaptchaService {
     @Autowired
     private DefaultKaptcha oDefaultKaptcha;
 
+    // Create new captcha entity
     public CaptchaEntity createCaptcha() {
         CaptchaEntity oCaptchaEntity = new CaptchaEntity();
         String text = oDefaultKaptcha.createText();
@@ -35,6 +36,7 @@ public class CaptchaService {
         return oCaptchaRepository.save(oCaptchaEntity);
     }
 
+    // Get a random captcha from database
     public CaptchaEntity getRandomCaptcha() {
         List<CaptchaEntity> oCaptchaEntityList = oCaptchaRepository.findAll();
         if (oCaptchaEntityList.isEmpty()) {
@@ -46,16 +48,16 @@ public class CaptchaService {
         }
     }
 
+    // Generate captcha image for the given text
     private byte[] generateCaptchaImage(String text) {
-        BufferedImage oBufferedImage = oDefaultKaptcha.createImage(text);
-        try (ByteArrayOutputStream oByteArrayOutputStream = new ByteArrayOutputStream()) {
-            ImageIO.write(oBufferedImage, "png", oByteArrayOutputStream);
-            oByteArrayOutputStream.flush();
-            return oByteArrayOutputStream.toByteArray();
-        } catch (Exception oException) {
-            oException.printStackTrace();
+        BufferedImage bufferedImage = oDefaultKaptcha.createImage(text);
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return new byte[0];
-        } 
+        }
     }
 
 }

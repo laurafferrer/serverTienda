@@ -2,10 +2,10 @@ package net.ausiasmarch.serverTienda.bean;
 
 public class CaptchaBean {
 
-    private String username;
-    private String password;
-    private String token;
-    private String answer;
+    private String username = "";
+    private String password = "";
+    private String token = "";
+    private String answer = "";
 
     public String getUsername() {
         return username;

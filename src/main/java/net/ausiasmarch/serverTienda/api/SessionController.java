@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
-import net.ausiasmarch.serverTienda.bean.UserBean;
 import net.ausiasmarch.serverTienda.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -23,11 +22,6 @@ public class SessionController {
 
     @Autowired
     SessionService oSessionService;
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserBean oUserBean) {
-        return ResponseEntity.ok("\"" + oSessionService.login(oUserBean) + "\"");
-    }
 
     @GetMapping("/prelogin")
     public ResponseEntity<CaptchaResponseBean> prelogin() {

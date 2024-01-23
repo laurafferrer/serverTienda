@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.transaction.Transactional;
+
 import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
-import net.ausiasmarch.serverTienda.bean.UserBean;
 
 import net.ausiasmarch.serverTienda.entity.CaptchaEntity;
 import net.ausiasmarch.serverTienda.entity.CategoryEntity;
@@ -20,9 +20,11 @@ import net.ausiasmarch.serverTienda.entity.UserEntity;
 
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.exception.UnauthorizedException;
+
 import net.ausiasmarch.serverTienda.helper.DataGenerationHelper;
 import net.ausiasmarch.serverTienda.helper.JWTHelper;
 
+import net.ausiasmarch.serverTienda.repository.CaptchaRepository;
 import net.ausiasmarch.serverTienda.repository.CategoryRepository;
 import net.ausiasmarch.serverTienda.repository.PendentRepository;
 import net.ausiasmarch.serverTienda.repository.UserRepository;
@@ -37,18 +39,16 @@ public class SessionService {
     CategoryRepository oCategoryRepository;
 
     @Autowired
-    HttpServletRequest oHttpServletRequest;
-
-    @Autowired
     CaptchaService oCaptchaService;
 
     @Autowired
-    PendentRepository oPendentRepository;
+    CaptchaRepository oCaptchaRepository;
 
-    public String login(UserBean oUserBean) {
-        oUserRepository.findByUsernameAndPassword(oUserBean.getUsername(), oUserBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Wrong User or password"));
-        return JWTHelper.generateJWT(oUserBean.getUsername());
-    }
+    @Autowired
+    HttpServletRequest oHttpServletRequest;
+
+    @Autowired
+    PendentRepository oPendentRepository;
 
     public String getSessionUsername() {
         if (oHttpServletRequest.getAttribute("username") instanceof String) {
@@ -113,33 +113,35 @@ public class SessionService {
         }
     }
 
-    public void onlyUsersWithIisOwnData(Long id_user) {
+    // Throw unauthorized exception if the current user is not the target user
+    public void onlyUsersWithTheirData(Long userId) {
         if (!this.isUser()) {
-            throw new UnauthorizedException("Only users can do this");
+            throw new UnauthorizedException("Only users can perform this action");
         }
-        if (!this.getSessionUser().getId().equals(id_user)) {
-            throw new UnauthorizedException("Only users can do this");
+        if (!this.getSessionUser().getId().equals(userId)) {
+            throw new UnauthorizedException("You can only access your own data");
         }
     }
 
-    public void onlyAdminsOrUsersWithIisOwnData(Long id_user) {
+    // Throw unauthorized exception if the current user is neither an admin nor the target user
+    public void onlyAdminsOrUsersWithTheirData(Long userId) {
         if (this.isSessionActive()) {
             if (!this.isAdmin()) {
                 if (!this.isUser()) {
-                    throw new UnauthorizedException("Only admins or users can do this");
+                    throw new UnauthorizedException("Only users can perform this action");
                 } else {
-                    if (!this.getSessionUser().getId().equals(id_user)) {
-                        throw new UnauthorizedException("Only admins or users with its own data can do this");
+                    if (!this.getSessionUser().getId().equals(userId)) {
+                        throw new UnauthorizedException("You can only access your own data");
                     }
                 }
             }
         } else {
-            throw new UnauthorizedException("Only admins or users can do this");
+            throw new UnauthorizedException("You must log in to perform this action");
         }
     }
 
-
-    /* REVISAR */
+/*
+REVISAR 
     public String getSessionCategory() {
         Object idAttribute = oHttpServletRequest.getAttribute("id");
     
@@ -170,57 +172,61 @@ public class SessionService {
             return false;
         }
     }
-    /* NI IDEA DE QUE HE HECHO :) */
-    
+*/
 
     @Transactional
     public CaptchaResponseBean prelogin() {
-        CaptchaEntity oCaptchaEntity = oCaptchaService.getRandomCaptcha();
+        // Create a captcha for pre-login
+        CaptchaEntity oCaptchaEntity = oCaptchaService.createCaptcha();
 
-        PendentEntity oPendentEntity = new PendentEntity();
-        oPendentEntity.setCaptcha(oCaptchaEntity);
-        oPendentEntity.setTimecode(LocalDateTime.now());
-        PendentEntity oNewPendentEntity = oPendentRepository.save(oPendentEntity);
+        // Create a new pendent entity associated with the captcha
+        PendentEntity pendentEntity = new PendentEntity();
+        pendentEntity.setCaptcha(oCaptchaEntity);
+        pendentEntity.setTimecode(LocalDateTime.now());
+        PendentEntity newPendentEntity = oPendentRepository.save(pendentEntity);
 
-        oNewPendentEntity.setToken(DataGenerationHelper.getSHA256(
-            String.valueOf(oNewPendentEntity.getId()) 
-            + String.valueOf(oCaptchaEntity.getId())
-            + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
+        // Generate a token for the pendent entity
+        newPendentEntity.setToken(DataGenerationHelper.getSHA256(String.valueOf(newPendentEntity.getId()) + String.valueOf(oCaptchaEntity.getId()) + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
+        oPendentRepository.save(newPendentEntity);
 
-        oPendentRepository.save(oNewPendentEntity);
+        // Prepare response with token and captcha image
+        CaptchaResponseBean captchaResponseBean = new CaptchaResponseBean();
+        captchaResponseBean.setToken(newPendentEntity.getToken());
+        captchaResponseBean.setCaptchaImage(oCaptchaEntity.getImage());
 
-        CaptchaResponseBean oCaptchaResponseBean = new CaptchaResponseBean();
-        oCaptchaResponseBean.setToken(oNewPendentEntity.getToken());
-        oCaptchaResponseBean.setCaptchaImage(oNewPendentEntity.getCaptcha().getImage());
-
-        return oCaptchaResponseBean;
+        return captchaResponseBean;
     }
 
     public String loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
          if (oCaptchaBean.getUsername() != null && oCaptchaBean.getPassword() != null) {
-            UserEntity oUserEntity = oUserRepository.findByUsernameAndPassword(oCaptchaBean.getUsername(), oCaptchaBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Wrong User or password"));
+            // Validate user credentials
+            UserEntity oUserEntity = oUserRepository.findByUsernameAndPassword(oCaptchaBean.getUsername(), oCaptchaBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Incorrect user or password"));
+
+            // Check if user entity is present
             if (oUserEntity!=null) {
-                PendentEntity oPendentEntity = oPendentRepository.findByToken(oCaptchaBean.getToken()).orElseThrow(() -> new ResourceNotFoundException("Pendent not found"));
+                // Retrieve pendent entity using the provided token
+                PendentEntity oPendentEntity = oPendentRepository.findByToken(oCaptchaBean.getToken()).orElseThrow(() -> new ResourceNotFoundException("Incorrect token"));
 
                 LocalDateTime timecode = oPendentEntity.getTimecode();
 
+                // Check if the captcha is still valid (within 120s)
                 if (LocalDateTime.now().isAfter(timecode.plusSeconds(120))) {
                     throw new UnauthorizedException("Captcha expired");
                 }
 
-                if (oPendentEntity.getCaptcha().getText().trim().equals(oCaptchaBean.getAnswer().trim())) {
-                    oPendentRepository.delete(oPendentEntity);
+                // Validate the captcha answer
+                if (oPendentEntity.getCaptcha().getText().equals(oCaptchaBean.getAnswer())) {
+                    // Generate and return a JWT token upon successful validation
                     return JWTHelper.generateJWT(oCaptchaBean.getUsername());
                 } else {
-                    throw new UnauthorizedException("Wrong captcha");
+                    throw new UnauthorizedException("Incorrect captcha");
                 }
             } else {
                 throw new UnauthorizedException("Wrong User or password");
             }        
         } else {
-            throw new UnauthorizedException("User or password not found");
+            throw new UnauthorizedException("User not found");
         }
     }
-
 
 }
