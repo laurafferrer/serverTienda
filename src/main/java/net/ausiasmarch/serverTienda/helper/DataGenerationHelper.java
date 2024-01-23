@@ -65,7 +65,7 @@ public class DataGenerationHelper {
     }
 
     // ¿¿MANEJO AÑOS BISIESTOS??
-    public static LocalDate getRandomBirthDate() {
+    public static LocalDate getRandombirth_date() {
         // Calcular fecha actual
         LocalDate currentDate = LocalDate.now();
 

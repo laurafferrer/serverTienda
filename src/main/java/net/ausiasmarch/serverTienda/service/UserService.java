@@ -106,13 +106,13 @@ public class UserService {
             String surname = DataGenerationHelper.getRandomLastName();
             String last_name = DataGenerationHelper.getRandomLastName();
             String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + surname.substring(1, 3) + last_name.substring(1, 2) + i).toLowerCase();
-            LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
+            LocalDate birth_date = DataGenerationHelper.getRandombirth_date();
             String phone_number = DataGenerationHelper.getRandomphone_number();
             String email = (name.substring(0, 3) + surname.substring(0, 3) + last_name.substring(0, 3) + i).toLowerCase() + "@gmail.com";
             String address = DataGenerationHelper.getRandomAddress();
             String city = DataGenerationHelper.getRandomCity();
             int postal_code = DataGenerationHelper.getRandompostal_code();
-            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, surname, last_name, birthDate, phone_number, email, address, city, postal_code, true));
+            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, surname, last_name, birth_date, phone_number, email, address, city, postal_code, true));
         }
         return oUserRepository.count();
     }

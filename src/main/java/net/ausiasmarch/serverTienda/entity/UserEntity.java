@@ -60,7 +60,7 @@ public class UserEntity {
     private String last_name;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate birthDate;
+    private LocalDate birth_date;
 
     @NotNull
     @Size(min = 9, max = 9)
@@ -95,7 +95,7 @@ public class UserEntity {
     }
 
     public UserEntity(Long id, String dni, String username, String password, String name, String surname,
-            String last_name, LocalDate birthDate, String phone_number, String email, String address, String city,
+            String last_name, LocalDate birth_date, String phone_number, String email, String address, String city,
             int postal_code, Boolean role) {
         this.id = id;
         this.dni = dni;
@@ -104,7 +104,7 @@ public class UserEntity {
         this.name = name;
         this.surname = surname;
         this.last_name = last_name;
-        this.birthDate = birthDate;
+        this.birth_date = birth_date;
         this.phone_number = phone_number;
         this.email = email;
         this.address = address;
@@ -114,7 +114,7 @@ public class UserEntity {
     }
 
     public UserEntity(String dni, String username, String password, String name, String surname, String last_name,
-            LocalDate birthDate, String phone_number, String email, String address, String city, int postal_code,
+            LocalDate birth_date, String phone_number, String email, String address, String city, int postal_code,
             Boolean role) {
         this.dni = dni;
         this.username = username;
@@ -122,7 +122,7 @@ public class UserEntity {
         this.name = name;
         this.surname = surname;
         this.last_name = last_name;
-        this.birthDate = birthDate;
+        this.birth_date = birth_date;
         this.phone_number = phone_number;
         this.email = email;
         this.address = address;
@@ -192,12 +192,12 @@ public class UserEntity {
         this.last_name = last_name;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public LocalDate getbirth_date() {
+        return birth_date;
     }
 
-    public void setBirthDate (LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public void setbirth_date (LocalDate birth_date) {
+        this.birth_date = birth_date;
     }
 
     public String getphone_number() {
