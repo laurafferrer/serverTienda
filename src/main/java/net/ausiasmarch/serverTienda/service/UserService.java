@@ -49,7 +49,7 @@ public class UserService {
         return oUserRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found by username"));
     }
 
-    // get a page of users
+    // Get a page of users
     public Page<UserEntity> getPage(Pageable oPageable) {
         return oUserRepository.findAll(oPageable);
     }
@@ -87,9 +87,14 @@ public class UserService {
         return oUserRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Get users in order desc with orders
-    public Page<UserEntity> getUsersByOrderingDesc(Pageable oPageable) {
-        return oUserRepository.findUsersByOrderingDesc(oPageable);
+    // Get users with purchase details ordered descending
+    public Page<UserEntity> getUsersByPurchaseDetailDesc(Pageable oPageable) {
+        return oUserRepository.findUsersByPurchaseDetailDesc(oPageable);
+    }
+
+    // Get users with purchase details ordered ascending
+    public Page<UserEntity> getUsersByPurchaseDetailAsc(Pageable oPageable) {
+        return oUserRepository.findUsersByPurchaseDetailAsc(oPageable);
     }
 
     // Populate the database with random users

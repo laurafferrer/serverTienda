@@ -5,10 +5,11 @@ package net.ausiasmarch.serverTienda.api;
 //import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 //import org.springframework.data.web.PageableDefault;
-
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,6 +55,25 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.getPage(oPageable));
     }
 
+    // Get a cantity of users using pagination
+    @GetMapping("")
+    public ResponseEntity<Page<UserEntity>> getPage(
+            @PageableDefault(size = 30, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getPage(oPageable));
+    }
+
+    // Get users with more purchase details
+    @GetMapping("/byPurchaseDetailDesc")
+    public ResponseEntity<Page<UserEntity>> getUsersByPurchaseDetailDesc(Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getUsersByPurchaseDetailDesc(oPageable));
+    }
+
+    // Get users with less purchase details
+    @GetMapping("/byPurchaseDetailAsc")
+    public ResponseEntity<Page<UserEntity>> getUsersByPurchaseDetailAsc(Pageable oPageable) {
+        return ResponseEntity.ok(oUserService.getUsersByPurchaseDetailAsc(oPageable));
+    }
+
     // Create new user
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody UserEntity oUserEntity) {
@@ -82,12 +102,6 @@ public class UserApi {
     @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
         return ResponseEntity.ok(oUserService.populate(amount));
-    }
-
-    // Get users by order desc with orders
-    @GetMapping("/byOrderingDesc")
-    public ResponseEntity<Page<UserEntity>> getUsersByOrderingDesc(Pageable oPageable) {
-        return ResponseEntity.ok(oUserService.getUsersByOrderingDesc(oPageable));
     }
 
     /* ???
