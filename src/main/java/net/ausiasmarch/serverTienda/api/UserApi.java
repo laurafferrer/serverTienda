@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.entity.UserEntity;
@@ -47,14 +46,6 @@ public class UserApi {
         return ResponseEntity.ok(oUserService.getByUsername(username));
     }
 
-    // Get all users
-    @GetMapping("")
-    public ResponseEntity<Page<UserEntity>> getPage(
-            Pageable oPageable,
-            @RequestParam(name = "filter", required = false) String strFilter) {
-        return ResponseEntity.ok(oUserService.getPage(oPageable));
-    }
-
     // Get a cantity of users using pagination
     @GetMapping("")
     public ResponseEntity<Page<UserEntity>> getPage(
@@ -72,6 +63,12 @@ public class UserApi {
     @GetMapping("/byPurchaseDetailAsc")
     public ResponseEntity<Page<UserEntity>> getUsersByPurchaseDetailAsc(Pageable oPageable) {
         return ResponseEntity.ok(oUserService.getUsersByPurchaseDetailAsc(oPageable));
+    }
+
+    // Get a random user
+    @GetMapping("/random")
+    public ResponseEntity<UserEntity> getOneRandom() {
+        return ResponseEntity.ok(oUserService.getOneRandom());
     }
 
     // Create new user
