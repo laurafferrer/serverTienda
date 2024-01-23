@@ -123,9 +123,9 @@ public class UserService {
         //oSessionService.onlyAdmins();
         oUserRepository.deleteAll();
         oUserRepository.resetAutoIncrement();
-        UserEntity oUserAdministrado = new UserEntity(1L, "00000000A", "marmarzo", tiendaPASSWORD, "Mario", "Marzo", "Cruz", LocalDate.of(1990, 10, 23), "666666666", "marmarzo@gmail.com", "Calle Mayor 1A", "Madrid", 28001, false);
-        oUserRepository.save(oUserAdministrado);
-        UserEntity oUser = new UserEntity(2L, "00000000B", "pepperez", tiendaPASSWORD, "Pepe", "Perez", "Cara", LocalDate.of(2000, 06, 13), "777777777", "pepperez@gmail.com", "Calle Menor 1A", "Barcelona", 28051, true);
+        UserEntity oUserAdministrador = new UserEntity(1L, "00000000A", "marmarzo", tiendaPASSWORD, "Mario", "Marzo", "Cruz", LocalDate.of(1990, 10, 23), "666666666", "marmarzo@gmail.com", "Calle Mayor 1A", "Madrid", 52301, false);
+        oUserRepository.save(oUserAdministrador);
+        UserEntity oUser = new UserEntity(2L, "00000000B", "pepperez", tiendaPASSWORD, "Pepe", "Perez", "Cara", LocalDate.of(2000, 06, 13), "777777777", "pepperez@gmail.com", "Calle Menor 1A", "Barcelona", 52051, true);
         oUserRepository.save(oUser);
         return oUserRepository.count();
     }
