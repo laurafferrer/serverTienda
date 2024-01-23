@@ -43,12 +43,12 @@ public class OrderingApi {
         return ResponseEntity.ok(oOrderingService.getPage(oPageable));
     }
 
-    // Get ordering by IdUser
-    @GetMapping("/byIdUser/{idUser}")
-    public ResponseEntity<Page<OrderingEntity>> findByIdUser(
+    // Get ordering by user_id
+    @GetMapping("/byuser_id/{user_id}")
+    public ResponseEntity<Page<OrderingEntity>> findByuser_id(
             Pageable oPageable,
-            @PathVariable("idUser") Long idUser) {
-        return ResponseEntity.ok(oOrderingService.findByIdUser(idUser, oPageable));
+            @PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oOrderingService.findByuser_id(user_id, oPageable));
     }
 
     // Create new ordering
@@ -76,23 +76,23 @@ public class OrderingApi {
     }
 
     // Get orders by date order desc
-    @GetMapping("/byDateOrderDesc")
-    public ResponseEntity<Page<OrderingEntity>> findOrderingByDateOrderDesc(Pageable pageable) {
-        return ResponseEntity.ok(oOrderingService.findOrderingByDateOrderDesc(pageable));
+    @GetMapping("/bydate_orderDesc")
+    public ResponseEntity<Page<OrderingEntity>> findOrderingBydate_orderDesc(Pageable pageable) {
+        return ResponseEntity.ok(oOrderingService.findOrderingBydate_orderDesc(pageable));
     }
 
     // Get orders by date order asc
-    @GetMapping("/byDateOrderAsc")
-    public ResponseEntity<Page<OrderingEntity>> findOrderingByDateOrderAsc(Pageable pageable) {
-        return ResponseEntity.ok(oOrderingService.findOrderingByDateOrderAsc(pageable));
+    @GetMapping("/bydate_orderAsc")
+    public ResponseEntity<Page<OrderingEntity>> findOrderingBydate_orderAsc(Pageable pageable) {
+        return ResponseEntity.ok(oOrderingService.findOrderingBydate_orderAsc(pageable));
     }
 
     // Get orders by date order containing
-    @GetMapping("/byDateOrderContaining/{dateOrder}")
-    public ResponseEntity<Page<OrderingEntity>> findOrderingByDateOrderContaining(
+    @GetMapping("/bydate_orderContaining/{date_order}")
+    public ResponseEntity<Page<OrderingEntity>> findOrderingBydate_orderContaining(
             Pageable pageable,
-            @PathVariable("dateOrder") String dateOrder) {
-        return ResponseEntity.ok(oOrderingService.findOrderingByDateOrderContaining(dateOrder, pageable));
+            @PathVariable("date_order") String date_order) {
+        return ResponseEntity.ok(oOrderingService.findOrderingBydate_orderContaining(date_order, pageable));
     }     
     
 }

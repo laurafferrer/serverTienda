@@ -81,13 +81,13 @@ public class DataGenerationHelper {
         return LocalDate.of(year, month, day);
     }
 
-    public static String getRandomNumberPhone() {
-        String numberPhone = String.valueOf((int) (Math.random() * 2) + 6);
+    public static String getRandomphone_number() {
+        String phone_number = String.valueOf((int) (Math.random() * 2) + 6);
 
         for (int i = 1; i < 9; i++) {
-            numberPhone += (int) (Math.random() * 10);
+            phone_number += (int) (Math.random() * 10);
         }
-        return numberPhone;
+        return phone_number;
     }
 
     public static String getRandomAddress() {
@@ -111,9 +111,9 @@ public class DataGenerationHelper {
         return city;
     }
 
-    public static int getRandomPostalCode() {
-        int postalCode = (int) (Math.random() * 90000) + 10000;
-        return postalCode;
+    public static int getRandompostal_code() {
+        int postal_code = (int) (Math.random() * 90000) + 10000;
+        return postal_code;
     }    
 
     /* RANDOM PARA EL CAPTCHA */

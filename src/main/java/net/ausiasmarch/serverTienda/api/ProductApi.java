@@ -1,7 +1,5 @@
 package net.ausiasmarch.serverTienda.api;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -58,7 +56,7 @@ public class ProductApi {
     }
 
     // Delete existing product
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.delete(id));
     }
@@ -77,44 +75,39 @@ public class ProductApi {
 
     // Get products by category
     @GetMapping("/byCategory/{id}")
-    public ResponseEntity<Optional<ProductEntity>> getByCategory(
-        Pageable oPageable,
-        @PathVariable("id") Long id) {
+    public ResponseEntity<Page<ProductEntity>> getByCategory(@PathVariable("id") Long id, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByCategory(id, oPageable));
     }
 
     // Get products by stock ascending
     @GetMapping("/byStockAsc")
-    public ResponseEntity<Page<ProductEntity>> getByStockAsc(Pageable oPageable) {
+    public ResponseEntity<Page<ProductEntity>> getByStockAsc(@PathVariable("stock") String stock, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByStockAsc(oPageable));
     }
 
     // Get products by price ascending
     @GetMapping("/byPriceAsc")
-    public ResponseEntity<Page<ProductEntity>> getByPriceAsc(Pageable oPageable) {
+    public ResponseEntity<Page<ProductEntity>> getByPriceAsc(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceAsc(oPageable));
     }
 
     // Get products by price descending
     @GetMapping("/byPriceDesc")
-    public ResponseEntity<Page<ProductEntity>> getByPriceDesc(Pageable oPageable) {
+    public ResponseEntity<Page<ProductEntity>> getByPriceDesc(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceDesc(oPageable));
     }
 
     // Get products by price ascending and category
-    @GetMapping("/byPriceAscAndIdCategory/{id}")
-    public ResponseEntity<Page<ProductEntity>> getByPriceAscAndIdCategory(
-        Pageable oPageable,
-        @PathVariable("id") Long id) {
-        return ResponseEntity.ok(oProductService.getByPriceAscAndIdCategory(id, oPageable));
+    @GetMapping("/byPriceAscAndcategory_id/{id}")
+    public ResponseEntity<Page<ProductEntity>> getByPriceAscAndcategory_id(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByPriceAscAndcategory_id(category_id, oPageable));
+
     }
 
     // Get products by price descending and category
-    @GetMapping("/byPriceDescAndIdCategory/{id}")
-    public ResponseEntity<Page<ProductEntity>> getByPriceDescAndIdCategory(
-        Pageable oPageable,
-        @PathVariable("id") Long id) {
-        return ResponseEntity.ok(oProductService.getByPriceDescAndIdCategory(id, oPageable));
+    @GetMapping("/byPriceDescAndcategory_id/{id}")
+    public ResponseEntity<Page<ProductEntity>> getByPriceDescAndcategory_id(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByPriceDescAndcategory_id(category_id, oPageable));
     }
 
 }

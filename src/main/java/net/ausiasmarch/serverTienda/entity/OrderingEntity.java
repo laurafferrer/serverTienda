@@ -23,34 +23,34 @@ public class OrderingEntity {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate dateOrder;
+    private LocalDate date_order;
 
     @NotNull
-    private Long numBill;
+    private Long num_bill;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate dateBill;
+    private LocalDate date_bill;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
-    private UserEntity idUser;
+    @JoinColumn(name = "user_id")
+    private UserEntity user_id;
 
     public OrderingEntity() {
     }
 
-    public OrderingEntity(Long id, LocalDate dateOrder, Long numBill, LocalDate dateBill, UserEntity idUser) {
+    public OrderingEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.id = id;
-        this.dateOrder = dateOrder;
-        this.numBill = numBill;
-        this.dateBill = dateBill;
-        this.idUser = idUser;
+        this.date_order = date_order;
+        this.num_bill = num_bill;
+        this.date_bill = date_bill;
+        this.user_id = user_id;
     }
 
-    public OrderingEntity(LocalDate dateOrder,  Long numBill, LocalDate dateBill, UserEntity idUser) {
-        this.dateOrder = dateOrder;
-        this.numBill = numBill;
-        this.dateBill = dateBill;
-        this.idUser = idUser;
+    public OrderingEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
+        this.date_order = date_order;
+        this.num_bill = num_bill;
+        this.date_bill = date_bill;
+        this.user_id = user_id;
     }
 
     public Long getId() {
@@ -61,36 +61,36 @@ public class OrderingEntity {
         this.id = id;
     }
     
-    public LocalDate getDateOrder() {
-        return dateOrder;
+    public LocalDate getdate_order() {
+        return date_order;
     }
 
-    public void setDateOrder(LocalDate dateOrder) {
-        this.dateOrder = dateOrder;
+    public void setdate_order(LocalDate date_order) {
+        this.date_order = date_order;
     }
 
-    public Long getNumBill() {
-        return numBill;
+    public Long getnum_bill() {
+        return num_bill;
     }
 
-    public void setNumBill(Long numBill) {
-        this.numBill = numBill;
+    public void setnum_bill(Long num_bill) {
+        this.num_bill = num_bill;
     }
 
-    public LocalDate getDateBill() {
-        return dateBill;
+    public LocalDate getdate_bill() {
+        return date_bill;
     }
 
-    public void setDateBill(LocalDate dateBill) {
-        this.dateBill = dateBill;
+    public void setdate_bill(LocalDate date_bill) {
+        this.date_bill = date_bill;
     }
 
     public UserEntity getUser() {
-        return idUser;
+        return user_id;
     }
 
-    public void setUser(UserEntity idUser) {
-        this.idUser = idUser;
+    public void setUser(UserEntity user_id) {
+        this.user_id = user_id;
     }
     
 }

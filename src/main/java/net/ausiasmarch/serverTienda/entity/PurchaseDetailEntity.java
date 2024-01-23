@@ -25,11 +25,11 @@ public class PurchaseDetailEntity {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "product_id")
     private ProductEntity product;
 
     @ManyToOne
-    @JoinColumn(name = "idOrdering")
+    @JoinColumn(name = "ordering_id")
     private OrderingEntity ordering;
 
     public PurchaseDetailEntity() {

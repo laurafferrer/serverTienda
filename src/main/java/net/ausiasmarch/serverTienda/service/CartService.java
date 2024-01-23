@@ -3,6 +3,9 @@ package net.ausiasmarch.serverTienda.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.serverTienda.entity.CartEntity;
 import net.ausiasmarch.serverTienda.entity.ProductEntity;
+import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.repository.CartRepository;
 
@@ -21,15 +25,34 @@ public class CartService {
 
     @Autowired
     ProductService oProductService;
+
+    @Autowired
+    UserService oUserService;
+
     @Autowired
     HttpServletRequest oHttpServletRequest;
 
     @Autowired
     SessionService oSessionService;
 
-    // get cart by ID
+    // Get cart by ID
     public CartEntity get(Long id) {
         return oCartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+    }
+
+    // Get cart by user id
+    public List<CartEntity> getCartByUser(Long user_id) {
+        return oCartRepository.findByuser_id(user_id);
+    }
+
+    // Get all carts for a specific user
+    public List<CartEntity> getAllByuser_id(Long user_id) {
+        return oCartRepository.findAllByuser_id(user_id);
+    }
+
+    // Get cart by user id and product id
+    public CartEntity getCartByUserAndProduct(Long user_id, Long product_id) {
+        return oCartRepository.findByuser_idAndproduct_id(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Get a page or carts
@@ -37,52 +60,43 @@ public class CartService {
         return oCartRepository.findAll(oPageable);
     }
 
-    // Get page of cart for a specific user
-    public Page<CartEntity> getPageByIdUser(Long idUser, Pageable oPageable) {
-        return oCartRepository.findByIdUser(idUser, oPageable);
-    }
-
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
-        oSessionService.onlyUsers();
+        UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
+        ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
-        // Validate amount is positive
-        if (oCartEntity.getAmount() <= 0){
-            throw new IllegalArgumentException("Amount must be positive");
+        Optional<CartEntity> cartFromDatabase = oCartRepository.findByuser_idAndproduct_id(oUserEntity.getId(), oProductEntity.getId());
+        if (cartFromDatabase.isPresent()) {
+            CartEntity cart = cartFromDatabase.get();
+            cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
+            return oCartRepository.save(oCartEntity).getId();
+        } else {
+            oCartEntity.setId(null);
+            oCartEntity.setUser(oUserEntity);
+            oCartEntity.setProduct(oProductEntity);
+            return oCartRepository.save(oCartEntity).getId();
         }
-
-        // Validate amount are menor or equal to stock in table product
-        Long idProduct = oCartEntity.getIdProduct().getId();
-        ProductEntity product = oProductService.get(idProduct);
-        if (oCartEntity.getAmount() > product.getStock()) {
-            throw new IllegalArgumentException("Amount must be less or equal to stock");
-        }
-
-        oCartEntity.setId(null);
-        return oCartRepository.save(oCartEntity).getId();
     }
 
     // Update existing cart
     public CartEntity update(CartEntity oCartEntity) {
-        oSessionService.onlyUsers();
+        CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
+        oCartEntity.setUser(oCartEntityFromDatabase.getUser());
+        oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
+
         return oCartRepository.save(oCartEntity);
     }
 
-    // Delete existing cart
+    // Delete existing cart by ID
     public Long delete(Long id) {
         oSessionService.onlyUsers();
         oCartRepository.deleteById(id);
         return id;
     }
 
-    // Find specific item in the cart base on user Id and product Id
-    public CartEntity findByIdUserAndIdProduct(Long idUser, Long idProduct) {
-        return oCartRepository.findByIdUserAndIdProduct(idUser, idProduct).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
-    }
-
-    // Remove all cart items for a specific user
-    public void deleteByIdUser(Long idUser) {
-        oCartRepository.deleteByIdUser(idUser);
+    // Delete all cart items for a specific user
+    public void deleteByuser_id(UserEntity user_id) {
+        oCartRepository.deleteByuser_id(user_id);
     }
 
     // Empty the cart table

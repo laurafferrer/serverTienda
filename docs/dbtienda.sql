@@ -32,8 +32,8 @@ USE `dbtienda`;
 CREATE TABLE `cart` (
   `id` bigint NOT NULL,
   `amount` int NOT NULL,
-  `idProduct` bigint NOT NULL,
-  `idUser` bigint NOT NULL
+  `product_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -55,10 +55,10 @@ CREATE TABLE `category` (
 
 CREATE TABLE `ordering` (
   `id` bigint NOT NULL,
-  `dateOrder` date NOT NULL,
-  `numBill` bigint NOT NULL,
-  `dateBill` datetime NOT NULL,
-  `idUser` bigint NOT NULL
+  `date_order` date NOT NULL,
+  `num_bill` bigint NOT NULL,
+  `date_bill` datetime NOT NULL,
+  `user_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -74,7 +74,7 @@ CREATE TABLE `product` (
   `price` double NOT NULL,
   `stock` bigint NOT NULL,
   `image` longblob NOT NULL,
-  `idCategory` bigint NOT NULL
+  `category_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -87,8 +87,8 @@ CREATE TABLE `purchaseDetail` (
   `id` bigint NOT NULL,
   `quantity` int NOT NULL,
   `price` double NOT NULL,
-  `idProduct` bigint NOT NULL,
-  `idOrdering` bigint NOT NULL
+  `product_id` bigint NOT NULL,
+  `ordering_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -103,14 +103,14 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `password` varchar(512) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `lastName1` varchar(255) NOT NULL,
-  `lastName2` varchar(255) DEFAULT NULL,
-  `bithDate` date NOT NULL,
-  `numberPhone` varchar(9) NOT NULL,
+  `surname` varchar(255) NOT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `birth_date` date NOT NULL,
+  `phone_number` varchar(9) NOT NULL,
   `email` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
-  `postalCode` varchar(10) NOT NULL,
+  `postal_code` varchar(10) NOT NULL,
   `role` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -123,8 +123,8 @@ CREATE TABLE `user` (
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idProduct` (`idProduct`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `category`
@@ -137,22 +137,22 @@ ALTER TABLE `category`
 --
 ALTER TABLE `ordering`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indices de la tabla `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idCategory` (`idCategory`);
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Indices de la tabla `purchaseDetail`
 --
 ALTER TABLE `purchaseDetail`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idProduct` (`idProduct`),
-  ADD KEY `idOrdering` (`idOrdering`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `ordering_id` (`ordering_id`);
 
 --
 -- Indices de la tabla `user`
@@ -208,27 +208,27 @@ ALTER TABLE `user`
 -- Filtros para la tabla `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Filtros para la tabla `ordering`
 --
 ALTER TABLE `ordering`
-  ADD CONSTRAINT `ordering_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `ordering_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Filtros para la tabla `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
 -- Filtros para la tabla `purchaseDetail`
 --
 ALTER TABLE `purchaseDetail`
-  ADD CONSTRAINT `purchaseDetail_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`idOrdering`) REFERENCES `ordering` (`id`);
+  ADD CONSTRAINT `purchaseDetail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`ordering_id`) REFERENCES `ordering` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

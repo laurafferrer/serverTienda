@@ -63,29 +63,29 @@ public class PurchaseDetailApi {
         return ResponseEntity.ok(oPurchaseDetailService.delete(id));
     }
 
-    // Get purchase detail by idOrdering
-    @GetMapping("/byIdOrdering/{idOrdering}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByIdOrdering(
+    // Get purchase detail by ordering_id
+    @GetMapping("/byordering_id/{ordering_id}")
+    public ResponseEntity<Optional<PurchaseDetailEntity>> findByordering_id(
             Pageable oPageable,
-            @PathVariable("idOrdering") Long idOrdering) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrdering(idOrdering, oPageable));
+            @PathVariable("ordering_id") Long ordering_id) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByordering_id(ordering_id, oPageable));
     }
 
-    // Get purchase detail by idProduct
-    @GetMapping("/byIdProduct/{idProduct}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByIdProduct(
+    // Get purchase detail by product_id
+    @GetMapping("/byproduct_id/{product_id}")
+    public ResponseEntity<Optional<PurchaseDetailEntity>> findByproduct_id(
             Pageable oPageable,
-            @PathVariable("idProduct") Long idProduct) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdProduct(idProduct, oPageable));
+            @PathVariable("product_id") Long product_id) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByproduct_id(product_id, oPageable));
     }
 
-    // Get purchase detail by idOrdering and idProduct
-    @GetMapping("/byIdOrderingAndIdProduct/{idOrdering}/{idProduct}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByIdOrderingAndIdProduct(
+    // Get purchase detail by ordering_id and product_id
+    @GetMapping("/byordering_idAndproduct_id/{ordering_id}/{product_id}")
+    public ResponseEntity<Optional<PurchaseDetailEntity>> findByordering_idAndproduct_id(
             Pageable oPageable,
-            @PathVariable("idOrdering") Long idOrdering,
-            @PathVariable("idProduct") Long idProduct) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByIdOrderingAndIdProduct(idOrdering, idProduct, oPageable));
+            @PathVariable("ordering_id") Long ordering_id,
+            @PathVariable("product_id") Long product_id) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByordering_idAndproduct_id(ordering_id, product_id, oPageable));
     }
 
     // Get purchase dewtail by price desc

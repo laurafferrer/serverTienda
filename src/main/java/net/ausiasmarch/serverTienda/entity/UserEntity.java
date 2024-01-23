@@ -54,10 +54,10 @@ public class UserEntity {
     @NotNull
     @NotBlank
     @Size(min = 3,  max = 255)
-    private String lastName1;
+    private String surname;
 
     @Size(min = 3,  max = 255)
-    private String lastName2;
+    private String last_name;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate birthDate;
@@ -65,7 +65,7 @@ public class UserEntity {
     @NotNull
     @Size(min = 9, max = 9)
     @Pattern(regexp = "\\+?[0-9]+")
-    private String numberPhone;
+    private String phone_number;
 
     @NotNull
     @NotBlank
@@ -83,51 +83,51 @@ public class UserEntity {
     private String city;
 
     @NotNull
-    private int postalCode;
+    private int postal_code;
 
     private Boolean role = false;
 
-    @OneToMany(mappedBy = "idUser", fetch = jakarta.persistence.FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<CartEntity> carts;
 
     public UserEntity() {
         carts = new ArrayList<>();
     }
 
-    public UserEntity(Long id, String dni, String username, String password, String name, String lastName1,
-            String lastName2, LocalDate birthDate, String numberPhone, String email, String address, String city,
-            int postalCode, Boolean role) {
+    public UserEntity(Long id, String dni, String username, String password, String name, String surname,
+            String last_name, LocalDate birthDate, String phone_number, String email, String address, String city,
+            int postal_code, Boolean role) {
         this.id = id;
         this.dni = dni;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.lastName1 = lastName1;
-        this.lastName2 = lastName2;
+        this.surname = surname;
+        this.last_name = last_name;
         this.birthDate = birthDate;
-        this.numberPhone = numberPhone;
+        this.phone_number = phone_number;
         this.email = email;
         this.address = address;
         this.city = city;
-        this.postalCode = postalCode;
+        this.postal_code = postal_code;
         this.role = role;
     }
 
-    public UserEntity(String dni, String username, String password, String name, String lastName1, String lastName2,
-            LocalDate birthDate, String numberPhone, String email, String address, String city, int postalCode,
+    public UserEntity(String dni, String username, String password, String name, String surname, String last_name,
+            LocalDate birthDate, String phone_number, String email, String address, String city, int postal_code,
             Boolean role) {
         this.dni = dni;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.lastName1 = lastName1;
-        this.lastName2 = lastName2;
+        this.surname = surname;
+        this.last_name = last_name;
         this.birthDate = birthDate;
-        this.numberPhone = numberPhone;
+        this.phone_number = phone_number;
         this.email = email;
         this.address = address;
         this.city = city;
-        this.postalCode = postalCode;
+        this.postal_code = postal_code;
         this.role = role;
     }
 
@@ -176,20 +176,20 @@ public class UserEntity {
         this.name = name;
     }
 
-    public String getLastName1() {
-        return lastName1;
+    public String getsurname() {
+        return surname;
     }
 
-    public void setLastName1 (String lastName1) {
-        this.lastName1 = lastName1;
+    public void setsurname (String surname) {
+        this.surname = surname;
     }
 
-    public String getLastName2() {
-        return lastName2;
+    public String getlast_name() {
+        return last_name;
     }
 
-    public void setLastName2 (String lastName2) {
-        this.lastName2 = lastName2;
+    public void setlast_name (String last_name) {
+        this.last_name = last_name;
     }
 
     public LocalDate getBirthDate() {
@@ -200,12 +200,12 @@ public class UserEntity {
         this.birthDate = birthDate;
     }
 
-    public String getNumberPhone() {
-        return numberPhone;
+    public String getphone_number() {
+        return phone_number;
     }
 
-    public void setNumberPhone (String numberPhone) {
-        this.numberPhone = numberPhone;
+    public void setphone_number (String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getEmail() {
@@ -232,12 +232,12 @@ public class UserEntity {
         this.city = city;
     }
 
-    public int getPostalCode() {
-        return postalCode;
+    public int getpostal_code() {
+        return postal_code;
     }
 
-    public void setPostalCode (int postalCode) {
-        this.postalCode = postalCode;
+    public void setpostal_code (int postal_code) {
+        this.postal_code = postal_code;
     }
 
     public Boolean getRole() {

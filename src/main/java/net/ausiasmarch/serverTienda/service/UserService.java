@@ -98,16 +98,16 @@ public class UserService {
         for (int i = 0; i < amount; i++) {
             String dni = DataGenerationHelper.getRandomDni();
             String name = DataGenerationHelper.getRandomName();
-            String lastName1 = DataGenerationHelper.getRandomLastName();
-            String lastName2 = DataGenerationHelper.getRandomLastName();
-            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + lastName1.substring(1, 3) + lastName2.substring(1, 2) + i).toLowerCase();
+            String surname = DataGenerationHelper.getRandomLastName();
+            String last_name = DataGenerationHelper.getRandomLastName();
+            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + surname.substring(1, 3) + last_name.substring(1, 2) + i).toLowerCase();
             LocalDate birthDate = DataGenerationHelper.getRandomBirthDate();
-            String numberPhone = DataGenerationHelper.getRandomNumberPhone();
-            String email = (name.substring(0, 3) + lastName1.substring(0, 3) + lastName2.substring(0, 3) + i).toLowerCase() + "@gmail.com";
+            String phone_number = DataGenerationHelper.getRandomphone_number();
+            String email = (name.substring(0, 3) + surname.substring(0, 3) + last_name.substring(0, 3) + i).toLowerCase() + "@gmail.com";
             String address = DataGenerationHelper.getRandomAddress();
             String city = DataGenerationHelper.getRandomCity();
-            int postalCode = DataGenerationHelper.getRandomPostalCode();
-            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, lastName1, lastName2, birthDate, numberPhone, email, address, city, postalCode, true));
+            int postal_code = DataGenerationHelper.getRandompostal_code();
+            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, surname, last_name, birthDate, phone_number, email, address, city, postal_code, true));
         }
         return oUserRepository.count();
     }

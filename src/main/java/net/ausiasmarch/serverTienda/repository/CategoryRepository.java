@@ -12,7 +12,7 @@ import net.ausiasmarch.serverTienda.entity.CategoryEntity;
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 
     // Methos to get categories by the quantity products associated in ascending order
-    @Query(value = "SELECT * FROM category ORDER BY (SELECT COUNT(*) FROM product WHERE product.idCategory = category.id) ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM category ORDER BY (SELECT COUNT(*) FROM product WHERE product.category_id = category.id) ASC", nativeQuery = true)
     Page<CategoryEntity> findByQuantityProductsAsc(Pageable oPageable);
 
     // Method to reset the auto-increment value primary key in the category table

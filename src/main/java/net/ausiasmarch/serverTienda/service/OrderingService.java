@@ -42,15 +42,15 @@ public class OrderingService {
         oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
-        if (oOrderingEntity.getNumBill() <= 0) {
+        if (oOrderingEntity.getnum_bill() <= 0) {
             throw new IllegalArgumentException("The num of bill must be more than 0");
         }
 
         // Validation date of bill are before or current date 
         LocalDate currentDate = LocalDate.now();
-        LocalDate dateBill = oOrderingEntity.getDateBill();
+        LocalDate date_bill = oOrderingEntity.getdate_bill();
 
-        if (dateBill == null || dateBill.isAfter(currentDate)) {
+        if (date_bill == null || date_bill.isAfter(currentDate)) {
             throw new IllegalArgumentException("The date of bill must be before or current date");
         }
 
@@ -78,23 +78,23 @@ public class OrderingService {
     }
 
     // Find orderings by user Id
-    public Page<OrderingEntity> findByIdUser(Long idUser, Pageable oPageable) {
-        return oOrderingRepository.findByIdUser(idUser, oPageable);
+    public Page<OrderingEntity> findByuser_id(Long user_id, Pageable oPageable) {
+        return oOrderingRepository.findByuser_id(user_id, oPageable);
     }
 
     // Find orderings by date order desc
-    public Page<OrderingEntity> findOrderingByDateOrderDesc(Pageable pageable) {
-        return oOrderingRepository.findOrderingByDateOrderDesc(pageable);
+    public Page<OrderingEntity> findOrderingBydate_orderDesc(Pageable pageable) {
+        return oOrderingRepository.findOrderingBydate_orderDesc(pageable);
     }
 
     // Find orderings by date order asc
-    public Page<OrderingEntity> findOrderingByDateOrderAsc(Pageable pageable) {
-        return oOrderingRepository.findOrderingByDateOrderAsc(pageable);
+    public Page<OrderingEntity> findOrderingBydate_orderAsc(Pageable pageable) {
+        return oOrderingRepository.findOrderingBydate_orderAsc(pageable);
     }
 
     // Find orderings by date order containing
-    public Page<OrderingEntity> findOrderingByDateOrderContaining(String dateOrder, Pageable pageable) {
-        return oOrderingRepository.findOrderingByDateOrderContaining(dateOrder, pageable);
+    public Page<OrderingEntity> findOrderingBydate_orderContaining(String date_order, Pageable pageable) {
+        return oOrderingRepository.findOrderingBydate_orderContaining(date_order, pageable);
     }
 
     // Empty the product ordering

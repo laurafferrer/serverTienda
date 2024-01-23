@@ -1,7 +1,5 @@
 package net.ausiasmarch.serverTienda.service;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -66,8 +64,8 @@ public class ProductService {
     }
 
     // Get products by category Id
-    public Optional<ProductEntity> getByCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByCategory(Long category_id, Pageable oPageable) {
+        return oProductRepository.findBycategory_id(category_id, oPageable);
     }
 
     // Get products by stock ascending
@@ -86,13 +84,13 @@ public class ProductService {
     }
 
     // Get products by price ascending and category
-    public Page<ProductEntity> getByPriceAscAndIdCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByPriceAscAndIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByPriceAscAndcategory_id(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceAscAndcategory_id(category_id, oPageable);
     }
 
     // Get products by price descending and category
-    public Page<ProductEntity> getByPriceDescAndIdCategory(Long idCategory, Pageable oPageable) {
-        return oProductRepository.findByPriceDescAndIdCategory(idCategory, oPageable);
+    public Page<ProductEntity> getByPriceDescAndcategory_id(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceDescAndcategory_id(category_id, oPageable);
     }
 
     // Empty the product table
