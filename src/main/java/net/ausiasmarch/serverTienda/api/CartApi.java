@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.service.CartService;
@@ -46,14 +45,6 @@ public class CartApi {
         return ResponseEntity.ok(oCartService.getByUser(user_id));
     }
 
-    // Get all carts
-    @GetMapping("")
-    public ResponseEntity<Page<CartEntity>> getPage(
-        Pageable oPageable,
-        @RequestParam(name = "filter", required = false) String strFilter) {
-        return ResponseEntity.ok(oCartService.getPage(oPageable));
-    }
-
     // Get cart by user id and product id
     @GetMapping("/byUserAndproduct_id/{user_id}/{product_id}")
     public ResponseEntity<CartEntity> getByUserAndProdcut(@PathVariable("user_id") Long user_id, @PathVariable("product_id") Long product_id) {
@@ -64,6 +55,12 @@ public class CartApi {
     @GetMapping("")
     public ResponseEntity<Page<CartEntity>> getPage( @PageableDefault(size = 40, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oCartService.getPage(oPageable));
+    }
+
+    // Get all carts for a specific user
+    @GetMapping("/allByUser/{user_id}")
+    public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oCartService.getAllByIdUser(user_id));
     }
 
     // Create new cart
@@ -88,13 +85,6 @@ public class CartApi {
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCartService.emptyTable());
-    }
-    
-    // Delete all carts for a specific user
-    @DeleteMapping("/byUser/{user_id}")
-    public ResponseEntity<?> deleteByUser(@PathVariable("user_id") Long user) {
-        oCartService.deleteByUser(user);
-        return ResponseEntity.ok().build();
     }
     
 }
