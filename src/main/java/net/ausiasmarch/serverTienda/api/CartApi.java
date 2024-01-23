@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.service.CartService;
 import net.ausiasmarch.serverTienda.entity.CartEntity;
-import net.ausiasmarch.serverTienda.entity.UserEntity;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -44,7 +43,7 @@ public class CartApi {
     // Get cart by user id
     @GetMapping("/byUser/{user_id}")
     public ResponseEntity<List<CartEntity>> getCartByUser(@PathVariable("user_id") Long user_id) {
-        return ResponseEntity.ok(oCartService.getCartByUser(user_id));
+        return ResponseEntity.ok(oCartService.getByUser(user_id));
     }
 
     // Get all carts
@@ -58,7 +57,7 @@ public class CartApi {
     // Get cart by user id and product id
     @GetMapping("/byUserAndproduct_id/{user_id}/{product_id}")
     public ResponseEntity<CartEntity> getByUserAndProdcut(@PathVariable("user_id") Long user_id, @PathVariable("product_id") Long product_id) {
-        return ResponseEntity.ok(oCartService.getCartByUserAndProduct(user_id, product_id));
+        return ResponseEntity.ok(oCartService.getByUserAndProduct(user_id, product_id));
     }
 
     // Get page of carts
@@ -93,8 +92,8 @@ public class CartApi {
     
     // Delete all carts for a specific user
     @DeleteMapping("/byUser/{user_id}")
-    public ResponseEntity<?> deleteByUser(@PathVariable("user_id") UserEntity user) {
-        oCartService.deleteByuser_id(user);
+    public ResponseEntity<?> deleteByUser(@PathVariable("user_id") Long user) {
+        oCartService.deleteByUser(user);
         return ResponseEntity.ok().build();
     }
     

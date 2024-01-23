@@ -41,18 +41,18 @@ public class CartService {
     }
 
     // Get cart by user id
-    public List<CartEntity> getCartByUser(Long user_id) {
-        return oCartRepository.findByuser_id(user_id);
+    public List<CartEntity> getByUser(Long user_id) {
+        return oCartRepository.findByIdUser(user_id);
     }
 
     // Get all carts for a specific user
-    public List<CartEntity> getAllByuser_id(Long user_id) {
-        return oCartRepository.findAllByuser_id(user_id);
+    public List<CartEntity> getAllByIdUser(Long user_id) {
+        return oCartRepository.findAllByIdUser(user_id);
     }
 
     // Get cart by user id and product id
-    public CartEntity getCartByUserAndProduct(Long user_id, Long product_id) {
-        return oCartRepository.findByuser_idAndproduct_id(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+    public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
+        return oCartRepository.findByIdUserAndIdProduct(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Get a page or carts
@@ -65,7 +65,7 @@ public class CartService {
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
-        Optional<CartEntity> cartFromDatabase = oCartRepository.findByuser_idAndproduct_id(oUserEntity.getId(), oProductEntity.getId());
+        Optional<CartEntity> cartFromDatabase = oCartRepository.findByIdUserAndIdProduct(oUserEntity.getId(), oProductEntity.getId());
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
@@ -95,8 +95,8 @@ public class CartService {
     }
 
     // Delete all cart items for a specific user
-    public void deleteByuser_id(UserEntity user_id) {
-        oCartRepository.deleteByuser_id(user_id);
+    public void deleteByUser(Long user_id) {
+        oCartRepository.deleteByIdUser(user_id);
     }
 
     // Empty the cart table
