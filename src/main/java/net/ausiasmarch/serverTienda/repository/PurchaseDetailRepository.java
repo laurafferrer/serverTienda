@@ -1,7 +1,5 @@
 package net.ausiasmarch.serverTienda.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,13 +12,13 @@ import net.ausiasmarch.serverTienda.entity.PurchaseDetailEntity;
 public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEntity, Long> {
 
     // Find purchase details by ordering id
-    Optional <PurchaseDetailEntity> findByordering_id(Long ordering_id, Pageable oPageable);
+    Page <PurchaseDetailEntity> findByOrderingId(Long ordering_id, Pageable oPageable);
 
     // Find purchase details by product id
-    Optional <PurchaseDetailEntity> findByproduct_id(Long product_id, Pageable oPageable);
+    Page <PurchaseDetailEntity> findByProductId(Long product_id, Pageable oPageable);
 
     // Find purchase details by ordering id and product id
-    Optional <PurchaseDetailEntity> findByordering_idAndproduct_id(Long ordering_id, Long product_id, Pageable oPageable);
+    Page <PurchaseDetailEntity> findByOrderingIdAndProductId(Long ordering_id, Long product_id, Pageable oPageable);
 
     // Find and order purchase details by price in descending order
     @Query(value = "SELECT * FROM purchaseDetail ORDER BY price DESC", nativeQuery = true)

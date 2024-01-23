@@ -1,7 +1,5 @@
 package net.ausiasmarch.serverTienda.service;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,18 +62,18 @@ public class PurchaseDetailService {
     }
 
     // Find purchase details by ordering id
-    public Optional<PurchaseDetailEntity> findByordering_id(Long ordering_id, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByordering_id(ordering_id, oPageable);
+    public Page<PurchaseDetailEntity> findByOrderingId(Long ordering_id, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByOrderingId(ordering_id, oPageable);
     }
 
     // Find purchase details by product id
-    public Optional<PurchaseDetailEntity> findByproduct_id(Long product_id, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByproduct_id(product_id, oPageable);
+    public Page<PurchaseDetailEntity> findByProductId(Long product_id, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByProductId(product_id, oPageable);
     }
 
     // Find purchase details by ordering id and product id
-    public Optional<PurchaseDetailEntity> findByordering_idAndproduct_id(Long ordering_id, Long product_id, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByordering_idAndproduct_id(ordering_id, product_id, oPageable);
+    public Page<PurchaseDetailEntity> findByOrderingIdAndProductId(Long ordering_id, Long product_id, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByOrderingIdAndProductId(ordering_id, product_id, oPageable);
     }
 
     // Find and order purchase details by price in descending order

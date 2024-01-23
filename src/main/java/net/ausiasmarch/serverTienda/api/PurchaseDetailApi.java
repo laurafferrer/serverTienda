@@ -1,7 +1,5 @@
 package net.ausiasmarch.serverTienda.api;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -65,27 +63,27 @@ public class PurchaseDetailApi {
 
     // Get purchase detail by ordering_id
     @GetMapping("/byordering_id/{ordering_id}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByordering_id(
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderingId(
             Pageable oPageable,
             @PathVariable("ordering_id") Long ordering_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByordering_id(ordering_id, oPageable));
+        return ResponseEntity.ok(oPurchaseDetailService.findByOrderingId(ordering_id, oPageable));
     }
 
     // Get purchase detail by product_id
     @GetMapping("/byproduct_id/{product_id}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByproduct_id(
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByProductId(
             Pageable oPageable,
             @PathVariable("product_id") Long product_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByproduct_id(product_id, oPageable));
+        return ResponseEntity.ok(oPurchaseDetailService.findByProductId(product_id, oPageable));
     }
 
     // Get purchase detail by ordering_id and product_id
     @GetMapping("/byordering_idAndproduct_id/{ordering_id}/{product_id}")
-    public ResponseEntity<Optional<PurchaseDetailEntity>> findByordering_idAndproduct_id(
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderingIdAndProductId(
             Pageable oPageable,
             @PathVariable("ordering_id") Long ordering_id,
             @PathVariable("product_id") Long product_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByordering_idAndproduct_id(ordering_id, product_id, oPageable));
+        return ResponseEntity.ok(oPurchaseDetailService.findByOrderingIdAndProductId(ordering_id, product_id, oPageable));
     }
 
     // Get purchase dewtail by price desc
