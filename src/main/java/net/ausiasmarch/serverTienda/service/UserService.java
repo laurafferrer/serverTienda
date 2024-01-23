@@ -36,8 +36,8 @@ public class UserService {
     @Autowired
     SessionService oSessionService;
 
-    @Autowired
-    EmailService oEmailService;
+    /*@Autowired
+    EmailService oEmailService;*/
     
     // Get user by ID
     public UserEntity get(Long id) {
