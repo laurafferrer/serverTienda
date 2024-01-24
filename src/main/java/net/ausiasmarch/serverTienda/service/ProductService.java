@@ -65,13 +65,13 @@ public class ProductService {
     }
 
     // Get products by price ascending and category
-    public Page<ProductEntity> getByPriceAscAndcategory_id(Long category_id, Pageable oPageable) {
-        return oProductRepository.findByPriceAscAndcategory_id(category_id, oPageable);
+    public Page<ProductEntity> getByPriceAscAndCategoryId(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceAscAndCategoryid(category_id, oPageable);
     }
 
     // Get products by price descending and category
-    public Page<ProductEntity> getByPriceDescAndcategory_id(Long category_id, Pageable oPageable) {
-        return oProductRepository.findByPriceDescAndcategory_id(category_id, oPageable);
+    public Page<ProductEntity> getByPriceDescAndCategoryId(Long category_id, Pageable oPageable) {
+        return oProductRepository.findByPriceDescAndCategoryId(category_id, oPageable);
     }
 
     // Create new product
