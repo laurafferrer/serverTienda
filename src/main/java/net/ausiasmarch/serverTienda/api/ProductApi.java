@@ -62,9 +62,9 @@ public class ProductApi {
     }
 
     // Remove all products
-    @DeleteMapping("/emptyTable")
-    public ResponseEntity<Long> emptyTable() {
-        return ResponseEntity.ok(oProductService.emptyTable());
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oProductService.empty());
     }
 
     // Get random product

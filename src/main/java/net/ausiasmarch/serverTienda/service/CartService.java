@@ -101,7 +101,7 @@ public class CartService {
     }
 
     // Empty the cart table
-    public Long emptyTable() {
+    public Long empty() {
         oCartRepository.deleteAll();
         oCartRepository.resetAutoIncrement();
         oCartRepository.resetAutoIncrement();

@@ -15,8 +15,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "ordering")
-public class OrderingEntity {
+@Table(name = "order")
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +35,10 @@ public class OrderingEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user_id;
 
-    public OrderingEntity() {
+    public OrderEntity() {
     }
 
-    public OrderingEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public OrderEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.id = id;
         this.date_order = date_order;
         this.num_bill = num_bill;
@@ -46,7 +46,7 @@ public class OrderingEntity {
         this.user_id = user_id;
     }
 
-    public OrderingEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public OrderEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.date_order = date_order;
         this.num_bill = num_bill;
         this.date_bill = date_bill;

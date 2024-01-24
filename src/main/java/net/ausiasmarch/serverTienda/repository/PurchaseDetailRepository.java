@@ -11,14 +11,14 @@ import net.ausiasmarch.serverTienda.entity.PurchaseDetailEntity;
 
 public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetailEntity, Long> {
 
-    // Find purchase details by ordering id
-    Page <PurchaseDetailEntity> findByOrderingId(Long ordering_id, Pageable oPageable);
+    // Find purchase details by order id
+    Page <PurchaseDetailEntity> findByOrderId(Long order_id, Pageable oPageable);
 
     // Find purchase details by product id
     Page <PurchaseDetailEntity> findByProductId(Long product_id, Pageable oPageable);
 
-    // Find purchase details by ordering id and product id
-    Page <PurchaseDetailEntity> findByOrderingIdAndProductId(Long ordering_id, Long product_id, Pageable oPageable);
+    // Find purchase details by order id and product id
+    Page <PurchaseDetailEntity> findByOrderIdAndProductId(Long order_id, Long product_id, Pageable oPageable);
 
     // Find and order purchase details by price in descending order
     @Query(value = "SELECT * FROM purchaseDetail ORDER BY price DESC", nativeQuery = true)

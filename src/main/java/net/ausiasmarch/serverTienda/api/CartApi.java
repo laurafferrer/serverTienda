@@ -84,7 +84,7 @@ public class CartApi {
     // Delete all carts
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
-        return ResponseEntity.ok(oCartService.emptyTable());
+        return ResponseEntity.ok(oCartService.empty());
     }
     
 }

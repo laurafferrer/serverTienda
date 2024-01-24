@@ -68,7 +68,7 @@ public class CategoryService {
     }
 
     // Empty the category table
-    public Long emptyTable() {
+    public Long empty() {
         oCategoryRepository.deleteAll();
         oCategoryRepository.resetAutoIncrement();
         oCategoryRepository.flush();

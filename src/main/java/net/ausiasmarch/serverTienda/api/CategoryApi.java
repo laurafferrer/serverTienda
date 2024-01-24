@@ -58,9 +58,9 @@ public class CategoryApi {
     }
 
     // Remove all categories
-    @DeleteMapping("/emptyTable")
-    public ResponseEntity<Long> emptyTable() {
-        return ResponseEntity.ok(oCategoryService.emptyTable());
+    @DeleteMapping("/empty")
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oCategoryService.empty());
     }
 
     // Get categories by the quantity products associated in ascending order

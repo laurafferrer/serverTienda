@@ -32,8 +32,8 @@ public class PurchaseDetailEntity {
     private ProductEntity product;
 
     @ManyToOne
-    @JoinColumn(name = "ordering_id")
-    private OrderingEntity ordering;
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
 
     /*
      * Default constructor.
@@ -48,14 +48,14 @@ public class PurchaseDetailEntity {
      * @param amount  Purchase detail's amount.
      * @param price     Purchase detail's price.
      * @param product   The product associated with the Purchase detail.
-     * @param ordering  The order associated with the Purchase detail.
+     * @param order  The order associated with the Purchase detail.
      */
-    public PurchaseDetailEntity(Long id, int amount, Double price, ProductEntity product, OrderingEntity ordering) {
+    public PurchaseDetailEntity(Long id, int amount, Double price, ProductEntity product, OrderEntity order) {
         this.id = id;
         this.amount = amount;
         this.price = price;
         this.product = product;
-        this.ordering = ordering;
+        this.order = order;
     }
 
     /*
@@ -64,13 +64,13 @@ public class PurchaseDetailEntity {
      * @param amount    Purchase detail's amount.
      * @param price     Purchase detail's price.
      * @param product   The product associated with the Purchase detail.
-     * @param ordering  The order associated with the Purchase detail.
+     * @param order  The order associated with the Purchase detail.
      */
-    public PurchaseDetailEntity(int amount, Double price, ProductEntity product, OrderingEntity ordering) {
+    public PurchaseDetailEntity(int amount, Double price, ProductEntity product, OrderEntity order) {
         this.amount = amount;
         this.price = price;
         this.product = product;
-        this.ordering = ordering;
+        this.order = order;
     }
 
     /*
@@ -150,8 +150,8 @@ public class PurchaseDetailEntity {
      * 
      * @return order associated with Purchase detail.
      */
-    public OrderingEntity getOrdering() {
-        return ordering;
+    public OrderEntity getOrder() {
+        return order;
     }
 
     /*
@@ -159,7 +159,7 @@ public class PurchaseDetailEntity {
      * 
      * @return order associated with Purchase detail.
      */
-    public void setOrdering(OrderingEntity ordering) {
-        this.ordering = ordering;
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 }

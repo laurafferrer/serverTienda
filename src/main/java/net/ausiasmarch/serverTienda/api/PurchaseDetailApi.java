@@ -61,29 +61,29 @@ public class PurchaseDetailApi {
         return ResponseEntity.ok(oPurchaseDetailService.delete(id));
     }
 
-    // Get purchase detail by ordering_id
-    @GetMapping("/byordering_id/{ordering_id}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderingId(
+    // Get purchase detail by order_id
+    @GetMapping("/byOrderId/{order_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderId(
             Pageable oPageable,
-            @PathVariable("ordering_id") Long ordering_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByOrderingId(ordering_id, oPageable));
+            @PathVariable("order_id") Long order_id) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByOrderId(order_id, oPageable));
     }
 
     // Get purchase detail by product_id
-    @GetMapping("/byproduct_id/{product_id}")
+    @GetMapping("/byProductId/{product_id}")
     public ResponseEntity<Page<PurchaseDetailEntity>> findByProductId(
             Pageable oPageable,
             @PathVariable("product_id") Long product_id) {
         return ResponseEntity.ok(oPurchaseDetailService.findByProductId(product_id, oPageable));
     }
 
-    // Get purchase detail by ordering_id and product_id
-    @GetMapping("/byordering_idAndproduct_id/{ordering_id}/{product_id}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderingIdAndProductId(
+    // Get purchase detail by order_id and product_id
+    @GetMapping("/byOrderIdAndProductId/{order_id}/{product_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderIdAndProductId(
             Pageable oPageable,
-            @PathVariable("ordering_id") Long ordering_id,
+            @PathVariable("order_id") Long order_id,
             @PathVariable("product_id") Long product_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByOrderingIdAndProductId(ordering_id, product_id, oPageable));
+        return ResponseEntity.ok(oPurchaseDetailService.findByOrderIdAndProductId(order_id, product_id, oPageable));
     }
 
     // Get purchase dewtail by price desc
@@ -100,8 +100,8 @@ public class PurchaseDetailApi {
 
     // Empty the purchase detail table
     @DeleteMapping("/empty")
-    public ResponseEntity<Long> emptyTable() {
-        return ResponseEntity.ok(oPurchaseDetailService.emptyTable());
+    public ResponseEntity<Long> empty() {
+        return ResponseEntity.ok(oPurchaseDetailService.empty());
     }
     
 }

@@ -62,9 +62,9 @@ public class PurchaseDetailService {
         return oPurchaseDetailRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Find purchase details by ordering id
-    public Page<PurchaseDetailEntity> findByOrderingId(Long ordering_id, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByOrderingId(ordering_id, oPageable);
+    // Find purchase details by order id
+    public Page<PurchaseDetailEntity> findByOrderId(Long order_id, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByOrderId(order_id, oPageable);
     }
 
     // Find purchase details by product id
@@ -72,9 +72,9 @@ public class PurchaseDetailService {
         return oPurchaseDetailRepository.findByProductId(product_id, oPageable);
     }
 
-    // Find purchase details by ordering id and product id
-    public Page<PurchaseDetailEntity> findByOrderingIdAndProductId(Long ordering_id, Long product_id, Pageable oPageable) {
-        return oPurchaseDetailRepository.findByOrderingIdAndProductId(ordering_id, product_id, oPageable);
+    // Find purchase details by order id and product id
+    public Page<PurchaseDetailEntity> findByOrderIdAndProductId(Long order_id, Long product_id, Pageable oPageable) {
+        return oPurchaseDetailRepository.findByOrderIdAndProductId(order_id, product_id, oPageable);
     }
 
     // Find and order purchase details by price in descending order
@@ -88,7 +88,7 @@ public class PurchaseDetailService {
     }
 
     // Empty the purchase detail table
-    public Long emptyTable() {
+    public Long empty() {
         oPurchaseDetailRepository.deleteAll();
         oPurchaseDetailRepository.resetAutoIncrement();
         oPurchaseDetailRepository.flush();
