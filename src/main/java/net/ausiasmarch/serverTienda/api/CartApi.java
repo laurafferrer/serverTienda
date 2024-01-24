@@ -1,3 +1,7 @@
+/*
+   Controller for managing categories.
+   Provides endpoints for retrieving, creating, updating, and deleting categories.
+*/
 package net.ausiasmarch.serverTienda.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,55 +37,100 @@ public class CartApi {
     @Autowired
     CartService oCartService;
 
-    // Get cart by id
+    /*
+     * Endpoint for retrieving a cart by id.
+     * 
+     * @param id Long containing the id of the cart to be retrieved.
+     * @return ResponseEntity containing the cart.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<CartEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCartService.get(id));
     }
 
-    // Get cart by user id
+    /*
+     * Endpoint for retrieving a cart by user id.
+     * 
+     * @param user_id Long containing the id of the user to be retrieved.
+     * @return ResponseEntity containing the cart.
+     */
     @GetMapping("/byUser/{user_id}")
     public ResponseEntity<List<CartEntity>> getCartByUser(@PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oCartService.getByUser(user_id));
     }
 
-    // Get cart by user id and product id
-    @GetMapping("/byUserAndproduct_id/{user_id}/{product_id}")
+    /*
+     * Endpoint for retrieving a cart by user id and product id.
+     * 
+     * @param user_id Long containing the id of the user to be retrieved.
+     * @param product_id Long containing the id of the product to be retrieved.
+     * @return ResponseEntity containing the cart.
+     */
+    @GetMapping("/byUserAndProductId/{user_id}/{product_id}")
     public ResponseEntity<CartEntity> getByUserAndProdcut(@PathVariable("user_id") Long user_id, @PathVariable("product_id") Long product_id) {
         return ResponseEntity.ok(oCartService.getByUserAndProduct(user_id, product_id));
     }
 
-    // Get page of carts
+    /*
+     * Endpoint for retrieving all carts.
+     * 
+     * @param oPageable Pageable object for pagination.
+     * @return ResponseEntity containing the carts.
+     */
     @GetMapping("")
     public ResponseEntity<Page<CartEntity>> getPage( @PageableDefault(size = 40, sort = { "id" }, direction = Sort.Direction.ASC) Pageable oPageable) {
         return ResponseEntity.ok(oCartService.getPage(oPageable));
     }
 
-    // Get all carts for a specific user
+    /*
+     * Endpoint for retrieving all carts for a specific user.
+     * 
+     * @param user_id Long containing the id of the user to be retrieved.
+     * @return ResponseEntity containing the carts.
+     */
     @GetMapping("/allByUser/{user_id}")
     public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oCartService.getAllByIdUser(user_id));
     }
 
-    // Create new cart
+    /*
+     * Endpoint for creating a new cart.
+     * 
+     * @param oCartEntity CartEntity object containing the cart to be created.
+     * @return ResponseEntity containing the id of the created cart.
+     */
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody CartEntity oCartEntity) {
         return ResponseEntity.ok(oCartService.create(oCartEntity));
     }
 
-    // Update existing cart
+    /*
+     * Endpoint for updating an existing cart.
+     * 
+     * @param oCartEntity CartEntity object containing the cart to be updated.
+     * @return ResponseEntity containing the updated cart.
+     */
     @PutMapping("")
     public ResponseEntity<CartEntity> update(@RequestBody CartEntity oCartEntity) {
         return ResponseEntity.ok(oCartService.update(oCartEntity));
     }
 
-    // Delete existing cart by ID
+    /*
+     * Endpoint for deleting an existing cart.
+     * 
+     * @param id Long containing the id of the cart to be deleted.
+     * @return ResponseEntity containing the id of the deleted cart.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCartService.delete(id));
     }
 
-    // Delete all carts
+    /*
+     * Endpoint for deleting all existing carts.
+     * 
+     * @return ResponseEntity containing the id of the deleted cart.
+     */
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oCartService.empty());
