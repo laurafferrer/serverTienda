@@ -1,3 +1,7 @@
+/*
+   Controller for managing CAPTCHA entities.
+   Provides an endpoint for creating a new CAPTCHA.
+*/
 package net.ausiasmarch.serverTienda.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,15 @@ import net.ausiasmarch.serverTienda.service.CaptchaService;
 @RequestMapping("/captcha")
 public class CaptchaApi {
 
+    // Autowired annotation is used for automatic dependency injection.
     @Autowired
     CaptchaService oCaptchaService;
 
+    /*
+     * Endpoint for creating a new CAPTCHA.
+     * 
+     * @return ResponseEntity containing the CAPTCHA.
+     */
     @PostMapping("/create")
     public ResponseEntity<CaptchaEntity> create() {
         return ResponseEntity.ok(oCaptchaService.createCaptcha());
