@@ -1,3 +1,8 @@
+/*
+   PurchaseDetailRepository interface for managing PurchaseDetailEntity persistence.
+   JpaRepository provides standard CRUD operations and queries for the PurchaseDetailEntity entity.
+   Additional custom queries to find purchase details based on different criteria such as order ID, product ID, and price.
+*/
 package net.ausiasmarch.serverTienda.repository;
 
 import org.springframework.data.domain.Page;
