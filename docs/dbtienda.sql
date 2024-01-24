@@ -67,10 +67,10 @@ INSERT INTO `category` (`id`, `category`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ordering`
+-- Estructura de tabla para la tabla `order`
 --
 
-CREATE TABLE `ordering` (
+CREATE TABLE `order` (
   `id` bigint NOT NULL,
   `date_order` date NOT NULL,
   `num_bill` bigint NOT NULL,
@@ -79,10 +79,10 @@ CREATE TABLE `ordering` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `ordering`
+-- Volcado de datos para la tabla `order`
 --
 
-INSERT INTO `ordering` (`id`, `date_order`, `num_bill`, `date_bill`, `user_id`) VALUES
+INSERT INTO `order` (`id`, `date_order`, `num_bill`, `date_bill`, `user_id`) VALUES
 (1, '2024-01-21', 1, '2024-01-23 18:57:26', 1),
 (2, '2024-01-11', 2, '2024-01-23 18:57:55', 2);
 
@@ -118,17 +118,17 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`, `image`, `
 
 CREATE TABLE `purchaseDetail` (
   `id` bigint NOT NULL,
-  `quantity` int NOT NULL,
+  `amount` int NOT NULL,
   `price` double NOT NULL,
   `product_id` bigint NOT NULL,
-  `ordering_id` bigint NOT NULL
+  `order_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `purchaseDetail`
 --
 
-INSERT INTO `purchaseDetail` (`id`, `quantity`, `price`, `product_id`, `ordering_id`) VALUES
+INSERT INTO `purchaseDetail` (`id`, `amount`, `price`, `product_id`, `order_id`) VALUES
 (1, 6, 12, 2, 1),
 (2, 7, 13, 1, 2);
 
@@ -182,11 +182,11 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `ordering`
+-- Indices de la tabla `order`
 --
-ALTER TABLE `ordering`
+ALTER TABLE `order`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ordering_ibfk_1` (`user_id`);
+  ADD KEY `order_ibfk_1` (`user_id`);
 
 --
 -- Indices de la tabla `product`
@@ -201,7 +201,7 @@ ALTER TABLE `product`
 ALTER TABLE `purchaseDetail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `purchaseDetail_ibfk_1` (`product_id`),
-  ADD KEY `purchaseDetail_ibfk_2` (`ordering_id`);
+  ADD KEY `purchaseDetail_ibfk_2` (`order_id`);
 
 --
 -- Indices de la tabla `user`
@@ -226,9 +226,9 @@ ALTER TABLE `category`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `ordering`
+-- AUTO_INCREMENT de la tabla `order`
 --
-ALTER TABLE `ordering`
+ALTER TABLE `order`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -261,10 +261,10 @@ ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Filtros para la tabla `ordering`
+-- Filtros para la tabla `order`
 --
-ALTER TABLE `ordering`
-  ADD CONSTRAINT `ordering_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Filtros para la tabla `product`
@@ -277,7 +277,7 @@ ALTER TABLE `product`
 --
 ALTER TABLE `purchaseDetail`
   ADD CONSTRAINT `purchaseDetail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`ordering_id`) REFERENCES `ordering` (`id`);
+  ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
