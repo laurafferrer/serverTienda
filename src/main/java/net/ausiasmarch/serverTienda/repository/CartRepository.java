@@ -1,3 +1,10 @@
+/*
+   CartRepository interface for managing CartEntity persistence.
+
+   JpaRepository provides standard CRUD operations and queries for the CartEntity entity.
+
+   Additional custom queries for specific operations on the CartEntity table.
+*/
 package net.ausiasmarch.serverTienda.repository;
 
 import java.util.List;
