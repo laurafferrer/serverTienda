@@ -1,3 +1,9 @@
+/*
+   UserRepository interface for managing UserEntity persistence.
+   JpaRepository provides standard CRUD operations and queries for the UserEntity entity.
+   Additional custom queries to find users based on different criteria such as username, username and password,
+   and ordering users by the count of purchase details in ascending and descending order.
+*/
 package net.ausiasmarch.serverTienda.repository;
 
 import java.util.Optional;
