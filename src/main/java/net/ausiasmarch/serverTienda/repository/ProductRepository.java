@@ -1,3 +1,8 @@
+/*
+   ProductRepository interface for managing ProductEntity persistence.
+   JpaRepository provides standard CRUD operations and queries for the ProductEntity entity.
+   Additional custom queries to find products based on different criteria such as category, name, stock, and price.
+*/
 package net.ausiasmarch.serverTienda.repository;
 
 import org.springframework.data.domain.Page;
