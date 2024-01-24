@@ -1,3 +1,8 @@
+/*
+   OrderRepository interface for managing OrderEntity persistence.
+   JpaRepository provides standard CRUD operations and queries for the OrderEntity entity.
+   Additional custom queries for specific operations on the OrderEntity table.
+*/
 package net.ausiasmarch.serverTienda.repository;
 
 import org.springframework.data.domain.Page;
