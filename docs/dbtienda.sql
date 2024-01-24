@@ -26,6 +26,18 @@ USE `dbtienda`;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `captcha`
+--
+
+CREATE TABLE `catpcha` (
+  `id` bigint NOT NULL,
+  `text` varchar(255) COLLATE utf16_bin NOT NULL,
+  `image` tinyblob
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `cart`
 --
 
@@ -63,6 +75,20 @@ INSERT INTO `category` (`id`, `category`) VALUES
 (1, 'Cartulina'),
 (2, 'Libreta'),
 (3, 'Boligrafo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pendent`
+--
+
+CREATE TABLE `pendent` (
+  `id` bigint NOT NULL,
+  `timecode` timestamp NOT NULL,
+  `token` varchar(512) COLLATE utf16_bin NOT NULL,
+  `captcha_id` bigint NOT NULL,
+  `id_captcha` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
 
@@ -168,6 +194,12 @@ INSERT INTO `user` (`id`, `dni`, `username`, `password`, `name`, `surname`, `las
 --
 
 --
+-- Indices de la tabla `captcha`
+--
+ALTER TABLE `captcha`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `cart`
 --
 ALTER TABLE `cart`
@@ -180,6 +212,14 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `pendent`
+--
+ALTER TABLE `pendent`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pendent_ibfk_1` (`id_captcha`),
+  ADD KEY `pendent_ibfk_2` (`captcha_id`);
 
 --
 -- Indices de la tabla `order`
@@ -214,6 +254,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `captcha`
+--
+ALTER TABLE `captcha`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
@@ -224,6 +270,12 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `category`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `pendent`
+--
+ALTER TABLE `pendent`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `order`
@@ -259,6 +311,14 @@ ALTER TABLE `user`
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Filtros para la tabla `pendent`
+--
+ALTER TABLE `pendent`
+  ADD CONSTRAINT `pendent_ibfk_1` FOREIGN KEY (`captcha_id`) REFERENCES `captcha` (`id`),
+  ADD CONSTRAINT `pendent_ibfk_2` FOREIGN KEY (`id_captcha`) REFERENCES `captcha` (`id`);
+
 
 --
 -- Filtros para la tabla `order`
