@@ -1,3 +1,7 @@
+/*
+   Controller for managing media files.
+   Provides endpoints for uploading and retrieving media files.
+*/
 package net.ausiasmarch.serverTienda.api;
 
 import lombok.AllArgsConstructor;
@@ -29,9 +33,16 @@ import net.ausiasmarch.serverTienda.service.StorageService;
 @AllArgsConstructor
 public class MediaController {
 
+    // Autowire StorageService for dependency injection.
     private final StorageService oStorageService;
     private final HttpServletRequest oRequest;
 
+    /*
+     * Endpoint for uploading media files.
+     * 
+     * @param oMultipartFile MultipartFile object containing the file to be uploaded.
+     * @return Map containing the URL of the uploaded file.
+     */
     @PostMapping("/")
     public Map<String, String> uploadFile (@RequestParam("file") MultipartFile oMultipartFile) {
         String path = oStorageService.store(oMultipartFile);
@@ -41,6 +52,12 @@ public class MediaController {
         return Map.of("url", url);
     }
 
+    /*
+     * Endpoint for retrieving a file by filename.
+     * 
+     * @param filename String containing the name of the file to be retrieved.
+     * @return ResponseEntity containing the file.
+     */
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) throws IOException {
         Resource file = oStorageService.loadAsResource(filename);
