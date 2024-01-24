@@ -1,3 +1,6 @@
+/*
+   DataGenerationHelper class for generating random data, such as names, addresses, phone numbers, etc.
+*/
 package net.ausiasmarch.serverTienda.helper;
 
 import java.nio.charset.StandardCharsets;
@@ -15,7 +18,9 @@ import net.ausiasmarch.serverTienda.exception.CannotPerformOperationException;
 
 public class DataGenerationHelper {
 
-    /* RANDOMS PARA EL USER */
+    /*
+     * Random names for users
+     */
     private static final String[] aNames = { 
             "Pepe", "Juan", "Antonio", "Manuel", "Jose", "Francisco", "David", "Jose Antonio", "Jose Luis",
             "Javier", "Jesus", "Francisco Javier", "Carlos", "Daniel", "Miguel", "Rafael", "Pedro", "Jose Manuel",
@@ -31,12 +36,20 @@ public class DataGenerationHelper {
             "Jose Pablo", "Jose Pedro", "Jose Ramon", "Jose Vicente", "Juan Antonio", "Juan Carlos", "Juan Diego"
     };
 
+    /*
+     * Random last names for users
+     */
     private static final String[] aLastName = { "Rodríguez", "Pérez", "Gómez", "Fernández", "López", "García",
             "Martínez", "Sánchez", "Díaz", "Torres", "Ramírez", "Vázquez", "Castro", "Ruiz", "Herrera", "Jiménez",
             "Moreno", "Navarro", "Medina", "Morales", "Ortega", "Silva", "Romero", "Flores", "Álvarez", "Cordero",
             "Peralta", "Quintero", "Mendoza", "Espinoza"
     };
 
+    /*
+     * Generates a random DNI.
+     * 
+     * @return Random DNI as a String.
+     */
     public static String getRandomDni() {
         String dni = "";
         String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -46,14 +59,32 @@ public class DataGenerationHelper {
         return dni;
     }
 
+    /*
+     * Generates a random first name.
+     * 
+     * @return A random first name.
+     */
     public static String getRandomName() {
         return aNames[(int) (Math.random() * aNames.length)];
     }
 
+    /*
+     * Generates a random last name.
+     * 
+     * @return A random last name.
+     */
     public static String getRandomLastName() {
         return aLastName[(int) (Math.random() * aLastName.length)];
     }
 
+    /*
+     * Normalizes a string by replacing accented characters with their ASCII
+     * equivalents.
+     * 
+     * @param cadena The input string.
+     * 
+     * @return The normalized string.
+     */
     public static String doNormalize(String cadena) {
         String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
         String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
@@ -64,7 +95,12 @@ public class DataGenerationHelper {
         return cadenaSinAcentos;
     }
 
-    // ¿¿MANEJO AÑOS BISIESTOS??
+    /*
+     * Generates a random birth date between 18 and 65 years ago from the current
+     * date.
+     * 
+     * @return A random birth date.
+     */
     public static LocalDate getRandombirth_date() {
         // Calcular fecha actual
         LocalDate currentDate = LocalDate.now();
@@ -81,6 +117,11 @@ public class DataGenerationHelper {
         return LocalDate.of(year, month, day);
     }
 
+    /*
+     * Generates a random phone number.
+     * 
+     * @return A random phone number.
+     */
     public static String getRandomphone_number() {
         String phone_number = String.valueOf((int) (Math.random() * 2) + 6);
 
@@ -90,6 +131,11 @@ public class DataGenerationHelper {
         return phone_number;
     }
 
+    /*
+     * Generates a random address.
+     * 
+     * @return A random address.
+     */
     public static String getRandomAddress() {
         String[] aAddress = { "Calle", "Avenida", "Plaza", "Paseo", "Camino", "Callejón", "Travesía", "Pasaje", "Ronda" };
         String[] aStreet = { "Mayor", "Real", "San Juan", "San Pedro", "San José", "San Miguel", "San Pablo"};
@@ -99,6 +145,11 @@ public class DataGenerationHelper {
         return address;
     }
 
+    /*
+     * Generates a random city.
+     * 
+     * @return A random city.
+     */
     public static String getRandomCity() {
         String[] aCity = {"Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", 
         "Málaga", "Murcia", "Palma", "Las Palmas de Gran Canaria", 
@@ -111,18 +162,36 @@ public class DataGenerationHelper {
         return city;
     }
 
+    /*
+     * Generates a random postal code.
+     * 
+     * @return A random postal code.
+     */
     public static int getRandompostal_code() {
         int postal_code = (int) (Math.random() * 90000) + 10000;
         return postal_code;
     }    
 
-    /* RANDOM PARA EL CAPTCHA */
+    /*
+     * Generates a random integer within the specified range.
+     * 
+     * @param min The minimum value.
+     * @param max The maximum value.
+     * @return A random integer.
+     */
     public static int getRandomInt(int min, int max) {
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
         return randomNum;
     }
 
+    /*
+     * Calculates the SHA-256 hash of a given string.
+     * 
+     * @param strToHash The string to hash.
+     * 
+     * @return The SHA-256 hash of the input string.
+     */
     public static String getSHA256(String strToHash) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
