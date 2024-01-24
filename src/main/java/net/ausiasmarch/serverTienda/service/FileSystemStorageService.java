@@ -1,3 +1,4 @@
+/* Service responsible for handling file storage operations using the local file system*/
 package net.ausiasmarch.serverTienda.service;
 
 import java.nio.file.Paths;
@@ -23,6 +24,7 @@ public class FileSystemStorageService implements StorageService {
 
     private Path rootLocation;
 
+    // Initialize the file system storage service
     @Override
     @PostConstruct
     public void init() {
@@ -35,6 +37,7 @@ public class FileSystemStorageService implements StorageService {
 
     }
 
+    // Store the uploaded file in the file system
     @Override
     public String store(MultipartFile file) {
         if (file.isEmpty()) {
@@ -51,6 +54,7 @@ public class FileSystemStorageService implements StorageService {
 
     }
 
+    // Load a file as a Resource form the file system
     @Override
     public Resource loadAsResource(String filename) {
         try {

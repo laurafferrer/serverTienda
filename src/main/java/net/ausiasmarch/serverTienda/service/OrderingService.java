@@ -1,15 +1,16 @@
+/* Service  that performs CRUD operations on the OrderingEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 import java.time.LocalDate;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import net.ausiasmarch.serverTienda.entity.OrderingEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
@@ -35,6 +36,12 @@ public class OrderingService {
     // Get a page of orderings
     public Page<OrderingEntity> getPage(Pageable oPageable) {
         return oOrderingRepository.findAll(oPageable);
+    }
+
+    // Get random ordering
+    public OrderingEntity getOneRandom() {
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oOrderingRepository.count()), 1);
+        return oOrderingRepository.findAll(oPageable).getContent().get(0);
     }
 
     // Create a new ordering
@@ -69,12 +76,6 @@ public class OrderingService {
         //oSessionService.onlyAdmins();
         oOrderingRepository.deleteById(id);
         return id;
-    }
-
-    // Get random ordering
-    public OrderingEntity getOneRandom() {
-        Pageable oPageable = PageRequest.of((int) (Math.random() * oOrderingRepository.count()), 1);
-        return oOrderingRepository.findAll(oPageable).getContent().get(0);
     }
 
     // Find orderings by user Id

@@ -1,3 +1,4 @@
+/* Service  that performs CRUD operations on the ProductEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
 import org.springframework.data.domain.Page;
@@ -35,28 +36,8 @@ public class ProductService {
     // Get a page of products
     public Page<ProductEntity> getPage(Pageable oPageable) {
         return oProductRepository.findAll(oPageable);
-    }    
-
-    // Create new product
-    public Long create(ProductEntity oProductEntity) {
-        //oSessionService.onlyAdmins();
-        oProductEntity.setId(null);
-        return oProductRepository.save(oProductEntity).getId();
     }
-
-    // Update existing product
-    public ProductEntity update(ProductEntity oProductEntity) {
-        //oSessionService.onlyAdmins();
-        return oProductRepository.save(oProductEntity);
-    }
-
-    // Delete existing product
-    public Long delete(Long id) {
-        //oSessionService.onlyAdmins();
-        oProductRepository.deleteById(id);
-        return id;
-    }
-
+    
     // Get random product
     public ProductEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oProductRepository.count()), 1);
@@ -91,6 +72,26 @@ public class ProductService {
     // Get products by price descending and category
     public Page<ProductEntity> getByPriceDescAndcategory_id(Long category_id, Pageable oPageable) {
         return oProductRepository.findByPriceDescAndcategory_id(category_id, oPageable);
+    }
+
+    // Create new product
+    public Long create(ProductEntity oProductEntity) {
+        //oSessionService.onlyAdmins();
+        oProductEntity.setId(null);
+        return oProductRepository.save(oProductEntity).getId();
+    }
+
+    // Update existing product
+    public ProductEntity update(ProductEntity oProductEntity) {
+        //oSessionService.onlyAdmins();
+        return oProductRepository.save(oProductEntity);
+    }
+
+    // Delete existing product
+    public Long delete(Long id) {
+        //oSessionService.onlyAdmins();
+        oProductRepository.deleteById(id);
+        return id;
     }
 
     // Empty the product table

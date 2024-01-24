@@ -1,3 +1,4 @@
+/* Service  responsible for performing CRUD operations on the CartEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
 import org.springframework.data.domain.Page;
@@ -35,12 +36,12 @@ public class CartService {
     @Autowired
     SessionService oSessionService;
 
-    // Get cart by ID
+    // Get a cart by its ID
     public CartEntity get(Long id) {
         return oCartRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
-    // Get cart by user id
+    // Get carts by user ID
     public List<CartEntity> getByUser(Long user_id) {
         return oCartRepository.findByUserId(user_id);
     }
@@ -50,7 +51,7 @@ public class CartService {
         return oCartRepository.findAllByUserId(user_id);
     }
 
-    // Get cart by user id and product id
+    // Get cart by user ID and product ID
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
         return oCartRepository.findByUserIdAndProductId(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
@@ -78,7 +79,7 @@ public class CartService {
         }
     }
 
-    // Update existing cart
+    // Update an existing cart
     public CartEntity update(CartEntity oCartEntity) {
         CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
@@ -87,7 +88,7 @@ public class CartService {
         return oCartRepository.save(oCartEntity);
     }
 
-    // Delete existing cart by ID
+    // Delete an existing cart by ID
     public Long delete(Long id) {
         //oSessionService.onlyUsers();
         oCartRepository.deleteById(id);

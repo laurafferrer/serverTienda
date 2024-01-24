@@ -14,7 +14,6 @@ import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
 
 import net.ausiasmarch.serverTienda.entity.CaptchaEntity;
-import net.ausiasmarch.serverTienda.entity.CategoryEntity;
 import net.ausiasmarch.serverTienda.entity.PendentEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
 
@@ -50,6 +49,7 @@ public class SessionService {
     @Autowired
     PendentRepository oPendentRepository;
 
+    // Method to get the session's username
     public String getSessionUsername() {
         if (oHttpServletRequest.getAttribute("username") instanceof String) {
             return oHttpServletRequest.getAttribute("username").toString();
@@ -58,6 +58,7 @@ public class SessionService {
         }
     }
 
+    // Methos to get the session user
     public UserEntity getSessionUser() {
         if (this.getSessionUser() != null ) {
             return oUserRepository.findByUsername(this.getSessionUsername()).orElse(null);
@@ -66,6 +67,7 @@ public class SessionService {
         }
     }
 
+    // Methos to check if the session is active
     public Boolean isSessionActive() {
         if (this.getSessionUsername() != null) {
             return oUserRepository.findByUsername(this.getSessionUsername()).isPresent();
@@ -73,6 +75,8 @@ public class SessionService {
             return false;
         }
     }
+
+    // Methos for role checks and access control
 /* 
     // Admins y Users.
     public Boolean isAdmin() {
@@ -84,8 +88,7 @@ public class SessionService {
             return false;
         }
     }
-*/
-/*
+
     public Boolean isUser() {
         if (this.getSessionUsername() != null) {
             UserEntity oUserEntityInSession = oUserRepository.findByUsername(this.getSessionUsername())
@@ -95,29 +98,25 @@ public class SessionService {
             return false;
         }
     }
-*/
-/*
+
     public void onlyAdmins() {
         if (!this.isAdmin()) {
             throw new UnauthorizedException("Only admins can do this");
         }
     }
-*/
-/*
+
     public void onlyUsers() {
         if (!this.isUser()) {
             throw new UnauthorizedException("Only users can do this");
         }
     }
-*/
-/*
+
     public void onlyAdminsOrUsers() {
         if (!this.isSessionActive()) {
             throw new UnauthorizedException("Only admins or users can do this");
         }
     }
-*/
-/*
+
     // Throw unauthorized exception if the current user is not the target user
     public void onlyUsersWithTheirData(Long userId) {
         if (!this.isUser()) {
@@ -127,8 +126,7 @@ public class SessionService {
             throw new UnauthorizedException("You can only access your own data");
         }
     }
-*/
-/*
+
     // Throw unauthorized exception if the current user is neither an admin nor the target user
     public void onlyAdminsOrUsersWithTheirData(Long userId) {
         if (this.isSessionActive()) {
@@ -143,39 +141,6 @@ public class SessionService {
             }
         } else {
             throw new UnauthorizedException("You must log in to perform this action");
-        }
-    }
-*/
-/*
-REVISAR 
-    public String getSessionCategory() {
-        Object idAttribute = oHttpServletRequest.getAttribute("id");
-    
-        if (idAttribute instanceof Integer) {
-            return idAttribute.toString();
-        } else {
-            return null;
-        }
-    }
-    
-    public Boolean isCategory() {
-        String sessionCategoryId = this.getSessionCategory();
-    
-        if (sessionCategoryId != null) {
-            try {
-                // Intenta convertir el id de la sesión a Long y busca la categoría en el repositorio
-                Long categoryId = Long.parseLong(sessionCategoryId);
-                CategoryEntity oCategoryEntityInSession = (CategoryEntity) oCategoryRepository.findById(categoryId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
-    
-                // Verifica si la categoría encontrada tiene un id válido
-                return oCategoryEntityInSession.getId() != null;
-            } catch (NumberFormatException e) {
-                // Manejar la excepción si el id de la sesión no es un número válido
-                return false;
-            }
-        } else {
-            return false;
         }
     }
 */

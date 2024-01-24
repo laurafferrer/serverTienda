@@ -1,3 +1,4 @@
+/* Service  responsible for performing CRUD operations on the CategoryEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
 import org.springframework.data.domain.Page;
@@ -30,12 +31,23 @@ public class CategoryService {
         return oCategoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
     }
 
-    //Get page of categories
+    // Get page of categories
     public Page<CategoryEntity> getPage(Pageable oPageable) {
         return oCategoryRepository.findAll(oPageable);
     }
 
-    //Create new category
+    // Get random category
+    public CategoryEntity getOneRandom() {
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oCategoryRepository.count()), 1);
+        return oCategoryRepository.findAll(oPageable).getContent().get(0);
+    }
+
+    // Get categories by quantity products
+    public Page<CategoryEntity> findByQuantityProductsAsc(Pageable oPageable) {
+        return oCategoryRepository.findByQuantityProductsAsc(oPageable);
+    }
+
+    // Create new category
     public Long create(CategoryEntity oCategoryEntity) {
         //oSessionService.onlyAdmins();
         oCategoryEntity.setId(null);
@@ -53,17 +65,6 @@ public class CategoryService {
         //oSessionService.onlyAdmins();
         oCategoryRepository.deleteById(id);
         return id;
-    }
-
-    // Get random category
-    public CategoryEntity getOneRandom() {
-        Pageable oPageable = PageRequest.of((int) (Math.random() * oCategoryRepository.count()), 1);
-        return oCategoryRepository.findAll(oPageable).getContent().get(0);
-    }
-
-    // Get categories by quantity products
-    public Page<CategoryEntity> findByQuantityProductsAsc(Pageable oPageable) {
-        return oCategoryRepository.findByQuantityProductsAsc(oPageable);
     }
 
     // Empty the category table

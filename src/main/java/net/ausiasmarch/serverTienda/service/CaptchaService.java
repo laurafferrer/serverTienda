@@ -1,3 +1,4 @@
+/* Service  responsible for handling Captcha-related operations */
 package net.ausiasmarch.serverTienda.service;
 
 import java.awt.image.BufferedImage;
@@ -36,7 +37,7 @@ public class CaptchaService {
         return oCaptchaRepository.save(oCaptchaEntity);
     }
 
-    // Get a random captcha from database
+    // Get a random captcha from the database
     public CaptchaEntity getRandomCaptcha() {
         List<CaptchaEntity> oCaptchaEntityList = oCaptchaRepository.findAll();
         if (oCaptchaEntityList.isEmpty()) {

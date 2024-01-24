@@ -1,3 +1,4 @@
+/* Service  that performs CRUD operations on the UserEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
 import jakarta.servlet.http.HttpServletRequest;
