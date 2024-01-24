@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 
 import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
-
+import net.ausiasmarch.serverTienda.bean.UserBean;
 import net.ausiasmarch.serverTienda.entity.CaptchaEntity;
 import net.ausiasmarch.serverTienda.entity.PendentEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
@@ -48,6 +48,14 @@ public class SessionService {
 
     @Autowired
     PendentRepository oPendentRepository;
+
+    public String login(UserBean oUserBean) {
+        String strUsername = oUserBean.getUsername();
+
+        oUserRepository.findByUsernameAndPassword(strUsername,oUserBean.getPassword())
+                .orElseThrow(() -> new ResourceNotFoundException("Wrong User"));
+        return JWTHelper.generateJWT(oUserBean.getUsername());
+    }
 
     // Method to get the session's username
     public String getSessionUsername() {

@@ -29,7 +29,7 @@ USE `dbtienda`;
 -- Estructura de tabla para la tabla `captcha`
 --
 
-CREATE TABLE `catpcha` (
+CREATE TABLE `captcha` (
   `id` bigint NOT NULL,
   `text` varchar(255) COLLATE utf16_bin NOT NULL,
   `image` tinyblob
@@ -169,6 +169,7 @@ CREATE TABLE `user` (
   `dni` varchar(9) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(512) NOT NULL,
+  `token_password` varchar(256) COLLATE utf16_unicode_ci DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL,
   `last_name` varchar(255) DEFAULT NULL,
@@ -185,9 +186,9 @@ CREATE TABLE `user` (
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id`, `dni`, `username`, `password`, `name`, `surname`, `last_name`, `birth_date`, `phone_number`, `email`, `address`, `city`, `postal_code`, `role`) VALUES
-(1, '00000000A', 'marmarzo', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'Mario', 'Marzo', 'Cruz', '1990-10-23', '666666666', 'marmarzo@gmail.com', 'Calle Mayor 1A', 'Madrid', '52301', 1),
-(2, '00000000B', 'pepperez', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'Pepe', 'Perez', 'Cara', '2000-06-13', '777777777', 'pepperez@gmail.com', 'Calle Menor 1A', 'Barcelona', '52051', 0);
+INSERT INTO `user` (`id`, `dni`, `username`, `password`, `token_password`, `name`, `surname`, `last_name`, `birth_date`, `phone_number`, `email`, `address`, `city`, `postal_code`, `role`) VALUES
+(1, '00000000A', 'marmarzo', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Mario', 'Marzo', 'Cruz', '1990-10-23', '666666666', 'marmarzo@gmail.com', 'Calle Mayor 1A', 'Madrid', '52301', 0),
+(2, '00000000B', 'pepperez', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Pepe', 'Perez', 'Cara', '2000-06-13', '777777777', 'pepperez@gmail.com', 'Calle Menor 1A', 'Barcelona', '52051', 1);
 
 --
 -- Índices para tablas volcadas

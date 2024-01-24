@@ -50,6 +50,8 @@ public class UserEntity {
     @Pattern(regexp = "^[a-fA-F0-9]+$")
     private String password = "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e";
 
+    private String tokenPassword;
+
     @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
@@ -254,6 +256,24 @@ public class UserEntity {
      */
     public void setPassword (String password) {
         this.password = password;
+    }
+
+    /*
+     * Get the user's token password.
+     * 
+     * @return User's token password.
+     */
+    public String getTokenPassword() {
+        return tokenPassword;
+    }
+
+    /*
+     * Set the user's token password.
+     * 
+     * @param tokenPassword User's token password.
+     */
+    public void setTokenPassword (String tokenPassword) {
+        this.tokenPassword = tokenPassword;
     }
 
     /*

@@ -25,8 +25,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // Find User by Username and Password
     Optional<UserEntity> findByUsernameAndPassword(String username, String password);
 
-    // USO AL IMPLEMENTAR CAMBIO DE CONTRASEÑA POR EMAIL. NO BORRAR
-    //Optional<UserEntity> findByEmail(String email);
+    // Find User by TokenPassword
+    Optional<UserEntity> findByTokenPassword(String tokenPassword);
+
+    Optional<UserEntity> findByEmail(String email);
 
     // Find users ordered by te count of purchase detail in descending order
     @Query(value = "SELECT u.*, count(pd.id) FROM user u, purchaseDetail pd WHERE u.id = pd.user_id GROUP BY u.id ORDER BY count(u.id) DESC", nativeQuery = true)
