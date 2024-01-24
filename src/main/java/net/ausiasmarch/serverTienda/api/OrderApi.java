@@ -1,3 +1,7 @@
+/*
+   API controller for managing orders.
+   Provides endpoints for retrieving, creating, updating, and deleting orders.
+*/
 package net.ausiasmarch.serverTienda.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +33,24 @@ public class OrderApi {
     @Autowired
     OrderService oOrderService;
 
-    // Get order by id
+    /*
+     * Get order by ID.
+     * 
+     * @param id Order's ID.
+     * @return ResponseEntity with OrderEntity.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<OrderEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oOrderService.get(id));
     }
 
-    // Get all orders
+    /*
+     * Get all orders.
+     * 
+     * @param oPageable Pageable object.
+     * @param strFilter Filter string.
+     * @return ResponseEntity with Page<OrderEntity>.
+     */
     @GetMapping("")
     public ResponseEntity<Page<OrderEntity>> getPage(
             Pageable oPageable,
@@ -43,51 +58,92 @@ public class OrderApi {
         return ResponseEntity.ok(oOrderService.getPage(oPageable));
     }
 
-    // Get order by user_id
-    @GetMapping("/byuser_id/{user_id}")
+    /*
+     * Get order by user_id.
+     * 
+     * @param oPageable Pageable object.
+     * @param user_id User's ID.
+     * @return ResponseEntity with Page<OrderEntity>.
+     */
+    @GetMapping("/byUserId/{user_id}")
     public ResponseEntity<Page<OrderEntity>> findByUserId(
             Pageable oPageable,
             @PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oOrderService.findByUserId(user_id, oPageable));
     }
 
-    // Create new order
+    /*
+     * Create new order.
+     * 
+     * @param oOrderEntity OrderEntity object.
+     * @return ResponseEntity with OrderEntity.
+     */
     @PostMapping("")
     public ResponseEntity<OrderEntity> create(@RequestBody OrderEntity oOrderEntity) {
         return ResponseEntity.ok(oOrderService.create(oOrderEntity));
     }
 
-    // Update existing order
+    /*
+     * Update existing order.
+     * 
+     * @param oOrderEntity OrderEntity object.
+     * @return ResponseEntity with OrderEntity.
+     */
     @PutMapping("")
     public ResponseEntity<OrderEntity> update(@RequestBody OrderEntity oOrderEntity) {
         return ResponseEntity.ok(oOrderService.update(oOrderEntity));
     }
 
-    // Delete existing order
+    /*
+     * Delete existing order.
+     * 
+     * @param id Order's ID.
+     * @return ResponseEntity with OrderEntity.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oOrderService.delete(id));
     }
 
-    // Remove all orders
+    /*
+     * Delete all orders.
+     * 
+     * @return ResponseEntity with OrderEntity.
+     */
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oOrderService.empty());
     }
 
-    // Get orders by date order desc
+    /*
+     * Get orders by date order desc.
+     * 
+     * @param oPageable Pageable object.
+     * @return ResponseEntity with Page<OrderEntity>.
+     */
     @GetMapping("/byDateOrderDesc")
     public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderDesc(Pageable pageable) {
         return ResponseEntity.ok(oOrderService.findOrderByDateOrderDesc(pageable));
     }
 
-    // Get orders by date order asc
+    /*
+     * Get orders by date order asc.
+     * 
+     * @param oPageable Pageable object.
+     * @return ResponseEntity with Page<OrderEntity>.
+     */
     @GetMapping("/byDateOrderAsc")
     public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderAsc(Pageable pageable) {
         return ResponseEntity.ok(oOrderService.findOrderByDateOrderAsc(pageable));
     }
 
-    // Get orders by date order containing
+    /*
+     * Get orders by date order containing.
+     * 
+     * @param oPageable Pageable object.
+     * @param date_order Date order.
+     * @return ResponseEntity with Page<OrderEntity>.
+     */
     @GetMapping("/byDateOrderContaining/{date_order}")
     public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderContaining(
             Pageable pageable,
