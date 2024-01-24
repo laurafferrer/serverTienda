@@ -49,13 +49,13 @@ public class OrderService {
         //oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
-        if (oOrderEntity.getnum_bill() <= 0) {
+        if (oOrderEntity.getNum_bill() <= 0) {
             throw new IllegalArgumentException("The num of bill must be more than 0");
         }
 
         // Validation date of bill are before or current date 
         LocalDate currentDate = LocalDate.now();
-        LocalDate date_bill = oOrderEntity.getdate_bill();
+        LocalDate date_bill = oOrderEntity.getDate_bill();
 
         if (date_bill == null || date_bill.isAfter(currentDate)) {
             throw new IllegalArgumentException("The date of bill must be before or current date");
