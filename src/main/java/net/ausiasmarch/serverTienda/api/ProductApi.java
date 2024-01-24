@@ -1,3 +1,7 @@
+/*
+   API controller for managing products.
+   Provides endpoints for retrieving, creating, updating, and deleting products.
+*/
 package net.ausiasmarch.serverTienda.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +33,24 @@ public class ProductApi {
     @Autowired
     ProductService oProductService;
 
-    // Get product by id
+    /*
+     * Ge product by ID.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ProductEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.get(id));
     }
 
-    // Get all products
+    /*
+     * Get all products.
+     * 
+     * @param oPageable Pageable object.
+     * @param strFilter Filter string.
+     * @return ResponseEntity with Page<ProductEntity>.
+     */
     @GetMapping("")
     public ResponseEntity<Page<ProductEntity>> getPage(
         Pageable oPageable,
@@ -43,77 +58,126 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.getPage(oPageable));
     }
 
-    // Create new product
+    /*
+     * Create new product.
+     * 
+     * @param oProductEntity ProductEntity object.
+     * @return ResponseEntity with ProductEntity.
+     */
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody ProductEntity oProductEntity) {
         return ResponseEntity.ok(oProductService.create(oProductEntity));
     }
 
-    // Update existing product
+    /*
+     * Update existing product.
+     * 
+     * @param oProductEntity ProductEntity object.
+     * @return ResponseEntity with ProductEntity.
+     */
     @PutMapping("")
     public ResponseEntity<ProductEntity> update(@RequestBody ProductEntity oProductEntity) {
         return ResponseEntity.ok(oProductService.update(oProductEntity));
     }
 
-    // Delete existing product
+    /*
+     * Delete existing product.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oProductService.delete(id));
     }
 
-    // Remove all products
+    /*
+     * Delete all products.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @DeleteMapping("/empty")
     public ResponseEntity<Long> empty() {
         return ResponseEntity.ok(oProductService.empty());
     }
 
-    // Get random product
+    /*
+     * Get random product.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/randomProduct")
     public ResponseEntity<ProductEntity> getOneRandom() {
         return ResponseEntity.ok(oProductService.getOneRandom());
     }
 
-    // Get products by category
+    /*
+     * Get products by category.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/byCategory/{id}")
     public ResponseEntity<Page<ProductEntity>> getByCategory(@PathVariable("id") Long id, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByCategory(id, oPageable));
     }
 
-    // Get products by stock ascending
+    /*
+     * Get products by stock ascending.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/byStockAsc")
     public ResponseEntity<Page<ProductEntity>> getByStockAsc(@PathVariable("stock") String stock, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByStockAsc(oPageable));
     }
 
-    // Get products by price ascending
+    /*
+     * Get products by stock descending.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/byPriceAsc")
     public ResponseEntity<Page<ProductEntity>> getByPriceAsc(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceAsc(oPageable));
     }
 
-    // Get products by price descending
+    /*
+     * Get products by price descending.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
     @GetMapping("/byPriceDesc")
     public ResponseEntity<Page<ProductEntity>> getByPriceDesc(@PathVariable("price") String price, Pageable oPageable) {
         return ResponseEntity.ok(oProductService.getByPriceDesc(oPageable));
     }
 
-    // Get products by price ascending and category
-    @GetMapping("/byPriceAscAndcategory_id/{id}")
-    public ResponseEntity<Page<ProductEntity>> getByPriceAscAndcategory_id(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
-        return ResponseEntity.ok(oProductService.getByPriceAscAndcategory_id(category_id, oPageable));
+    /*
+     * Get products by price ascending and category.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
+    @GetMapping("/byPriceAscAndCategoryId/{id}")
+    public ResponseEntity<Page<ProductEntity>> getByPriceAscAndCategoryId(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByPriceAscAndCategoryId(category_id, oPageable));
 
     }
 
-    // Get products by price descending and category
-    @GetMapping("/byPriceDescAndcategory_id/{id}")
-    public ResponseEntity<Page<ProductEntity>> getByPriceDescAndcategory_id(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
-        return ResponseEntity.ok(oProductService.getByPriceDescAndcategory_id(category_id, oPageable));
+    /*
+     * Get products by price descending and category.
+     * 
+     * @param id Product's ID.
+     * @return ResponseEntity with ProductEntity.
+     */
+    @GetMapping("/byPriceDescAndCategoryId/{id}")
+    public ResponseEntity<Page<ProductEntity>> getByPriceDescAndCategoryId(@PathVariable("price") String price, @PathVariable("category_id") Long category_id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByPriceDescAndCategoryId(category_id, oPageable));
     }
 
 }
-
-
-
-    
-    
-
