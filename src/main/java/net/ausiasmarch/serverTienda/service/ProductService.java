@@ -74,10 +74,21 @@ public class ProductService {
         return oProductRepository.findByPriceDescAndCategoryId(category_id, oPageable);
     }
 
-    // Create new product
+    // Crear nuevo producto
     public Long create(ProductEntity oProductEntity) {
-        //oSessionService.onlyAdmins();
+        // Asegurarse de que category está presente y tiene un id válido
+        if (oProductEntity.getCategory() == null || oProductEntity.getCategory().getId() == null) {
+            // Manejar el caso en el que la categoría no está establecida correctamente
+            throw new IllegalArgumentException("La categoría no está establecida correctamente en el producto.");
+        }
+
+        // Establecer category con el objeto CategoryEntity
+        oProductEntity.setCategory(oProductEntity.getCategory());
+
+        // Asegurarse de que el id del producto sea nulo para que se genere uno nuevo
         oProductEntity.setId(null);
+
+        // Guardar el producto en la base de datos
         return oProductRepository.save(oProductEntity).getId();
     }
 
