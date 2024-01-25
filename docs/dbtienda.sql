@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: database:3306
--- Tiempo de generación: 25-01-2024 a las 16:48:22
+-- Tiempo de generación: 25-01-2024 a las 17:41:56
 -- Versión del servidor: 8.2.0
 -- Versión de PHP: 8.2.12
 
@@ -83,28 +83,6 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `purchase`
---
-
-CREATE TABLE `purchase` (
-  `id` bigint NOT NULL,
-  `date_purchase` date NOT NULL,
-  `num_bill` bigint NOT NULL,
-  `date_bill` datetime NOT NULL,
-  `user_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `purchase`
---
-
-INSERT INTO `purchase` (`id`, `date_purchase`, `num_bill`, `date_bill`, `user_id`) VALUES
-(1, '2024-01-21', 1, '2024-01-23 18:57:26', 1),
-(2, '2024-01-11', 2, '2024-01-23 18:57:55', 2);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `pendent`
 --
 
@@ -127,7 +105,7 @@ CREATE TABLE `product` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `price` double NOT NULL,
-  `stock` bigint NOT NULL,
+  `stock` int NOT NULL,
   `image` longblob,
   `category_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -144,24 +122,38 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`, `image`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `purchaseDetail`
+-- Estructura de tabla para la tabla `purchase`
 --
 
-CREATE TABLE `purchaseDetail` (
+CREATE TABLE `purchase` (
   `id` bigint NOT NULL,
-  `amount` int NOT NULL,
-  `price` double NOT NULL,
-  `product_id` bigint NOT NULL,
-  `purchase_id` bigint NOT NULL
+  `date_purchase` date NOT NULL,
+  `num_bill` bigint NOT NULL,
+  `date_bill` date DEFAULT NULL,
+  `user_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Volcado de datos para la tabla `purchaseDetail`
+-- Volcado de datos para la tabla `purchase`
 --
 
-INSERT INTO `purchaseDetail` (`id`, `amount`, `price`, `product_id`, `purchase_id`) VALUES
-(1, 6, 12, 2, 1),
-(2, 7, 13, 1, 2);
+INSERT INTO `purchase` (`id`, `date_purchase`, `num_bill`, `date_bill`, `user_id`) VALUES
+(1, '2024-01-21', 1, '2024-01-23', 1),
+(2, '2024-01-11', 2, '2024-01-23', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `purchase_detail`
+--
+
+CREATE TABLE `purchase_detail` (
+  `id` bigint NOT NULL,
+  `amount` int NOT NULL,
+  `price` double NOT NULL,
+  `product_id` bigint DEFAULT NULL,
+  `purchase_id` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -183,7 +175,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
-  `postal_code` varchar(10) NOT NULL,
+  `postal_code` int NOT NULL,
   `role` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -192,9 +184,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `dni`, `username`, `password`, `token_password`, `name`, `surname`, `last_name`, `birth_date`, `phone_number`, `email`, `address`, `city`, `postal_code`, `role`) VALUES
-(1, '00000000A', 'marmarzo', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Mario', 'Marzo', 'Cruz', '1990-10-23', '666666666', 'marmarzo@gmail.com', 'Calle Mayor 1A', 'Madrid', '52301', 0),
-(2, '00000000B', 'pepperez', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Pepe', 'Perez', 'Cara', '2000-06-13', '777777777', 'pepperez@gmail.com', 'Calle Menor 1A', 'Barcelona', '52051', 1),
-(3, '00000000H', 'lauraferrer', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', NULL, 'Laura', 'Ferrer', 'Esteve', '2003-10-10', '666666666', 'lferrer@gmail.com', 'Calle Tierra 1C', 'Valencia', '56530', 1);
+(1, '00000000A', 'marmarzo', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Mario', 'Marzo', 'Cruz', '1990-10-23', '666666666', 'marmarzo@gmail.com', 'Calle Mayor 1A', 'Madrid', 52301, 0),
+(2, '00000000B', 'pepperez', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', 'NULL', 'Pepe', 'Perez', 'Cara', '2000-06-13', '777777777', 'pepperez@gmail.com', 'Calle Menor 1A', 'Barcelona', 52051, 1),
+(3, '00000000H', 'lauraferrer', 'e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e', NULL, 'Laura', 'Ferrer', 'Esteve', '2003-10-10', '666666666', 'lferrer@gmail.com', 'Calle Tierra 1C', 'Valencia', 56530, 1);
 
 --
 -- Índices para tablas volcadas
@@ -221,13 +213,6 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `purchase`
---
-ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `purchase_ibfk_1` (`user_id`);
-
---
 -- Indices de la tabla `pendent`
 --
 ALTER TABLE `pendent`
@@ -243,12 +228,19 @@ ALTER TABLE `product`
   ADD KEY `product_ibfk_1` (`category_id`);
 
 --
--- Indices de la tabla `purchaseDetail`
+-- Indices de la tabla `purchase`
 --
-ALTER TABLE `purchaseDetail`
+ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `purchaseDetail_ibfk_1` (`product_id`),
-  ADD KEY `purchaseDetail_ibfk_2` (`purchase_id`);
+  ADD KEY `purchase_ibfk_1` (`user_id`);
+
+--
+-- Indices de la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK79a6tsn4e9qfillme2u9kr3i2` (`product_id`),
+  ADD KEY `FK65hoe4yy1817l2vm74msb8eq5` (`purchase_id`);
 
 --
 -- Indices de la tabla `user`
@@ -279,12 +271,6 @@ ALTER TABLE `category`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `purchase`
---
-ALTER TABLE `purchase`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT de la tabla `pendent`
 --
 ALTER TABLE `pendent`
@@ -297,10 +283,16 @@ ALTER TABLE `product`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `purchaseDetail`
+-- AUTO_INCREMENT de la tabla `purchase`
 --
-ALTER TABLE `purchaseDetail`
+ALTER TABLE `purchase`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
@@ -320,12 +312,6 @@ ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Filtros para la tabla `purchase`
---
-ALTER TABLE `purchase`
-  ADD CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
 -- Filtros para la tabla `pendent`
 --
 ALTER TABLE `pendent`
@@ -339,11 +325,17 @@ ALTER TABLE `product`
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
--- Filtros para la tabla `purchaseDetail`
+-- Filtros para la tabla `purchase`
 --
-ALTER TABLE `purchaseDetail`
-  ADD CONSTRAINT `purchaseDetail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `purchaseDetail_ibfk_2` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
+ALTER TABLE `purchase`
+  ADD CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Filtros para la tabla `purchase_detail`
+--
+ALTER TABLE `purchase_detail`
+  ADD CONSTRAINT `FK65hoe4yy1817l2vm74msb8eq5` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`),
+  ADD CONSTRAINT `FK79a6tsn4e9qfillme2u9kr3i2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
