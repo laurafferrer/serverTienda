@@ -32,7 +32,7 @@ public class PurchaseEntity {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate date_order;
+    private LocalDate date_purchase;
 
     @NotNull
     private Long num_bill;
@@ -59,14 +59,14 @@ public class PurchaseEntity {
      * Constructor with parameters for full entity initialization.
      * 
      * @param id          Purchase's ID.
-     * @param date_order  Purchase's date of order.
+     * @param date_purchase  Purchase's date of order.
      * @param num_bill    Purchase's bill number.
      * @param date_bill   Purchase's date of bill.
      * @param user_id     User associated with the order.
      */
-    public PurchaseEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public PurchaseEntity(Long id, LocalDate date_purchase, Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.id = id;
-        this.date_order = date_order;
+        this.date_purchase = date_purchase;
         this.num_bill = num_bill;
         this.date_bill = date_bill;
         this.user_id = user_id;
@@ -75,13 +75,13 @@ public class PurchaseEntity {
     /*
      * Constructor with parameters for partial entity initialization.
      * 
-     * @param date_order  Purchase's date of order.
+     * @param date_purchase  Purchase's date of order.
      * @param num_bill    Purchase's bill number.
      * @param date_bill   Purchase's date of bill.
      * @param user_id     User associated with the order.
      */
-    public PurchaseEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
-        this.date_order = date_order;
+    public PurchaseEntity(LocalDate date_purchase,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
+        this.date_purchase = date_purchase;
         this.num_bill = num_bill;
         this.date_bill = date_bill;
         this.user_id = user_id;
@@ -110,17 +110,17 @@ public class PurchaseEntity {
      * 
      * @return Purchase's date of order.
      */
-    public LocalDate getDate_order() {
-        return date_order;
+    public LocalDate getDate_purchase() {
+        return date_purchase;
     }
 
     /*
      * Set the Purchase's date of order.
      * 
-     * @param date_order Purchase's date of order.
+     * @param date_purchase Purchase's date of order.
      */
-    public void setDate_order(LocalDate date_order) {
-        this.date_order = date_order;
+    public void setDate_purchase(LocalDate date_purchase) {
+        this.date_purchase = date_purchase;
     }
 
     /*

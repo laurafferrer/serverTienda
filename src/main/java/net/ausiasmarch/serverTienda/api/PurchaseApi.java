@@ -141,14 +141,14 @@ public class PurchaseApi {
      * Get orders by date order containing.
      * 
      * @param oPageable Pageable object.
-     * @param date_order Date order.
+     * @param date_purchase Date order.
      * @return ResponseEntity with Page<OrderEntity>.
      */
-    @GetMapping("/byDateOrderContaining/{date_order}")
+    @GetMapping("/byDateOrderContaining/{date_purchase}")
     public ResponseEntity<Page<PurchaseEntity>> findOrderByDateOrderContaining(
             Pageable pageable,
-            @PathVariable("date_order") String date_order) {
-        return ResponseEntity.ok(oOrderService.findOrderByDateOrderContaining(date_order, pageable));
+            @PathVariable("date_purchase") String date_purchase) {
+        return ResponseEntity.ok(oOrderService.findOrderByDateOrderContaining(date_purchase, pageable));
     }     
     
 }

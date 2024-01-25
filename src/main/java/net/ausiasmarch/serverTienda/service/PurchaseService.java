@@ -117,8 +117,8 @@ public class PurchaseService {
     }
 
     // Find orders by date order containing
-    public Page<PurchaseEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable) {
-        return oOrderRepository.findOrderByDateOrderContaining(date_order, pageable);
+    public Page<PurchaseEntity> findOrderByDateOrderContaining(String date_purchase, Pageable pageable) {
+        return oOrderRepository.findOrderByDateOrderContaining(date_purchase, pageable);
     }
 
     // Empty the product order
@@ -154,7 +154,7 @@ public class PurchaseService {
         PurchaseEntity oOrderEntity = new PurchaseEntity();
 
         oOrderEntity.setUser(oUserEntity);
-        oOrderEntity.setDate_order(LocalDate.now());
+        oOrderEntity.setDate_purchase(LocalDate.now());
         oOrderEntity.setNum_bill(generateCodeBill());
 
         oOrderRepository.save(oOrderEntity);
@@ -184,7 +184,7 @@ public class PurchaseService {
         PurchaseEntity oOrderEntity = new PurchaseEntity();
 
         oOrderEntity.setUser(oUserEntity);
-        oOrderEntity.setDate_order(LocalDate.now());
+        oOrderEntity.setDate_purchase(LocalDate.now());
         oOrderEntity.setNum_bill(generateCodeBill());
 
         oOrderRepository.save(oOrderEntity);

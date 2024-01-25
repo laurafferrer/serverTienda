@@ -20,16 +20,16 @@ public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> 
     Page<PurchaseEntity> findByUserId (Long user_id, Pageable oPageable);
 
     // Find orders by date order desc
-    @Query(value = "SELECT * FROM `order` WHERE date_order DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM `order` WHERE date_purchase DESC", nativeQuery = true)
     Page<PurchaseEntity> findOrderByDateOrderDesc(Pageable pageable);
 
     // Find orders by date order asc
-    @Query(value = "SELECT * FROM `order` WHERE date_order ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM `order` WHERE date_purchase ASC", nativeQuery = true)
     Page<PurchaseEntity> findOrderByDateOrderAsc(Pageable pageable);
 
     // Find orders by date order containing
-    @Query(value = "SELECT * FROM `order` WHERE date_order LIKE %?1%", nativeQuery = true)
-    Page<PurchaseEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable);
+    @Query(value = "SELECT * FROM `order` WHERE date_purchase LIKE %?1%", nativeQuery = true)
+    Page<PurchaseEntity> findOrderByDateOrderContaining(String date_purchase, Pageable pageable);
 
     // Method to reset the auto-increment counter for the user table
     @Modifying
