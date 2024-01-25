@@ -101,14 +101,14 @@ public class ProductEntity {
      * @param description   Product description.
      * @param price         Product price.
      * @param stock         Product stock quantity.
-     * @param image         Product image.
+     * @param category      Product category.
      */
-    public ProductEntity(String name, String description, Double price, int stock, byte[] image) {
+    public ProductEntity(String name, String description, Double price, int stock, CategoryEntity category) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.image = image;
+        this.category = category;
     }
 
     /**
