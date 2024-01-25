@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -99,7 +100,7 @@ public class UserEntity {
     private List<CartEntity> carts;
 
     @JsonManagedReference("user-order")
-    @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
+    @OneToMany(mappedBy = "user_id", cascade = CascadeType.PERSIST, fetch = jakarta.persistence.FetchType.LAZY)
     private List<OrderEntity> orders;
 
     /*
