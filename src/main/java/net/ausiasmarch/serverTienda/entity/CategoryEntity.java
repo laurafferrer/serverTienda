@@ -24,7 +24,7 @@ public class CategoryEntity {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 255)
-    private String category;
+    private String name;
 
     /*
      * Default constructor.
@@ -35,21 +35,21 @@ public class CategoryEntity {
     /*
      * Constructor with parameters for full entity initialization.
      * 
-     * @param id       Category's ID.
-     * @param category Category's name.
+     * @param id        Category's ID.
+     * @param name      Category's name.
      */
-    public CategoryEntity(Long id, String category) {
+    public CategoryEntity(Long id, String name) {
         this.id = id;
-        this.category = category;
+        this.name = name;
     }
 
     /*
      * Constructor with parameters for partial entity initialization.
      * 
-     * @param category Category's name.
+     * @param name      Category's name.
      */
-    public CategoryEntity(String category) {
-        this.category = category;
+    public CategoryEntity(String name) {
+        this.name = name;
     }
 
     /*
@@ -75,17 +75,17 @@ public class CategoryEntity {
      * 
      * @return Category's name.
      */
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
     /*
      * Set the category's name.
      * 
-     * @param category Category's name.
+     * @param name Category's name.
      */
-    public void setCategory(String category) {
-        this.category = category;
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
