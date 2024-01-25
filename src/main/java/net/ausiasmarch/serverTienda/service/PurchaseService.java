@@ -164,7 +164,7 @@ public class PurchaseService {
         oPurchaseDetailEntity.setAmount(oCartEntity.getAmount());
         oPurchaseDetailEntity.setPrice(oCartEntity.getPrice());
         oPurchaseDetailEntity.setProduct(oCartEntity.getProduct());
-        oPurchaseDetailEntity.setOrder(oOrderEntity);
+        oPurchaseDetailEntity.setPurchase(oOrderEntity);
 
         oPurchaseDetailRepository.save(oPurchaseDetailEntity);
 
@@ -197,7 +197,7 @@ public class PurchaseService {
             oPurchaseDetailEntity.setAmount(cart.getAmount());
             oPurchaseDetailEntity.setPrice(cart.getPrice());
             oPurchaseDetailEntity.setProduct(cart.getProduct());
-            oPurchaseDetailEntity.setOrder(oOrderEntity);
+            oPurchaseDetailEntity.setPurchase(oOrderEntity);
 
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
         }
@@ -214,10 +214,10 @@ public class PurchaseService {
     }
 
     public Long cancelOrder(Long id) {
-        PurchaseEntity purchase = oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Order not found."));
+        //PurchaseEntity purchase = oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Order not found."));
         //oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
         if (oOrderRepository.existsById(id)) {
-            Page<PurchaseDetailEntity> purchasesDetail = oPurchaseDetailRepository.findByOrderId(id, PageRequest.of(0, 1000));
+            Page<PurchaseDetailEntity> purchasesDetail = oPurchaseDetailRepository.findByPurchaseId(id, PageRequest.of(0, 1000));
             for (PurchaseDetailEntity purchaseDetail : purchasesDetail) {
                 ProductEntity product = purchaseDetail.getProduct();
                 int amount = purchaseDetail.getAmount();
