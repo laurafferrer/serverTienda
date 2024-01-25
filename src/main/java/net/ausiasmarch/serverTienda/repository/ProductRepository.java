@@ -17,7 +17,7 @@ import net.ausiasmarch.serverTienda.entity.ProductEntity;
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     // Find product by Id Category
-    Page <ProductEntity> findBycategory_id(Long category_id, Pageable pageable);
+    Page <ProductEntity> findByCategoryId(Long category_id, Pageable pageable);
 
     // Find product by name
     @Query(value = "SELECT * FROM product WHERE name LIKE %?1%", nativeQuery = true)

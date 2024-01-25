@@ -120,8 +120,8 @@ public class ProductApi {
      * @return ResponseEntity with ProductEntity.
      */
     @GetMapping("/byCategory/{id}")
-    public ResponseEntity<Page<ProductEntity>> getByCategory(@PathVariable("id") Long id, Pageable oPageable) {
-        return ResponseEntity.ok(oProductService.getByCategory(id, oPageable));
+    public ResponseEntity<Page<ProductEntity>> getByCategoryId(@PathVariable("id") Long id, Pageable oPageable) {
+        return ResponseEntity.ok(oProductService.getByCategoryId(id, oPageable));
     }
 
     /*
