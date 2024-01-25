@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import net.ausiasmarch.serverTienda.service.CategoryService;
 import net.ausiasmarch.serverTienda.entity.CategoryEntity;
 
@@ -61,7 +63,7 @@ public class CategoryApi {
      * @return ResponseEntity containing the id of the created category.
      */
     @PostMapping("")
-    public ResponseEntity<Long> create(CategoryEntity oCategoryEntity) {
+    public ResponseEntity<Long> create(@Valid @RequestBody CategoryEntity oCategoryEntity) {
         return ResponseEntity.ok(oCategoryService.create(oCategoryEntity));
     }
 
