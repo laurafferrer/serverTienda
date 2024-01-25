@@ -104,17 +104,18 @@ public class ProductService {
     
     // Update stock product and check if depleted
     @Transactional
-    public ProductEntity updateStock(Long id, int quantity) {
-        ProductEntity product = oProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    public void updateStock(ProductEntity oProductEntity, int amount) {
+        ProductEntity product = oProductRepository.findById(oProductEntity.getId()).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
-        int updatedStock = product.getStock() - quantity;
-        if (updatedStock < 0) {
-            throw new RuntimeException("Stock insufficient for product with ID: " + id);
+        if (product != null) {
+            int currentStock = product.getStock();
+            int newStock = currentStock - amount;
+            if (newStock < 0) {
+                newStock = 0;
+            }
+            product.setStock(newStock);
+            oProductRepository.save(product);
         }
-
-        product.setStock(updatedStock);
-        oProductRepository.save(product);
-        return product;
     }
 
 }
