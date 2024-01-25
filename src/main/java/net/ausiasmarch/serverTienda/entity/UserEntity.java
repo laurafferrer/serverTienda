@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
@@ -93,8 +94,13 @@ public class UserEntity {
 
     private Boolean role = false;
 
+    @JsonManagedReference("user-cart")
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<CartEntity> carts;
+
+    @JsonManagedReference("user-order")
+    @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
+    private List<OrderEntity> orders;
 
     /*
      * Default constructor initializes lists.
@@ -463,6 +469,15 @@ public class UserEntity {
      */
     public List<CartEntity> getCarts() {
         return carts;
+    }
+
+    /*
+     * Get the list of user's orders.
+     * 
+     * @return list of user's orders.
+     */
+    public List<OrderEntity> getOrders() {
+        return orders;
     }
 
 }
