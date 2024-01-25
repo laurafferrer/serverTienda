@@ -12,24 +12,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import net.ausiasmarch.serverTienda.entity.OrderEntity;
+import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
 
-public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> {
 
     // Find orders by user Id
-    Page<OrderEntity> findByUserId (Long user_id, Pageable oPageable);
+    Page<PurchaseEntity> findByUserId (Long user_id, Pageable oPageable);
 
     // Find orders by date order desc
-    @Query(value = "SELECT * FROM order WHERE date_order DESC", nativeQuery = true)
-    Page<OrderEntity> findOrderByDateOrderDesc(Pageable pageable);
+    @Query(value = "SELECT * FROM `order` WHERE date_order DESC", nativeQuery = true)
+    Page<PurchaseEntity> findOrderByDateOrderDesc(Pageable pageable);
 
     // Find orders by date order asc
-    @Query(value = "SELECT * FROM order WHERE date_order ASC", nativeQuery = true)
-    Page<OrderEntity> findOrderByDateOrderAsc(Pageable pageable);
+    @Query(value = "SELECT * FROM `order` WHERE date_order ASC", nativeQuery = true)
+    Page<PurchaseEntity> findOrderByDateOrderAsc(Pageable pageable);
 
     // Find orders by date order containing
-    @Query(value = "SELECT * FROM order WHERE date_order LIKE %?1%", nativeQuery = true)
-    Page<OrderEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable);
+    @Query(value = "SELECT * FROM `order` WHERE date_order LIKE %?1%", nativeQuery = true)
+    Page<PurchaseEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable);
 
     // Method to reset the auto-increment counter for the user table
     @Modifying

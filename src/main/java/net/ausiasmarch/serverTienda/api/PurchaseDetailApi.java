@@ -83,17 +83,17 @@ public class PurchaseDetailApi {
     }
 
     /*
-     * Endpoint to get purchase details by order ID.
+     * Endpoint to get purchase details by purchase ID.
      *
      * @param oPageable Pageable object for pagination.
-     * @param order_id ID of the order to filter by.
+     * @param purchase_id ID of the purchase to filter by.
      * @return ResponseEntity with a Page of PurchaseDetailEntity.
      */
-    @GetMapping("/byOrderId/{order_id}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderId(
+    @GetMapping("/byPurchaseId/{purchase_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByPurchaseId(
             Pageable oPageable,
-            @PathVariable("order_id") Long order_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByOrderId(order_id, oPageable));
+            @PathVariable("purchase_id") Long purchase_id) {
+        return ResponseEntity.ok(oPurchaseDetailService.findByPurchaseId(purchase_id, oPageable));
     }
 
     /*
@@ -111,19 +111,19 @@ public class PurchaseDetailApi {
     }
 
     /*
-     * Endpoint to get purchase details by both order ID and product ID.
+     * Endpoint to get purchase details by both purchase ID and product ID.
      *
      * @param oPageable Pageable object for pagination.
-     * @param order_id ID of the order to filter by.
+     * @param purchase_id ID of the purchase to filter by.
      * @param product_id ID of the product to filter by.
      * @return ResponseEntity with a Page of PurchaseDetailEntity.
      */
-    @GetMapping("/byOrderIdAndProductId/{order_id}/{product_id}")
-    public ResponseEntity<Page<PurchaseDetailEntity>> findByOrderIdAndProductId(
+    @GetMapping("/byPurchaseIdAndProductId/{purchase_id}/{product_id}")
+    public ResponseEntity<Page<PurchaseDetailEntity>> findByPurchaseIdAndProductId(
             Pageable oPageable,
-            @PathVariable("order_id") Long order_id,
+            @PathVariable("purchase_id") Long purchase_id,
             @PathVariable("product_id") Long product_id) {
-        return ResponseEntity.ok(oPurchaseDetailService.findByOrderIdAndProductId(order_id, product_id, oPageable));
+        return ResponseEntity.ok(oPurchaseDetailService.findByPurchaseIdAndProductId(purchase_id, product_id, oPageable));
     }
 
     /*

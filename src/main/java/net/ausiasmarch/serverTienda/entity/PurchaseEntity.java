@@ -25,7 +25,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "order")
-public class OrderEntity {
+public class PurchaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +52,7 @@ public class OrderEntity {
     /*
      * Default constructor
      */
-    public OrderEntity() {
+    public PurchaseEntity() {
     }
 
     /*
@@ -64,7 +64,7 @@ public class OrderEntity {
      * @param date_bill   Order's date of bill.
      * @param user_id     User associated with the order.
      */
-    public OrderEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public PurchaseEntity(Long id, LocalDate date_order, Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.id = id;
         this.date_order = date_order;
         this.num_bill = num_bill;
@@ -80,7 +80,7 @@ public class OrderEntity {
      * @param date_bill   Order's date of bill.
      * @param user_id     User associated with the order.
      */
-    public OrderEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public PurchaseEntity(LocalDate date_order,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
         this.date_order = date_order;
         this.num_bill = num_bill;
         this.date_bill = date_bill;

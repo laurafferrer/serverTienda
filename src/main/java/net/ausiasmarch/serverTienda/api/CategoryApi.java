@@ -100,7 +100,7 @@ public class CategoryApi {
     }
 
     /*
-     * Endpoint for retrieving all categories by the quantity products associated in ascending order.
+     * Endpoint for retrieving all categories by the quantity products associated in ascending purchase.
      * 
      * @param oPageable Pageable object for pagination.
      * @return ResponseEntity containing the categories.

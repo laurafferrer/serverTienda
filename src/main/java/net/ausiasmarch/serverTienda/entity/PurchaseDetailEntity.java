@@ -35,10 +35,10 @@ public class PurchaseDetailEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    @JsonBackReference("order-purchasedetail")
+    @JsonBackReference("purchase-purchasedetail")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "order_id")
-    private OrderEntity order;
+    @JoinColumn(name = "purchase_id")
+    private PurchaseEntity purchase;
 
     /*
      * Default constructor.
@@ -53,14 +53,14 @@ public class PurchaseDetailEntity {
      * @param amount  Purchase detail's amount.
      * @param price     Purchase detail's price.
      * @param product   The product associated with the Purchase detail.
-     * @param order  The order associated with the Purchase detail.
+     * @param purchase  The purchase associated with the Purchase detail.
      */
-    public PurchaseDetailEntity(Long id, int amount, Double price, ProductEntity product, OrderEntity order) {
+    public PurchaseDetailEntity(Long id, int amount, Double price, ProductEntity product, PurchaseEntity purchase) {
         this.id = id;
         this.amount = amount;
         this.price = price;
         this.product = product;
-        this.order = order;
+        this.purchase = purchase;
     }
 
     /*
@@ -69,13 +69,13 @@ public class PurchaseDetailEntity {
      * @param amount    Purchase detail's amount.
      * @param price     Purchase detail's price.
      * @param product   The product associated with the Purchase detail.
-     * @param order  The order associated with the Purchase detail.
+     * @param purchase  The purchase associated with the Purchase detail.
      */
-    public PurchaseDetailEntity(int amount, Double price, ProductEntity product, OrderEntity order) {
+    public PurchaseDetailEntity(int amount, Double price, ProductEntity product, PurchaseEntity purchase) {
         this.amount = amount;
         this.price = price;
         this.product = product;
-        this.order = order;
+        this.purchase = purchase;
     }
 
     /*
@@ -151,20 +151,20 @@ public class PurchaseDetailEntity {
     }
 
     /*
-     * Get order associated with Purchase detail.
+     * Get purchase associated with Purchase detail.
      * 
-     * @return order associated with Purchase detail.
+     * @return purchase associated with Purchase detail.
      */
-    public OrderEntity getOrder() {
-        return order;
+    public PurchaseEntity getPurchase() {
+        return purchase;
     }
 
     /*
-     * Set order associated with Purchase detail.
+     * Set purchase associated with Purchase detail.
      * 
-     * @return order associated with Purchase detail.
+     * @return purchase associated with Purchase detail.
      */
-    public void setOrder(OrderEntity order) {
-        this.order = order;
+    public void setPurchase(PurchaseEntity purchase) {
+        this.purchase = purchase;
     }
 }

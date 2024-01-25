@@ -99,9 +99,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<CartEntity> carts;
 
-    @JsonManagedReference("user-order")
+    @JsonManagedReference("user-purchase")
     @OneToMany(mappedBy = "user_id", cascade = CascadeType.PERSIST, fetch = jakarta.persistence.FetchType.LAZY)
-    private List<OrderEntity> orders;
+    private List<PurchaseEntity> purchases;
 
     /*
      * Default constructor initializes lists.
@@ -473,12 +473,12 @@ public class UserEntity {
     }
 
     /*
-     * Get the list of user's orders.
+     * Get the list of user's purchases.
      * 
-     * @return list of user's orders.
+     * @return list of user's purchases.
      */
-    public List<OrderEntity> getOrders() {
-        return orders;
+    public List<PurchaseEntity> getPurchases() {
+        return purchases;
     }
 
 }

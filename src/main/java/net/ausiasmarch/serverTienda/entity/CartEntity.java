@@ -31,12 +31,12 @@ public class CartEntity {
     @NotNull(message = "Price cannot be null")
     private double price;
 
-    @JsonBackReference("user-order")
+    @JsonBackReference("user-cart")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @JsonBackReference("product-order")
+    @JsonBackReference("product-cart")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id")
     private ProductEntity product;

@@ -17,21 +17,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import net.ausiasmarch.serverTienda.entity.CartEntity;
-import net.ausiasmarch.serverTienda.entity.OrderEntity;
+import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
 import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.entity.PurchaseDetailEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
 
-import net.ausiasmarch.serverTienda.repository.OrderRepository;
+import net.ausiasmarch.serverTienda.repository.PurchaseRepository;
 import net.ausiasmarch.serverTienda.repository.PurchaseDetailRepository;
 
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 
 @Service
-public class OrderService {
+public class PurchaseService {
 
     @Autowired
-    OrderRepository oOrderRepository;
+    PurchaseRepository oOrderRepository;
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
@@ -52,23 +52,23 @@ public class OrderService {
     PurchaseDetailRepository oPurchaseDetailRepository;
 
     // Get order by ID
-    public OrderEntity get(Long id) {
+    public PurchaseEntity get(Long id) {
         return oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("order not found"));
     }
 
     // Get a page of orders
-    public Page<OrderEntity> getPage(Pageable oPageable) {
+    public Page<PurchaseEntity> getPage(Pageable oPageable) {
         return oOrderRepository.findAll(oPageable);
     }
 
     // Get random order
-    public OrderEntity getOneRandom() {
+    public PurchaseEntity getOneRandom() {
         Pageable oPageable = PageRequest.of((int) (Math.random() * oOrderRepository.count()), 1);
         return oOrderRepository.findAll(oPageable).getContent().get(0);
     }
 
     // Create a new order
-    public OrderEntity create(OrderEntity oOrderEntity) {
+    public PurchaseEntity create(PurchaseEntity oOrderEntity) {
         // oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
@@ -89,7 +89,7 @@ public class OrderService {
     }
 
     // Update an existing order
-    public OrderEntity update(OrderEntity oOrderEntity) {
+    public PurchaseEntity update(PurchaseEntity oOrderEntity) {
         // oSessionService.onlyAdmins();
         return oOrderRepository.save(oOrderEntity);
     }
@@ -102,22 +102,22 @@ public class OrderService {
     }
 
     // Find orders by user Id
-    public Page<OrderEntity> findByUserId(Long user_id, Pageable oPageable) {
+    public Page<PurchaseEntity> findByUserId(Long user_id, Pageable oPageable) {
         return oOrderRepository.findByUserId(user_id, oPageable);
     }
 
     // Find orders by date order desc
-    public Page<OrderEntity> findOrderByDateOrderDesc(Pageable pageable) {
+    public Page<PurchaseEntity> findOrderByDateOrderDesc(Pageable pageable) {
         return oOrderRepository.findOrderByDateOrderDesc(pageable);
     }
 
     // Find orders by date order asc
-    public Page<OrderEntity> findOrderByDateOrderAsc(Pageable pageable) {
+    public Page<PurchaseEntity> findOrderByDateOrderAsc(Pageable pageable) {
         return oOrderRepository.findOrderByDateOrderAsc(pageable);
     }
 
     // Find orders by date order containing
-    public Page<OrderEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable) {
+    public Page<PurchaseEntity> findOrderByDateOrderContaining(String date_order, Pageable pageable) {
         return oOrderRepository.findOrderByDateOrderContaining(date_order, pageable);
     }
 
@@ -147,11 +147,11 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderEntity makePurchaseSingleCart(CartEntity oCartEntity, UserEntity oUserEntity) {
+    public PurchaseEntity makePurchaseSingleCart(CartEntity oCartEntity, UserEntity oUserEntity) {
 
         // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
-        OrderEntity oOrderEntity = new OrderEntity();
+        PurchaseEntity oOrderEntity = new PurchaseEntity();
 
         oOrderEntity.setUser(oUserEntity);
         oOrderEntity.setDate_order(LocalDate.now());
@@ -177,11 +177,11 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderEntity makePurchaseAllCarts (List<CartEntity> carts, UserEntity oUserEntity) {
+    public PurchaseEntity makePurchaseAllCarts (List<CartEntity> carts, UserEntity oUserEntity) {
         
         // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
-        OrderEntity oOrderEntity = new OrderEntity();
+        PurchaseEntity oOrderEntity = new PurchaseEntity();
 
         oOrderEntity.setUser(oUserEntity);
         oOrderEntity.setDate_order(LocalDate.now());
@@ -214,7 +214,7 @@ public class OrderService {
     }
 
     public Long cancelOrder(Long id) {
-        OrderEntity purchase = oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Order not found."));
+        PurchaseEntity purchase = oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Order not found."));
         //oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
         if (oOrderRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchasesDetail = oPurchaseDetailRepository.findByOrderId(id, PageRequest.of(0, 1000));

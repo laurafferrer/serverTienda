@@ -1,6 +1,6 @@
 /*
-   API controller for managing orders.
-   Provides endpoints for retrieving, creating, updating, and deleting orders.
+   API controller for managing purchases.
+   Provides endpoints for retrieving, creating, updating, and deleting purchases.
 */
 package net.ausiasmarch.serverTienda.api;
 
@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.ausiasmarch.serverTienda.entity.OrderEntity;
-import net.ausiasmarch.serverTienda.service.OrderService;
+import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
+import net.ausiasmarch.serverTienda.service.PurchaseService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/order")
-public class OrderApi {
+public class PurchaseApi {
 
     @Autowired
-    OrderService oOrderService;
+    PurchaseService oOrderService;
 
     /*
      * Get order by ID.
@@ -40,7 +40,7 @@ public class OrderApi {
      * @return ResponseEntity with OrderEntity.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<OrderEntity> get(@PathVariable("id") Long id) {
+    public ResponseEntity<PurchaseEntity> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oOrderService.get(id));
     }
 
@@ -52,7 +52,7 @@ public class OrderApi {
      * @return ResponseEntity with Page<OrderEntity>.
      */
     @GetMapping("")
-    public ResponseEntity<Page<OrderEntity>> getPage(
+    public ResponseEntity<Page<PurchaseEntity>> getPage(
             Pageable oPageable,
             @RequestParam(name = "filter", required = false) String strFilter) {
         return ResponseEntity.ok(oOrderService.getPage(oPageable));
@@ -66,7 +66,7 @@ public class OrderApi {
      * @return ResponseEntity with Page<OrderEntity>.
      */
     @GetMapping("/byUserId/{user_id}")
-    public ResponseEntity<Page<OrderEntity>> findByUserId(
+    public ResponseEntity<Page<PurchaseEntity>> findByUserId(
             Pageable oPageable,
             @PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oOrderService.findByUserId(user_id, oPageable));
@@ -79,7 +79,7 @@ public class OrderApi {
      * @return ResponseEntity with OrderEntity.
      */
     @PostMapping("")
-    public ResponseEntity<OrderEntity> create(@RequestBody OrderEntity oOrderEntity) {
+    public ResponseEntity<PurchaseEntity> create(@RequestBody PurchaseEntity oOrderEntity) {
         return ResponseEntity.ok(oOrderService.create(oOrderEntity));
     }
 
@@ -90,7 +90,7 @@ public class OrderApi {
      * @return ResponseEntity with OrderEntity.
      */
     @PutMapping("")
-    public ResponseEntity<OrderEntity> update(@RequestBody OrderEntity oOrderEntity) {
+    public ResponseEntity<PurchaseEntity> update(@RequestBody PurchaseEntity oOrderEntity) {
         return ResponseEntity.ok(oOrderService.update(oOrderEntity));
     }
 
@@ -122,7 +122,7 @@ public class OrderApi {
      * @return ResponseEntity with Page<OrderEntity>.
      */
     @GetMapping("/byDateOrderDesc")
-    public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderDesc(Pageable pageable) {
+    public ResponseEntity<Page<PurchaseEntity>> findOrderByDateOrderDesc(Pageable pageable) {
         return ResponseEntity.ok(oOrderService.findOrderByDateOrderDesc(pageable));
     }
 
@@ -133,7 +133,7 @@ public class OrderApi {
      * @return ResponseEntity with Page<OrderEntity>.
      */
     @GetMapping("/byDateOrderAsc")
-    public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderAsc(Pageable pageable) {
+    public ResponseEntity<Page<PurchaseEntity>> findOrderByDateOrderAsc(Pageable pageable) {
         return ResponseEntity.ok(oOrderService.findOrderByDateOrderAsc(pageable));
     }
 
@@ -145,7 +145,7 @@ public class OrderApi {
      * @return ResponseEntity with Page<OrderEntity>.
      */
     @GetMapping("/byDateOrderContaining/{date_order}")
-    public ResponseEntity<Page<OrderEntity>> findOrderByDateOrderContaining(
+    public ResponseEntity<Page<PurchaseEntity>> findOrderByDateOrderContaining(
             Pageable pageable,
             @PathVariable("date_order") String date_order) {
         return ResponseEntity.ok(oOrderService.findOrderByDateOrderContaining(date_order, pageable));
