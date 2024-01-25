@@ -1,6 +1,5 @@
 package net.ausiasmarch.serverTienda.api;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,17 +57,17 @@ public class EmailController {
 
       oEmailService.sendEmailTemplate(oEmailValuesDTO);
 
-      return new ResponseEntity(null, HttpStatus.OK);
+      return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDTO oChangePasswordDTO, BindingResult oBindingResult) {
       if (oBindingResult.hasErrors()) {
-        return new ResponseEntity("Compruebe los campos introducidos", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Compruebe los campos introducidos", HttpStatus.BAD_REQUEST);
       }
 
       if(!oChangePasswordDTO.getPassword().equals(oChangePasswordDTO.getConfirmPassword())) {
-        return new ResponseEntity("Las contraseñas no coinciden", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Las contraseñas no coinciden", HttpStatus.BAD_REQUEST);
       }
 
       UserEntity oUserEntity = oUserService.getByTokenPassword(oChangePasswordDTO.getTokenPassword());
@@ -77,7 +76,7 @@ public class EmailController {
       oUserEntity.setTokenPassword(null);
       oUserRepository.save(oUserEntity);
 
-      return new ResponseEntity(null, HttpStatus.OK);
+      return new ResponseEntity<>(null, HttpStatus.OK);
 
     }
 }
