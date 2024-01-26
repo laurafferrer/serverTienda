@@ -116,7 +116,7 @@ public class UserService {
             String name = DataGenerationHelper.getRandomName();
             String surname = DataGenerationHelper.getRandomLastName();
             String last_name = DataGenerationHelper.getRandomLastName();
-            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + surname.substring(1, 3) + last_name.substring(1, 2) + i).toLowerCase();
+            String username = DataGenerationHelper.doNormalize(name.substring(0, 3) + surname.substring(1, 3) + last_name.substring(1, 2)).toLowerCase();
             LocalDate birth_date = DataGenerationHelper.getRandombirth_date();
             String phone_number = DataGenerationHelper.getRandomphone_number();
             String email = (name.substring(0, 3) + surname.substring(0, 3) + last_name.substring(0, 3) + i).toLowerCase() + "@gmail.com";

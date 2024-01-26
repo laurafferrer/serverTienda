@@ -34,8 +34,6 @@ public class UserEntity {
 
     @NotNull
     @NotBlank
-    @Size(min = 9, max = 9)
-    @Pattern(regexp = "[0-9]{8}[A-Za-z]{1}")
     private String dni;
 
     @NotNull
@@ -69,8 +67,6 @@ public class UserEntity {
     private LocalDate birth_date;
 
     @NotNull
-    @Size(min = 9, max = 9)
-    @Pattern(regexp = "\\+?[0-9]+")
     private String phone_number;
 
     @NotNull
