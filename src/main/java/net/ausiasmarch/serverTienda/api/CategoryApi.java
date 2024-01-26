@@ -74,7 +74,7 @@ public class CategoryApi {
      * @return ResponseEntity containing the updated category.
      */
     @PutMapping("")
-    public ResponseEntity<CategoryEntity> update(CategoryEntity oCategoryEntity) {
+    public ResponseEntity<CategoryEntity> update(@RequestBody CategoryEntity oCategoryEntity) {
         return ResponseEntity.ok(oCategoryService.update(oCategoryEntity));
     }
 
