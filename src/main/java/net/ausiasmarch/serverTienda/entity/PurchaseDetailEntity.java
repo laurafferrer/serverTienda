@@ -3,9 +3,6 @@
 */
 package net.ausiasmarch.serverTienda.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,13 +27,11 @@ public class PurchaseDetailEntity {
     @NotNull
     private Double price;
 
-    @JsonBackReference("product-purchasedetail")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    @JsonBackReference("purchase-purchasedetail")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "purchase_id")
     private PurchaseEntity purchase;
 

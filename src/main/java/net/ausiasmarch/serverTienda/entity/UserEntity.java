@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -95,12 +93,10 @@ public class UserEntity {
 
     private Boolean role = false;
 
-    @JsonManagedReference("user-cart")
     @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<CartEntity> carts;
 
-    @JsonManagedReference("user-purchase")
-    @OneToMany(mappedBy = "user_id", cascade = CascadeType.PERSIST, fetch = jakarta.persistence.FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = jakarta.persistence.FetchType.LAZY)
     private List<PurchaseEntity> purchases;
 
     /*
@@ -108,6 +104,7 @@ public class UserEntity {
      */
     public UserEntity() {
         carts = new ArrayList<>();
+        purchases = new ArrayList<>();
     }
 
     /*
@@ -464,21 +461,21 @@ public class UserEntity {
     }
 
     /*
-     * Get the list of user's carts.
+     * Returns the number of carts associated with the user.
      * 
-     * @return list of user's carts.
+     * @return Number of carts associated with the user.
      */
-    public List<CartEntity> getCarts() {
-        return carts;
+    public int getCarts() {
+        return carts.size();
     }
 
     /*
-     * Get the list of user's purchases.
+     * Returns the number of purchases made by the user.
      * 
-     * @return list of user's purchases.
+     * @return Number of purchases made by the user.
      */
-    public List<PurchaseEntity> getPurchases() {
-        return purchases;
+    public int getPurchases(){
+        return purchases.size();
     }
 
 }

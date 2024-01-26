@@ -5,20 +5,15 @@
 package net.ausiasmarch.serverTienda.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotNull;
@@ -40,14 +35,9 @@ public class PurchaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate date_bill;
 
-    @JsonBackReference("user-purchase")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user_id;
-
-    @JsonManagedReference("purchase-purchasedetail")
-    @OneToMany(mappedBy = "purchase", fetch = jakarta.persistence.FetchType.LAZY)
-    private List<PurchaseDetailEntity> purchasesdetails;
+    private UserEntity user;
 
     /*
      * Default constructor
@@ -64,12 +54,12 @@ public class PurchaseEntity {
      * @param date_bill   Purchase's date of bill.
      * @param user_id     User associated with the order.
      */
-    public PurchaseEntity(Long id, LocalDate date_purchase, Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public PurchaseEntity(Long id, LocalDate date_purchase, Long num_bill, LocalDate date_bill, UserEntity user) {
         this.id = id;
         this.date_purchase = date_purchase;
         this.num_bill = num_bill;
         this.date_bill = date_bill;
-        this.user_id = user_id;
+        this.user = user;
     }
 
     /*
@@ -80,11 +70,24 @@ public class PurchaseEntity {
      * @param date_bill   Purchase's date of bill.
      * @param user_id     User associated with the order.
      */
-    public PurchaseEntity(LocalDate date_purchase,  Long num_bill, LocalDate date_bill, UserEntity user_id) {
+    public PurchaseEntity(LocalDate date_purchase,  Long num_bill, LocalDate date_bill, UserEntity user) {
         this.date_purchase = date_purchase;
         this.num_bill = num_bill;
         this.date_bill = date_bill;
-        this.user_id = user_id;
+        this.user = user;
+    }
+
+    /*
+     * Constructor with parameters for partial entity initialization.
+     * 
+     * @param date_purchase  Purchase's date of order.
+     * @param num_bill    Purchase's bill number.
+     * @param date_bill   Purchase's date of bill.
+     */
+    public PurchaseEntity(LocalDate date_purchase,  Long num_bill, LocalDate date_bill) {
+        this.date_purchase = date_purchase;
+        this.num_bill = num_bill;
+        this.date_bill = date_bill;
     }
 
     /*
@@ -165,7 +168,7 @@ public class PurchaseEntity {
      * @return User associated with the Purchase.
      */
     public UserEntity getUser() {
-        return user_id;
+        return user;
     }
 
     /*
@@ -173,8 +176,8 @@ public class PurchaseEntity {
      * 
      * @param user_id User associated with the Purchase.
      */
-    public void setUser(UserEntity user_id) {
-        this.user_id = user_id;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
     
 }

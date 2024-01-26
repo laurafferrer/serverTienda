@@ -3,9 +3,8 @@
 */
 package net.ausiasmarch.serverTienda.entity;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +30,6 @@ public class CategoryEntity {
     @Size(min = 3, max = 255)
     private String name;
 
-    @JsonManagedReference("category-product")
     @OneToMany(mappedBy = "category", fetch = jakarta.persistence.FetchType.LAZY)
     private List<ProductEntity> products;
 
@@ -39,6 +37,7 @@ public class CategoryEntity {
      * Default constructor.
      */
     public CategoryEntity() {
+        products = new ArrayList<>();
     }
 
     /*
@@ -95,6 +94,15 @@ public class CategoryEntity {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /*
+     * Returns the number of products associated with this category.
+     * 
+     * @return Number of products associated with the category.
+     */
+    public int getProducts() {
+        return products.size();
     }
 
 }
