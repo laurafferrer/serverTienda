@@ -1,5 +1,5 @@
 /*
-   DataGenerationHelper class for generating random data, such as names, addresses, phone numbers, etc.
+   UserGenerationHelper class for generating random data, such as names, addresses, phone numbers, etc.
 */
 package net.ausiasmarch.serverTienda.helper;
 
@@ -16,7 +16,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import net.ausiasmarch.serverTienda.exception.CannotPerformOperationException;
 
-public class DataGenerationHelper {
+public class UserGenerationHelper {
 
     /*
      * Random names for users
