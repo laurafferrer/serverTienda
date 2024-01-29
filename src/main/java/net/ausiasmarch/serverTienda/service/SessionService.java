@@ -20,7 +20,7 @@ import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 import net.ausiasmarch.serverTienda.exception.UnauthorizedException;
 
-import net.ausiasmarch.serverTienda.helper.UserGenerationHelper;
+import net.ausiasmarch.serverTienda.helper.DataGenerationHelper;
 import net.ausiasmarch.serverTienda.helper.JWTHelper;
 
 import net.ausiasmarch.serverTienda.repository.CaptchaRepository;
@@ -165,7 +165,7 @@ public class SessionService {
         PendentEntity newPendentEntity = oPendentRepository.save(pendentEntity);
 
         // Generate a token for the pendent entity
-        newPendentEntity.setToken(UserGenerationHelper.getSHA256(String.valueOf(newPendentEntity.getId()) + String.valueOf(oCaptchaEntity.getId()) + String.valueOf(UserGenerationHelper.getRandomInt(0, 9999))));
+        newPendentEntity.setToken(DataGenerationHelper.getSHA256(String.valueOf(newPendentEntity.getId()) + String.valueOf(oCaptchaEntity.getId()) + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
         oPendentRepository.save(newPendentEntity);
 
         // Prepare response with token and captcha image
