@@ -27,7 +27,7 @@ import net.ausiasmarch.serverTienda.service.PurchaseService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/purchase")
 public class PurchaseApi {
 
     @Autowired
