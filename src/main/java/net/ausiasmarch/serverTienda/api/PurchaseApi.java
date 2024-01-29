@@ -4,6 +4,8 @@
 */
 package net.ausiasmarch.serverTienda.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -22,8 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ausiasmarch.serverTienda.entity.CartEntity;
 import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
+import net.ausiasmarch.serverTienda.entity.UserEntity;
+import net.ausiasmarch.serverTienda.service.CartService;
 import net.ausiasmarch.serverTienda.service.PurchaseService;
+import net.ausiasmarch.serverTienda.service.UserService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 @RestController
@@ -32,6 +38,12 @@ public class PurchaseApi {
 
     @Autowired
     PurchaseService oPurchaseService;
+
+    @Autowired
+    UserService oUserService;
+
+    @Autowired
+    CartService oCartService;
 
     /*
      * Get purchase by ID.
@@ -73,6 +85,17 @@ public class PurchaseApi {
     }
 
     /*
+     * Get random purchase.
+     * 
+     * @return ResponseEntity with purchaseEntity.
+     */
+    @GetMapping("/random")
+    public ResponseEntity<PurchaseEntity> getRandom() {
+        PurchaseEntity oPurchaseEntity = oPurchaseService.getOneRandom();
+        return ResponseEntity.ok(oPurchaseEntity);
+    }
+
+    /*
      * Create new purchase.
      * 
      * @param oPurchaseEntity purchaseEntity object.
@@ -81,6 +104,50 @@ public class PurchaseApi {
     @PostMapping("")
     public ResponseEntity<PurchaseEntity> create(@RequestBody PurchaseEntity oPurchaseEntity) {
         return ResponseEntity.ok(oPurchaseService.create(oPurchaseEntity));
+    }
+
+    /*
+     * Purchase one cart.
+     * 
+     * @param idUser User's ID.
+     * @param idCart Cart's ID.
+     * @return ResponseEntity with purchaseEntity.
+     */
+    @PostMapping("/MakePurchaseSingleCart/{idUser}/{id}")
+    public ResponseEntity<PurchaseEntity> makePurchaseSingleCart(@PathVariable Long idUser, @PathVariable Long id) {
+        UserEntity oUserEntity = oUserService.get(idUser);
+        CartEntity oCartEntity = oCartService.get(id);
+
+        PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseSingleCart(oCartEntity, oUserEntity);
+
+        return ResponseEntity.ok(oPurchaseEntity);
+    }
+
+    /*
+     * Purchase all carts.
+     * 
+     * @param idUser User's ID.
+     * @return ResponseEntity with purchaseEntity.
+     */
+    @PostMapping("/MakePurchaseAllCarts/{idUser}")
+    public ResponseEntity<PurchaseEntity> makePurchaseAllCarts(@PathVariable Long idUser) {
+        UserEntity oUserEntity = oUserService.get(idUser);
+        List<CartEntity> oCartsEntity = oCartService.getCartsUser(idUser);
+
+        PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseAllCarts(oCartsEntity, oUserEntity);
+
+        return ResponseEntity.ok(oPurchaseEntity);
+    }
+
+    /*
+     * Populate database with random purchases.
+     * 
+     * @param amount Number of purchases to create.
+     * @return ResponseEntity with purchaseEntity.
+     */
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") int amount) {
+        return ResponseEntity.ok(oPurchaseService.populate(amount));
     }
 
     /*

@@ -61,6 +61,12 @@ public class CartService {
         return oCartRepository.findAll(oPageable);
     }
 
+    // Get all carts of user.
+    public List<CartEntity> getCartsUser(Long user_id) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        return oCartRepository.findAllByUserId(user_id);
+    }
+
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());

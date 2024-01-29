@@ -2,9 +2,7 @@
 package net.ausiasmarch.serverTienda.service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -26,6 +24,7 @@ import net.ausiasmarch.serverTienda.repository.PurchaseRepository;
 import net.ausiasmarch.serverTienda.repository.PurchaseDetailRepository;
 
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
+import net.ausiasmarch.serverTienda.helper.PurchaseGenartionHelper;
 
 @Service
 public class PurchaseService {
@@ -41,6 +40,9 @@ public class PurchaseService {
 
     @Autowired
     CartService oCartService;
+
+    @Autowired
+    UserService oUserService;
 
     @Autowired
     ProductService oProductService;
@@ -121,29 +123,25 @@ public class PurchaseService {
         return oPurchaseRepository.findPurchaseByDateOrderContaining(date_purchase, pageable);
     }
 
+    // Populate the product Purchase
+    public Long populate(int amount) {
+        //oSessionService.onlyAdmins();
+        for (int i = 0; i < amount; i++) {
+            UserEntity oUserEntity = oUserService.getOneRandom();
+            LocalDate date_purchase = PurchaseGenartionHelper.getRandomDatePurchase();
+            Long num_bill = PurchaseGenartionHelper.getRandomNumBill();
+            LocalDate date_bill = PurchaseGenartionHelper.getRandomDateBill();
+            oPurchaseRepository.save(new PurchaseEntity(date_purchase, num_bill, date_bill, oUserEntity));
+        }
+        return oPurchaseRepository.count();
+    }
+
     // Empty the product Purchase
     public Long empty() {
         oPurchaseRepository.deleteAll();
         oPurchaseRepository.resetAutoIncrement();
         oPurchaseRepository.flush();
         return oPurchaseRepository.count();
-    }
-
-    /**
-     * Generates a unique Long code for a bill based on the current date and a UUID.
-     * 
-     * @return A unique Long code for a bill.
-     */
-    public Long generateCodeBill() {
-        // Format the current date in the pattern "yyyyMMdd"
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        Long actualDate = Long.parseLong(LocalDate.now().format(formatter));
-
-        // Generate a UUID, remove hyphens, and take the first 4 characters
-        Long uuid = Long.parseLong(UUID.randomUUID().toString().replace("-", "").substring(0, 4));
-
-        // Concatenate the formatted date and UUID to create the final Long code
-        return actualDate * 10000 + uuid;
     }
 
     @Transactional
@@ -155,7 +153,7 @@ public class PurchaseService {
 
         oPurchaseEntity.setUser(oUserEntity);
         oPurchaseEntity.setDate_purchase(LocalDate.now());
-        oPurchaseEntity.setNum_bill(generateCodeBill());
+        oPurchaseEntity.setNum_bill(PurchaseGenartionHelper.getRandomNumBill());
 
         oPurchaseRepository.save(oPurchaseEntity);
 
@@ -185,7 +183,7 @@ public class PurchaseService {
 
         oPurchaseEntity.setUser(oUserEntity);
         oPurchaseEntity.setDate_purchase(LocalDate.now());
-        oPurchaseEntity.setNum_bill(generateCodeBill());
+        oPurchaseEntity.setNum_bill(PurchaseGenartionHelper.getRandomNumBill());
 
         oPurchaseRepository.save(oPurchaseEntity);
 
