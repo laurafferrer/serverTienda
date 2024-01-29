@@ -1,4 +1,4 @@
-/* Service  that performs CRUD operations on the OrderEntity entity*/
+/* Service  that performs CRUD operations on the PurchaseEntity entity*/
 package net.ausiasmarch.serverTienda.service;
 
 import java.time.LocalDate;
@@ -31,7 +31,7 @@ import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
 public class PurchaseService {
 
     @Autowired
-    PurchaseRepository oOrderRepository;
+    PurchaseRepository oPurchaseRepository;
 
     @Autowired
     HttpServletRequest oHttpServletRequest;
@@ -51,82 +51,82 @@ public class PurchaseService {
     @Autowired
     PurchaseDetailRepository oPurchaseDetailRepository;
 
-    // Get order by ID
+    // Get purchase by ID
     public PurchaseEntity get(Long id) {
-        return oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("order not found"));
+        return oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("purchase not found"));
     }
 
-    // Get a page of orders
+    // Get a page of purchases
     public Page<PurchaseEntity> getPage(Pageable oPageable) {
-        return oOrderRepository.findAll(oPageable);
+        return oPurchaseRepository.findAll(oPageable);
     }
 
-    // Get random order
+    // Get random purchase
     public PurchaseEntity getOneRandom() {
-        Pageable oPageable = PageRequest.of((int) (Math.random() * oOrderRepository.count()), 1);
-        return oOrderRepository.findAll(oPageable).getContent().get(0);
+        Pageable oPageable = PageRequest.of((int) (Math.random() * oPurchaseRepository.count()), 1);
+        return oPurchaseRepository.findAll(oPageable).getContent().get(0);
     }
 
-    // Create a new order
-    public PurchaseEntity create(PurchaseEntity oOrderEntity) {
+    // Create a new purchase
+    public PurchaseEntity create(PurchaseEntity oPurchaseEntity) {
         // oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
-        if (oOrderEntity.getNum_bill() <= 0) {
+        if (oPurchaseEntity.getNum_bill() <= 0) {
             throw new IllegalArgumentException("The num of bill must be more than 0");
         }
 
         // Validation date of bill are before or current date
         LocalDate currentDate = LocalDate.now();
-        LocalDate date_bill = oOrderEntity.getDate_bill();
+        LocalDate date_bill = oPurchaseEntity.getDate_bill();
 
         if (date_bill == null || date_bill.isAfter(currentDate)) {
             throw new IllegalArgumentException("The date of bill must be before or current date");
         }
 
-        oOrderEntity.setId(null);
-        return oOrderRepository.save(oOrderEntity);
+        oPurchaseEntity.setId(null);
+        return oPurchaseRepository.save(oPurchaseEntity);
     }
 
-    // Update an existing order
-    public PurchaseEntity update(PurchaseEntity oOrderEntity) {
+    // Update an existing purchase
+    public PurchaseEntity update(PurchaseEntity oPurchaseEntity) {
         // oSessionService.onlyAdmins();
-        return oOrderRepository.save(oOrderEntity);
+        return oPurchaseRepository.save(oPurchaseEntity);
     }
 
-    // Delete an existing order
+    // Delete an existing purchase
     public Long delete(Long id) {
         // oSessionService.onlyAdmins();
-        oOrderRepository.deleteById(id);
+        oPurchaseRepository.deleteById(id);
         return id;
     }
 
-    // Find orders by user Id
+    // Find purchases by user Id
     public Page<PurchaseEntity> findByUserId(Long user_id, Pageable oPageable) {
-        return oOrderRepository.findByUserId(user_id, oPageable);
+        return oPurchaseRepository.findByUserId(user_id, oPageable);
     }
 
-    // Find orders by date order desc
-    public Page<PurchaseEntity> findOrderByDateOrderDesc(Pageable pageable) {
-        return oOrderRepository.findOrderByDateOrderDesc(pageable);
+    // Find purchases by date order desc
+    public Page<PurchaseEntity> findPurchaseByDateOrderDesc(Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderDesc(pageable);
     }
 
-    // Find orders by date order asc
-    public Page<PurchaseEntity> findOrderByDateOrderAsc(Pageable pageable) {
-        return oOrderRepository.findOrderByDateOrderAsc(pageable);
+    // Find purchases by date order asc
+    public Page<PurchaseEntity> findPurchaseByDateOrderAsc(Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderAsc(pageable);
     }
 
-    // Find orders by date order containing
-    public Page<PurchaseEntity> findOrderByDateOrderContaining(String date_purchase, Pageable pageable) {
-        return oOrderRepository.findOrderByDateOrderContaining(date_purchase, pageable);
+    // Find purchases by date order containing
+    public Page<PurchaseEntity> findPurchaseByDateOrderContaining(String date_purchase, Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderContaining(date_purchase, pageable);
     }
 
-    // Empty the product order
+    // Empty the product Purchase
     public Long empty() {
-        oOrderRepository.deleteAll();
-        oOrderRepository.resetAutoIncrement();
-        oOrderRepository.flush();
-        return oOrderRepository.count();
+        oPurchaseRepository.deleteAll();
+        oPurchaseRepository.resetAutoIncrement();
+        oPurchaseRepository.flush();
+        return oPurchaseRepository.count();
     }
 
     /**
@@ -151,20 +151,20 @@ public class PurchaseService {
 
         // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
-        PurchaseEntity oOrderEntity = new PurchaseEntity();
+        PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
-        oOrderEntity.setUser(oUserEntity);
-        oOrderEntity.setDate_purchase(LocalDate.now());
-        oOrderEntity.setNum_bill(generateCodeBill());
+        oPurchaseEntity.setUser(oUserEntity);
+        oPurchaseEntity.setDate_purchase(LocalDate.now());
+        oPurchaseEntity.setNum_bill(generateCodeBill());
 
-        oOrderRepository.save(oOrderEntity);
+        oPurchaseRepository.save(oPurchaseEntity);
 
         PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
         oPurchaseDetailEntity.setId(null);
         oPurchaseDetailEntity.setAmount(oCartEntity.getAmount());
         oPurchaseDetailEntity.setPrice(oCartEntity.getPrice());
         oPurchaseDetailEntity.setProduct(oCartEntity.getProduct());
-        oPurchaseDetailEntity.setPurchase(oOrderEntity);
+        oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
 
         oPurchaseDetailRepository.save(oPurchaseDetailEntity);
 
@@ -173,7 +173,7 @@ public class PurchaseService {
 
         oCartService.delete(oCartEntity.getId());
 
-        return oOrderEntity;
+        return oPurchaseEntity;
     }
 
     @Transactional
@@ -181,13 +181,13 @@ public class PurchaseService {
         
         // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
-        PurchaseEntity oOrderEntity = new PurchaseEntity();
+        PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
-        oOrderEntity.setUser(oUserEntity);
-        oOrderEntity.setDate_purchase(LocalDate.now());
-        oOrderEntity.setNum_bill(generateCodeBill());
+        oPurchaseEntity.setUser(oUserEntity);
+        oPurchaseEntity.setDate_purchase(LocalDate.now());
+        oPurchaseEntity.setNum_bill(generateCodeBill());
 
-        oOrderRepository.save(oOrderEntity);
+        oPurchaseRepository.save(oPurchaseEntity);
 
         carts = oCartService.getByUser(oUserEntity.getId());
         
@@ -197,7 +197,7 @@ public class PurchaseService {
             oPurchaseDetailEntity.setAmount(cart.getAmount());
             oPurchaseDetailEntity.setPrice(cart.getPrice());
             oPurchaseDetailEntity.setProduct(cart.getProduct());
-            oPurchaseDetailEntity.setPurchase(oOrderEntity);
+            oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
 
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
         }
@@ -209,14 +209,14 @@ public class PurchaseService {
 
         oCartService.deleteByUser(oUserEntity.getId());
 
-        return oOrderEntity;
+        return oPurchaseEntity;
 
     }
 
-    public Long cancelOrder(Long id) {
-        //PurchaseEntity purchase = oOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Order not found."));
+    public Long cancelPurchase(Long id) {
+        //PurchaseEntity purchase = oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Purchase not found."));
         //oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
-        if (oOrderRepository.existsById(id)) {
+        if (oPurchaseRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchasesDetail = oPurchaseDetailRepository.findByPurchaseId(id, PageRequest.of(0, 1000));
             for (PurchaseDetailEntity purchaseDetail : purchasesDetail) {
                 ProductEntity product = purchaseDetail.getProduct();
@@ -224,10 +224,10 @@ public class PurchaseService {
                 oProductService.updateStock(product, -amount);
             }
             oPurchaseDetailRepository.deleteAll(purchasesDetail);
-            oOrderRepository.deleteById(id);
+            oPurchaseRepository.deleteById(id);
             return id;
         } else {
-            throw new ResourceNotFoundException("Error: Order not found.");
+            throw new ResourceNotFoundException("Error: Purchase not found.");
         }
     }
 

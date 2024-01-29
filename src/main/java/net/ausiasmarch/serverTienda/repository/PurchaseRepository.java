@@ -1,7 +1,7 @@
 /*
-   OrderRepository interface for managing OrderEntity persistence.
-   JpaRepository provides standard CRUD operations and queries for the OrderEntity entity.
-   Additional custom queries for specific operations on the OrderEntity table.
+   PurchaseRepository interface for managing PurchaseEntity persistence.
+   JpaRepository provides standard CRUD operations and queries for the PurchaseEntity entity.
+   Additional custom queries for specific operations on the PurchaseEntity table.
 */
 package net.ausiasmarch.serverTienda.repository;
 
@@ -16,20 +16,20 @@ import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
 
 public interface PurchaseRepository extends JpaRepository<PurchaseEntity, Long> {
 
-    // Find orders by user Id
+    // Find purchases by user Id
     Page<PurchaseEntity> findByUserId (Long user_id, Pageable oPageable);
 
-    // Find orders by date order desc
-    @Query(value = "SELECT * FROM `order` WHERE date_purchase DESC", nativeQuery = true)
-    Page<PurchaseEntity> findOrderByDateOrderDesc(Pageable pageable);
+    // Find purchases by date order desc
+    @Query(value = "SELECT * FROM purchase WHERE date_purchase DESC", nativeQuery = true)
+    Page<PurchaseEntity> findPurchaseByDateOrderDesc(Pageable pageable);
 
-    // Find orders by date order asc
-    @Query(value = "SELECT * FROM `order` WHERE date_purchase ASC", nativeQuery = true)
-    Page<PurchaseEntity> findOrderByDateOrderAsc(Pageable pageable);
+    // Find purchases by date order asc
+    @Query(value = "SELECT * FROM purchase WHERE date_purchase ASC", nativeQuery = true)
+    Page<PurchaseEntity> findPurchaseByDateOrderAsc(Pageable pageable);
 
-    // Find orders by date order containing
-    @Query(value = "SELECT * FROM `order` WHERE date_purchase LIKE %?1%", nativeQuery = true)
-    Page<PurchaseEntity> findOrderByDateOrderContaining(String date_purchase, Pageable pageable);
+    // Find purchases by date order containing
+    @Query(value = "SELECT * FROM purchase WHERE date_purchase LIKE %?1%", nativeQuery = true)
+    Page<PurchaseEntity> findPurchaseByDateOrderContaining(String date_purchase, Pageable pageable);
 
     // Method to reset the auto-increment counter for the user table
     @Modifying
