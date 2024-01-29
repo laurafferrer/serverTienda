@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import net.ausiasmarch.serverTienda.entity.CategoryEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
+import net.ausiasmarch.serverTienda.helper.CategoryGenerationHelper;
 import net.ausiasmarch.serverTienda.repository.CategoryRepository;
 
 @Service
@@ -52,6 +53,16 @@ public class CategoryService {
         //oSessionService.onlyAdmins();
         oCategoryEntity.setId(null);
         return oCategoryRepository.save(oCategoryEntity).getId();
+    }
+
+    // Populate the category table with random data
+    public Long populate(Long amount) {
+        // oSessionService.onlyAdmins();
+        for (int i = 0; i < amount; i++) {
+            String category = CategoryGenerationHelper.getRandomName();
+            oCategoryRepository.save(new CategoryEntity(category));
+        }
+        return oCategoryRepository.count();
     }
 
     // Update an existing category

@@ -100,6 +100,17 @@ public class CategoryApi {
     }
 
     /*
+     * Endpoint for populating the categories table with random data.
+     * 
+     * @param amount Long containing the number of categories to be generated.
+     * @return ResponseEntity containing the number of generated categories.
+     */
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Long amount) {
+        return ResponseEntity.ok(oCategoryService.populate(amount));
+    }
+
+    /*
      * Endpoint for retrieving all categories by the quantity products associated in ascending purchase.
      * 
      * @param oPageable Pageable object for pagination.
