@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 
 import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
+import net.ausiasmarch.serverTienda.helper.ProductGenerationHelper;
 import net.ausiasmarch.serverTienda.repository.ProductRepository;
 
 @Service
@@ -90,6 +91,19 @@ public class ProductService {
 
         // Guardar el producto en la base de datos
         return oProductRepository.save(oProductEntity).getId();
+    }
+
+    // Populate the database with random products
+    public Long populate(Long amount) {
+        //oSessionService.onlyAdmins();
+        for (int i = 0; i < amount; i++) {
+            String name = ProductGenerationHelper.getRandomName();
+            String description = ProductGenerationHelper.getRandomDescription();
+            Double price = ProductGenerationHelper.getRandomPrice();
+            Integer stock = ProductGenerationHelper.getRandomStock();
+            oProductRepository.save(new ProductEntity(name, description, price, stock));
+        }
+        return oProductRepository.count();
     }
 
     // Update existing product

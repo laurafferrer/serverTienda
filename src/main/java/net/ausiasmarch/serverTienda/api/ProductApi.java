@@ -103,6 +103,17 @@ public class ProductApi {
     }
 
     /*
+     * Generate random products up to a given amount.
+     * 
+     * @param amount Number of products to be generated.
+     * @return ResponseEntity with the number of generated products.
+     */
+    @GetMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Long amount) {
+        return ResponseEntity.ok(oProductService.populate(amount));
+    }
+
+    /*
      * Get random product.
      * 
      * @param id Product's ID.
