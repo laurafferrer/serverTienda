@@ -29,6 +29,9 @@ public class ProductService {
     @Autowired
     SessionService oSessionService;
 
+    @Autowired
+    CategoryService oCategoryService;
+
     // Get product by ID
     public ProductEntity get(Long id) {
         return oProductRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -101,7 +104,8 @@ public class ProductService {
             String description = ProductGenerationHelper.getRandomDescription();
             Double price = ProductGenerationHelper.getRandomPrice();
             Integer stock = ProductGenerationHelper.getRandomStock();
-            oProductRepository.save(new ProductEntity(name, description, price, stock));
+           // int category = CategoryGenerationHelper.getRandomCategory();
+            oProductRepository.save(new ProductEntity(name, description, price, stock, oCategoryService.getOneRandom()));
         }
         return oProductRepository.count();
     }

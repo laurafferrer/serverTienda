@@ -108,7 +108,7 @@ public class ProductApi {
      * @param amount Number of products to be generated.
      * @return ResponseEntity with the number of generated products.
      */
-    @GetMapping("/populate/{amount}")
+    @PostMapping("/populate/{amount}")
     public ResponseEntity<Long> populate(@PathVariable("amount") Long amount) {
         return ResponseEntity.ok(oProductService.populate(amount));
     }

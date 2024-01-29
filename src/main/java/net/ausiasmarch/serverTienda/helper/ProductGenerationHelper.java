@@ -68,12 +68,12 @@ public class ProductGenerationHelper {
     }
 
     /*
-     * Get random price for products
+     * Get random price for products, rounded to two decimals.
      * 
      * @return A random price.
      */
     public static double getRandomPrice() {
-        return 0.50 + Math.random() * 29.50;
+        return Math.round(Math.random() * 10000) / 100.0;
     }
 
     /*
