@@ -25,9 +25,6 @@ public class CartEntity {
     @NotNull(message = "Amount cannot be null")
     private int amount;
 
-    @NotNull(message = "Price cannot be null")
-    private double price;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -47,14 +44,12 @@ public class CartEntity {
      * 
      * @param id      Cart's ID.
      * @param amount  Cart's amount.
-     * @param price   Cart's price.
      * @param user    User associated with the cart.
      * @param product Product associated with the cart.
      */
-    public CartEntity(Long id, int amount, double price, UserEntity user, ProductEntity product) {
+    public CartEntity(Long id, int amount, UserEntity user, ProductEntity product) {
         this.id = id;
         this.amount = amount;
-        this.price = price;
         this.user = user;
         this.product = product;
     }
@@ -63,13 +58,11 @@ public class CartEntity {
      * Constructor with parameters for partial entity initialization.
      * 
      * @param amount  Cart's amount.
-     * @param price   Cart's price.
      * @param user    User associated with the cart.
      * @param product Product associated with the cart.
      */
-    public CartEntity(int amount, double price, UserEntity user, ProductEntity product) {
+    public CartEntity(int amount, UserEntity user, ProductEntity product) {
         this.amount = amount;
-        this.price = price;
         this.user = user;
         this.product = product;
     }
@@ -90,24 +83,6 @@ public class CartEntity {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /*
-     * Get the cart's price.
-     * 
-     * @return Cart's price.
-     */
-    public double getPrice() {
-        return price;
-    }
-
-    /*
-     * Set the cart's price.
-     * 
-     * @param price Cart's price.
-     */
-    public void setPrice(double price) {
-        this.price = price;
     }
     
     /*

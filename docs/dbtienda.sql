@@ -45,19 +45,8 @@ CREATE TABLE `cart` (
   `id` bigint NOT NULL,
   `amount` int NOT NULL,
   `product_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
-  `price` double NOT NULL
+  `user_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `cart`
---
-
-INSERT INTO `cart` (`id`, `amount`, `product_id`, `user_id`, `price`) VALUES
-(1, 12, 2, 1, 0),
-(2, 4, 2, 2, 0),
-(3, 23, 1, 1, 0),
-(4, 23, 1, 1, 0);
 
 -- --------------------------------------------------------
 

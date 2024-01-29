@@ -69,6 +69,7 @@ public class CartService {
 
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId();
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
