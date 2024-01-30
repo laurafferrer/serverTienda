@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import net.ausiasmarch.serverTienda.bean.CaptchaBean;
 import net.ausiasmarch.serverTienda.bean.CaptchaResponseBean;
+import net.ausiasmarch.serverTienda.bean.UserBean;
 import net.ausiasmarch.serverTienda.service.SessionService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
@@ -38,7 +39,18 @@ public class SessionController {
      */
     @PostMapping("/loginCaptcha")
     public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
-        return ResponseEntity.ok("\"" + oSessionService.loginCaptcha(oCaptchaBean) + "\"");
+        return ResponseEntity.ok(oSessionService.loginCaptcha(oCaptchaBean));
+    }
+
+    /*
+     * Endpoint for user login with credentials.
+     * 
+     * @param oUserBean UserBean containing user credentials.
+     * @return ResponseEntity with a string response, typically a token.
+     */
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserBean oUserBean) {
+        return ResponseEntity.ok(oSessionService.login(oUserBean));
     }
     
 }

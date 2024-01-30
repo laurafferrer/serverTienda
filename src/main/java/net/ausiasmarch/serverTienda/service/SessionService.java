@@ -49,12 +49,11 @@ public class SessionService {
     @Autowired
     PendentRepository oPendentRepository;
 
+    // Method to login without captcha
     public String login(UserBean oUserBean) {
-        String strUsername = oUserBean.getUsername();
-
-        oUserRepository.findByUsernameAndPassword(strUsername,oUserBean.getPassword())
-                .orElseThrow(() -> new ResourceNotFoundException("Wrong User"));
-        return JWTHelper.generateJWT(oUserBean.getUsername());
+        UserEntity userEntity = oUserRepository.findByUsernameAndPassword(oUserBean.getUsername(), oUserBean.getPassword())
+                .orElseThrow(() -> new ResourceNotFoundException("User or password incorrect"));
+        return JWTHelper.generateJWT(userEntity.getUsername());
     }
 
     // Method to get the session's username
