@@ -32,7 +32,7 @@ USE `dbtienda`;
 CREATE TABLE `captcha` (
   `id` bigint NOT NULL,
   `text` varchar(255) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
-  `image` tinyblob
+  `image` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
