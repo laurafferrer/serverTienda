@@ -89,8 +89,30 @@ public class CartApi {
      * @return ResponseEntity containing the carts.
      */
     @GetMapping("/allByUser/{user_id}")
-    public ResponseEntity<List<CartEntity>> getAllByUser(@PathVariable("user_id") Long user_id) {
+    public ResponseEntity<List<CartEntity>> getAllByIdUser(@PathVariable("user_id") Long user_id) {
         return ResponseEntity.ok(oCartService.getAllByIdUser(user_id));
+    }
+
+    /*
+     * Endpoint for calculating the cost of a specific cart.
+     * 
+     * @param cart_id Long containing the id of the cart to be calculated.
+     * @return ResponseEntity containing the cost of the cart.
+     */
+    @GetMapping("/cost/{cart_id}")
+    public ResponseEntity<Double> calculateCartCost(@PathVariable("cart_id") Long cart_id) {
+        return ResponseEntity.ok(oCartService.calculateCartCost(cart_id));
+    }
+
+    /*
+     * Endpoint for calculating the total cost of all carts for a specific user.
+     * 
+     * @param user_id Long containing the id of the user to be retrieved.
+     * @return ResponseEntity containing the total cost of the carts. 
+     */
+    @GetMapping("/totalCost/{user_id}")
+    public ResponseEntity<Double> calculateTotalCartCost(@PathVariable("user_id") Long user_id) {
+        return ResponseEntity.ok(oCartService.calculateTotalCartCost(user_id));
     }
 
     /*
@@ -102,6 +124,14 @@ public class CartApi {
     @PostMapping("")
     public ResponseEntity<Long> create(@RequestBody CartEntity oCartEntity) {
         return ResponseEntity.ok(oCartService.create(oCartEntity));
+    }
+
+    /*
+     * 
+     */
+    @PostMapping("/populate/{amount}")
+    public ResponseEntity<Long> populate(@PathVariable("amount") Integer amount) {
+        return ResponseEntity.ok(oCartService.populate(amount));
     }
 
     /*
@@ -124,6 +154,15 @@ public class CartApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCartService.delete(id));
+    }
+
+    /*
+     * 
+     */
+    @DeleteMapping("/user/{user_id}")
+    public ResponseEntity<Long> deleteCartByUser(@PathVariable("user_id") Long user_id) {
+        oCartService.deleteByUserId(user_id);
+        return ResponseEntity.ok(user_id);
     }
 
     /*

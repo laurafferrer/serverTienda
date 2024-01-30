@@ -26,18 +26,23 @@ public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     // Find all carts for a specific user
     @Query(value = "SELECT * FROM cart WHERE user_id = ?1", nativeQuery = true)
-    List<CartEntity> findAllByUserId(Long userId);
+    List<CartEntity> findAllByIdUser(Long user_id);
+    
+    /// Calculate the cost of a specific cart
+    @Query(value = "SELECT c.amount * c.product.price FROM cart c WHERE c.id = ?1", nativeQuery = true)
+    Double calculateCartCost(Long id);
 
-    // Calculate the total price of the cart.
-    @Query(value = "SELECT SUM(p.price) FROM cart c, product p WHERE c.user_id = ?1", nativeQuery = true)
-    Double getTotalPrice(Long user_id);
+    // Calculate the total cost of all carts for a specific user
+    @Query(value = "SELECT SUM(c.amount * c.product.price) FROM cart c WHERE c.user_id = ?1", nativeQuery = true)
+    Double calculateTotalCartCost(Long user_id);
+
+    // Remove all carts for a specific user
+    @Modifying
+    @Query(value = "DELETE FROM cart WHERE user_id = ?1", nativeQuery = true)
+    void deleteByUserId(Long user_id);
 
     // Method to reset the auto-increment counter for the cart table
     @Modifying
     @Query(value = "ALTER TABLE cart AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoIncrement();
-
-    @Modifying
-    @Query(value = "DELETE FROM cart WHERE user_id = ?1", nativeQuery = true)
-    void deleteByUserId();
 }

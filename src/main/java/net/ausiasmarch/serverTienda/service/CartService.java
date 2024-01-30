@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 import net.ausiasmarch.serverTienda.entity.CartEntity;
 import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
+import net.ausiasmarch.serverTienda.helper.CartGenerationHelper;
 import net.ausiasmarch.serverTienda.repository.CartRepository;
 
 @Service
@@ -46,11 +48,6 @@ public class CartService {
         return oCartRepository.findByUserId(user_id);
     }
 
-    // Get all carts for a specific user
-    public List<CartEntity> getAllByIdUser(Long user_id) {
-        return oCartRepository.findAllByUserId(user_id);
-    }
-
     // Get cart by user ID and product ID
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
         return oCartRepository.findByUserIdAndProductId(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
@@ -61,10 +58,20 @@ public class CartService {
         return oCartRepository.findAll(oPageable);
     }
 
-    // Get all carts of user.
-    public List<CartEntity> getCartsUser(Long user_id) {
+    // Get all carts for a specific user
+    public List<CartEntity> getAllByIdUser(Long user_id) {
         //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
-        return oCartRepository.findAllByUserId(user_id);
+        return oCartRepository.findAllByIdUser(user_id);
+    }
+
+    // Calculate the cost of a specific cart
+    public Double calculateCartCost(Long id) {
+        return oCartRepository.calculateCartCost(id);
+    }
+
+    // Calculate the total cost of all carts for a specific user
+    public Double calculateTotalCartCost(Long user_id) {
+        return oCartRepository.calculateTotalCartCost(user_id);
     }
 
     // Create new cart with validation
@@ -86,9 +93,22 @@ public class CartService {
         }
     }
 
+    // Populate the cart table with random data
+    public Long populate(Integer amount) {
+        //oSessionService.onlyAdmins();
+        for (int i = 0; i < amount; i++) {
+            int amountInCart = CartGenerationHelper.getRandomAmount();
+            UserEntity randomUser = oUserService.getOneRandom();
+            ProductEntity randomProduct = oProductService.getOneRandom();
+            oCartRepository.save(new CartEntity(amountInCart, randomUser, randomProduct));
+        }
+        return oCartRepository.count();
+    }
+
     // Update an existing cart
     public CartEntity update(CartEntity oCartEntity) {
         CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
+        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
         oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
 
@@ -97,14 +117,21 @@ public class CartService {
 
     // Delete an existing cart by ID
     public Long delete(Long id) {
-        //oSessionService.onlyUsers();
-        oCartRepository.deleteById(id);
-        return id;
+        //CartEntity oCartEntityFromDatabase = this.get(id);
+        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
+        if (oCartRepository.existsById(id)) {
+            oCartRepository.deleteById(id);
+            return id;
+        } else {
+            throw new ResourceNotFoundException("Error: El cart not found.");
+        }
     }
 
-    // Delete all cart items for a specific user
-    public void deleteByUser(Long user_id) {
-        oCartRepository.findAllByUserId(user_id);
+    // Remove all carts for a specific user
+    @Transactional
+    public void deleteByUserId(Long user_id) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        oCartRepository.deleteByUserId(user_id);
     }
 
     // Empty the cart table
