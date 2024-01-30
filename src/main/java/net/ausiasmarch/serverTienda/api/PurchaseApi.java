@@ -132,7 +132,7 @@ public class PurchaseApi {
     @PostMapping("/MakePurchaseAllCarts/{idUser}")
     public ResponseEntity<PurchaseEntity> makePurchaseAllCarts(@PathVariable Long idUser) {
         UserEntity oUserEntity = oUserService.get(idUser);
-        List<CartEntity> oCartsEntity = oCartService.getCartsUser(idUser);
+        List<CartEntity> oCartsEntity = oCartService.getByUser(idUser);
 
         PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseAllCarts(oCartsEntity, oUserEntity);
 

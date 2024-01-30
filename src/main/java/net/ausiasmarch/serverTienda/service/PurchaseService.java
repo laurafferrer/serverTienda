@@ -203,7 +203,7 @@ public class PurchaseService {
             oProductService.updateStock(product, cart.getAmount());
         }
 
-        oCartService.deleteByUser(oUserEntity.getId());
+        oCartService.deleteByUserId(oUserEntity.getId());
 
         return oPurchaseEntity;
 
