@@ -24,7 +24,7 @@ public class PendentEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_captcha")
+    @JoinColumn(name = "captcha_id")
     private CaptchaEntity captcha;
 
     private String token;

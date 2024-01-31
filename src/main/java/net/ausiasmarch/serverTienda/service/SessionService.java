@@ -156,7 +156,7 @@ public class SessionService {
     @Transactional
     public CaptchaResponseBean prelogin() {
         // Create a captcha for pre-login
-        CaptchaEntity oCaptchaEntity = oCaptchaService.getRandomCaptcha();
+        CaptchaEntity oCaptchaEntity = oCaptchaService.createCaptcha();
 
         // Create a new pendent entity associated with the captcha
         PendentEntity pendentEntity = new PendentEntity();
@@ -171,7 +171,7 @@ public class SessionService {
         // Prepare response with token and captcha image
         CaptchaResponseBean captchaResponseBean = new CaptchaResponseBean();
         captchaResponseBean.setToken(newPendentEntity.getToken());
-        captchaResponseBean.setCaptchaImage(newPendentEntity.getCaptcha().getImage());
+        captchaResponseBean.setCaptchaImage(oCaptchaEntity.getImage());
 
         return captchaResponseBean;
     }
@@ -194,9 +194,8 @@ public class SessionService {
                 }
 
                 // Validate the captcha answer
-                if (oPendentEntity.getCaptcha().getText().trim().equals(oCaptchaBean.getAnswer().trim())) {
+                if (oPendentEntity.getCaptcha().getText().equals(oCaptchaBean.getAnswer())) {
                     // Generate and return a JWT token upon successful validation
-                    oPendentRepository.delete(oPendentEntity);
                     return JWTHelper.generateJWT(oCaptchaBean.getUsername());
                 } else {
                     throw new UnauthorizedException("Incorrect captcha");
