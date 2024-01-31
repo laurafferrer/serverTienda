@@ -29,7 +29,7 @@ public class SessionController {
      */
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserBean oUserBean) {
-        return ResponseEntity.ok(oSessionService.login(oUserBean));
+        return ResponseEntity.ok("\"" + oSessionService.login(oUserBean) + "\"");
     }
 
     /*
@@ -50,7 +50,7 @@ public class SessionController {
      */
     @PostMapping("/loginCaptcha")
     public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
-        return ResponseEntity.ok(oSessionService.loginCaptcha(oCaptchaBean));
+        return ResponseEntity.ok("\"" + oSessionService.loginCaptcha(oCaptchaBean) + "\"");
     }
     
 }

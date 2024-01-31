@@ -51,9 +51,10 @@ public class SessionService {
 
     // Method to login without captcha
     public String login(UserBean oUserBean) {
-        UserEntity userEntity = oUserRepository.findByUsernameAndPassword(oUserBean.getUsername(), oUserBean.getPassword())
+        String strUsername = oUserBean.getUsername();
+        oUserRepository.findByUsernameAndPassword(strUsername, oUserBean.getPassword())
                 .orElseThrow(() -> new ResourceNotFoundException("User or password incorrect"));
-        return JWTHelper.generateJWT(userEntity.getUsername());
+        return JWTHelper.generateJWT(oUserBean.getUsername());
     }
 
     // Method to get the session's username
@@ -155,7 +156,7 @@ public class SessionService {
     @Transactional
     public CaptchaResponseBean prelogin() {
         // Create a captcha for pre-login
-        CaptchaEntity oCaptchaEntity = oCaptchaService.createCaptcha();
+        CaptchaEntity oCaptchaEntity = oCaptchaService.getRandomCaptcha();
 
         // Create a new pendent entity associated with the captcha
         PendentEntity pendentEntity = new PendentEntity();
@@ -170,7 +171,7 @@ public class SessionService {
         // Prepare response with token and captcha image
         CaptchaResponseBean captchaResponseBean = new CaptchaResponseBean();
         captchaResponseBean.setToken(newPendentEntity.getToken());
-        captchaResponseBean.setCaptchaImage(oCaptchaEntity.getImage());
+        captchaResponseBean.setCaptchaImage(newPendentEntity.getCaptcha().getImage());
 
         return captchaResponseBean;
     }
@@ -193,8 +194,9 @@ public class SessionService {
                 }
 
                 // Validate the captcha answer
-                if (oPendentEntity.getCaptcha().getText().equals(oCaptchaBean.getAnswer())) {
+                if (oPendentEntity.getCaptcha().getText().trim().equals(oCaptchaBean.getAnswer().trim())) {
                     // Generate and return a JWT token upon successful validation
+                    oPendentRepository.delete(oPendentEntity);
                     return JWTHelper.generateJWT(oCaptchaBean.getUsername());
                 } else {
                     throw new UnauthorizedException("Incorrect captcha");
