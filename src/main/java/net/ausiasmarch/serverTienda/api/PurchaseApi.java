@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -120,7 +120,7 @@ public class PurchaseApi {
 
         PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseSingleCart(oCartEntity, oUserEntity);
 
-        return ResponseEntity.ok(oPurchaseEntity);
+        return new ResponseEntity<>(oPurchaseEntity, HttpStatus.CREATED);
     }
 
     /*
@@ -136,7 +136,7 @@ public class PurchaseApi {
 
         PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseAllCarts(oCartsEntity, oUserEntity);
 
-        return ResponseEntity.ok(oPurchaseEntity);
+        return new ResponseEntity<>(oPurchaseEntity, HttpStatus.CREATED);
     }
 
     /*

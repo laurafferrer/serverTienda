@@ -35,14 +35,29 @@ public class PurchaseGenartionHelper {
     public static Long getRandomNumBill() {
         // Format the current date in the pattern "yyyyMMdd"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        Long actualDate = Long.parseLong(LocalDate.now().format(formatter));
+        Long actualDate;
+
+        try {
+            // Attempt to parse the formatted date as a Long
+            actualDate = Long.parseLong(LocalDate.now().format(formatter));
+        } catch (NumberFormatException e) {
+            // Handle the case where the formatted date is not a valid Long
+            actualDate = 0L; // You can choose a default value or handle it differently
+        }
 
         // Generate a UUID, remove hyphens, and take the first 4 characters
-        Long uuid = Long.parseLong(UUID.randomUUID().toString().replace("-", "").substring(0, 4));
+        Long uuid;
+
+        try {
+            // Attempt to parse the UUID as a Long
+            uuid = Long.parseLong(UUID.randomUUID().toString().replace("-", "").substring(0, 4));
+        } catch (NumberFormatException e) {
+            // Handle the case where the UUID is not a valid Long
+            uuid = 0L; // You can choose a default value or handle it differently
+        }
 
         // Concatenate the formatted date and UUID to create the final Long code
         return actualDate * 10000 + uuid;
-
     }
 
     /*

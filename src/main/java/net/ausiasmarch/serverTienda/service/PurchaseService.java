@@ -160,6 +160,7 @@ public class PurchaseService {
         PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
         oPurchaseDetailEntity.setId(null);
         oPurchaseDetailEntity.setAmount(oCartEntity.getAmount());
+        oPurchaseDetailEntity.setPrice(oCartEntity.getProduct().getPrice());
         oPurchaseDetailEntity.setProduct(oCartEntity.getProduct());
         oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
 
@@ -192,6 +193,7 @@ public class PurchaseService {
             PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
             oPurchaseDetailEntity.setId(null);
             oPurchaseDetailEntity.setAmount(cart.getAmount());
+            oPurchaseDetailEntity.setPrice(cart.getProduct().getPrice());
             oPurchaseDetailEntity.setProduct(cart.getProduct());
             oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
 
