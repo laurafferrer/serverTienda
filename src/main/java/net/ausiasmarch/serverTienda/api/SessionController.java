@@ -22,6 +22,17 @@ public class SessionController {
     SessionService oSessionService;
 
     /*
+     * Endpoint for user login with credentials.
+     * 
+     * @param oUserBean UserBean containing user credentials.
+     * @return ResponseEntity with a string response, typically a token.
+     */
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserBean oUserBean) {
+        return ResponseEntity.ok(oSessionService.login(oUserBean));
+    }
+
+    /*
      * Endpoint for pre-login operation, returns a captcha for user validation.
      * 
      * @return ResponseEntity with CaptchaResponseBean.
@@ -40,17 +51,6 @@ public class SessionController {
     @PostMapping("/loginCaptcha")
     public ResponseEntity<String> loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
         return ResponseEntity.ok(oSessionService.loginCaptcha(oCaptchaBean));
-    }
-
-    /*
-     * Endpoint for user login with credentials.
-     * 
-     * @param oUserBean UserBean containing user credentials.
-     * @return ResponseEntity with a string response, typically a token.
-     */
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserBean oUserBean) {
-        return ResponseEntity.ok(oSessionService.login(oUserBean));
     }
     
 }
