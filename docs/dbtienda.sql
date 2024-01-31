@@ -78,9 +78,8 @@ INSERT INTO `category` (`id`, `name`) VALUES
 CREATE TABLE `pendent` (
   `id` bigint NOT NULL,
   `timecode` timestamp NOT NULL,
-  `token` varchar(512) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
-  `captcha_id` bigint NOT NULL,
-  `id_captcha` bigint DEFAULT NULL
+  `token` varchar(512) COLLATE utf16_bin NULL,
+  `captcha_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 -- --------------------------------------------------------
@@ -206,8 +205,7 @@ ALTER TABLE `category`
 --
 ALTER TABLE `pendent`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `pendent_ibfk_1` (`id_captcha`),
-  ADD KEY `pendent_ibfk_2` (`captcha_id`);
+  ADD KEY `pendent_ibfk_1` (`captcha_id`);
 
 --
 -- Indices de la tabla `product`
@@ -304,8 +302,7 @@ ALTER TABLE `cart`
 -- Filtros para la tabla `pendent`
 --
 ALTER TABLE `pendent`
-  ADD CONSTRAINT `pendent_ibfk_1` FOREIGN KEY (`captcha_id`) REFERENCES `captcha` (`id`),
-  ADD CONSTRAINT `pendent_ibfk_2` FOREIGN KEY (`id_captcha`) REFERENCES `captcha` (`id`);
+  ADD CONSTRAINT `pendent_ibfk_1` FOREIGN KEY (`captcha_id`) REFERENCES `captcha` (`id`);
 
 --
 -- Filtros para la tabla `product`
