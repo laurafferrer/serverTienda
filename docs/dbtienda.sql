@@ -190,9 +190,7 @@ ALTER TABLE `captcha`
 -- Indices de la tabla `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cart_ibfk_1` (`product_id`),
-  ADD KEY `cart_ibfk_2` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `category`
@@ -204,30 +202,25 @@ ALTER TABLE `category`
 -- Indices de la tabla `pendent`
 --
 ALTER TABLE `pendent`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pendent_ibfk_1` (`captcha_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_ibfk_1` (`category_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `purchase`
 --
 ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `purchase_ibfk_1` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `purchase_detail`
 --
 ALTER TABLE `purchase_detail`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK79a6tsn4e9qfillme2u9kr3i2` (`product_id`),
-  ADD KEY `FK65hoe4yy1817l2vm74msb8eq5` (`purchase_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `user`
@@ -288,42 +281,3 @@ ALTER TABLE `user`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `pendent`
---
-ALTER TABLE `pendent`
-  ADD CONSTRAINT `pendent_ibfk_1` FOREIGN KEY (`captcha_id`) REFERENCES `captcha` (`id`);
-
---
--- Filtros para la tabla `product`
---
-ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
-
---
--- Filtros para la tabla `purchase`
---
-ALTER TABLE `purchase`
-  ADD CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Filtros para la tabla `purchase_detail`
---
-ALTER TABLE `purchase_detail`
-  ADD CONSTRAINT `FK65hoe4yy1817l2vm74msb8eq5` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`),
-  ADD CONSTRAINT `FK79a6tsn4e9qfillme2u9kr3i2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
