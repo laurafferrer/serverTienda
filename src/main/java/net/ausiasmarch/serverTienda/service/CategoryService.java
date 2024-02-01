@@ -4,6 +4,7 @@ package net.ausiasmarch.serverTienda.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,6 +81,7 @@ public class CategoryService {
     }
 
     // Empty the category table
+    @Transactional
     public Long empty() {
         oCategoryRepository.deleteAll();
         oCategoryRepository.resetAutoIncrement();
