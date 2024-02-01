@@ -75,6 +75,7 @@ public class CategoryService {
     public Long delete(Long id) {
         //oSessionService.onlyAdmins();
         oCategoryRepository.deleteById(id);
+        // PONER PARA QUE AL BORRAR UNA CATEGORIA SE BORREN LOS PRODUCTOS DE ESA CATEGORIA
         return id;
     }
 
