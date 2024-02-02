@@ -1,0 +1,23 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "captcha",
+    "dateExported": "2024-02-02T09:10:37.967Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "8dde2052-6b92-4429-a725-c7dd49cc80b1",
+            "colId": "c1c86907-f25f-488e-a1cb-3146c054fab7",
+            "containerId": "",
+            "name": "CreateCaptcha",
+            "url": "http://localhost:8083/captcha/create",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-01-30T19:33:44.913Z",
+            "modified": "2024-01-30T19:34:13.373Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

@@ -1,0 +1,117 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "category",
+    "dateExported": "2024-02-02T09:09:50.230Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "1276746b-146c-4e1e-a178-77e0460c8e00",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "GetCategory",
+            "url": "http://localhost:8083/category/26",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-25T13:32:37.992Z",
+            "modified": "2024-02-01T11:22:50.136Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f74baefa-8cf1-4533-8128-867c7796c14b",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "GetAllCategory",
+            "url": "http://localhost:8083/category",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-25T13:32:41.426Z",
+            "modified": "2024-01-26T11:40:48.921Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c96fc09c-8692-4a03-b4fd-003e62ad403f",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "InsertCategory",
+            "url": "http://localhost:8083/category",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-25T13:32:43.065Z",
+            "modified": "2024-01-26T11:41:19.043Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Mochila\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "055a00c6-947b-4480-8e28-373849e70fde",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "Populate",
+            "url": "http://localhost:8083/category/populate/10",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2024-01-26T11:55:39.482Z",
+            "modified": "2024-02-01T11:25:57.050Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ae549d1d-3697-4d0a-8dd4-28658bca3071",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "UpdateCategory",
+            "url": "http://localhost:8083/category",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-01-25T13:32:44.130Z",
+            "modified": "2024-02-01T11:31:52.290Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"10\",\n  \"name\": \"aaaa\"\n}\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4dc46dc5-233f-43c3-8a21-b90b734dbbb1",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "DeleteCategory",
+            "url": "http://localhost:8083/category/11",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-01-25T13:33:33.784Z",
+            "modified": "2024-02-01T11:32:10.404Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "20c85b30-1fcf-410d-aa9c-4316d2d8e2e7",
+            "colId": "30507162-5151-4a59-9259-9876df448845",
+            "containerId": "",
+            "name": "Empty",
+            "url": "http://localhost:8083/category/empty",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2024-01-26T11:47:44.592Z",
+            "modified": "2024-01-26T11:48:04.234Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

@@ -1,0 +1,117 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "user",
+    "dateExported": "2024-02-02T09:09:44.272Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "079476f1-bc64-42d1-aae6-71cd7ea5c58b",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "GetUser",
+            "url": "http://localhost:8083/user/3",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-01-25T13:31:54.322Z",
+            "modified": "2024-02-01T09:34:13.998Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "080a1663-0e84-4073-95ed-3b29423981d2",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "GetAllUsers",
+            "url": "http://localhost:8083/user",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-25T13:31:58.097Z",
+            "modified": "2024-01-26T10:56:21.202Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "a8768d86-ea5a-4389-9d73-03c8c9d9b2eb",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "InsertUser",
+            "url": "http://localhost:8083/user",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-25T13:32:01.585Z",
+            "modified": "2024-01-26T10:34:23.637Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"dni\": \"00000000H\",\n  \"username\": \"lauraferrer\",\n  \"name\": \"Laura\",\n  \"surname\": \"Ferrer\",\n  \"last_name\": \"Esteve\",\n  \"birth_date\": \"10-10-2003\",\n  \"phone_number\": \"666666666\",\n  \"email\": \"lferrer@gmail.com\",\n  \"address\": \"Calle Tierra 1C\",\n  \"city\": \"Valencia\",\n  \"postal_code\": \"56530\",\n  \"role\": true\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "29eb4f76-8b66-4b10-9d91-746e74090f8a",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "Populate",
+            "url": "http://localhost:8083/user/populate/10",
+            "method": "POST",
+            "sortNum": 35000,
+            "created": "2024-01-26T11:26:47.635Z",
+            "modified": "2024-01-29T16:21:17.596Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b5402b22-97ad-4e9f-a291-76fe0e625c52",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "UpdateUser",
+            "url": "http://localhost:8083/user",
+            "method": "PUT",
+            "sortNum": 40000,
+            "created": "2024-01-25T13:32:03.106Z",
+            "modified": "2024-01-26T10:57:28.665Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"4\",\n  \"dni\": \"00000000H\",\n  \"username\": \"mimimimimimi\",\n  \"name\": \"Laura\",\n  \"surname\": \"Ferrer\",\n  \"last_name\": \"Esteve\",\n  \"birth_date\": \"10-10-2003\",\n  \"phone_number\": \"666666666\",\n  \"email\": \"lferrer@gmail.com\",\n  \"address\": \"Calle Tierra 1C\",\n  \"city\": \"Valencia\",\n  \"postal_code\": \"56530\",\n  \"role\": true\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "b3b595f6-4e67-4827-9260-48cc2f4a7cac",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "DeleteUser",
+            "url": "http://localhost:8083/user/4",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-01-25T13:33:09.331Z",
+            "modified": "2024-01-26T10:57:53.499Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4158385d-39a2-45d5-9980-46c7a76f6ae5",
+            "colId": "cb997786-ea1c-4588-af83-ba817dc26989",
+            "containerId": "",
+            "name": "Empty",
+            "url": "http://localhost:8083/user/empty",
+            "method": "DELETE",
+            "sortNum": 70000,
+            "created": "2024-01-26T11:35:28.938Z",
+            "modified": "2024-01-26T11:35:45.176Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

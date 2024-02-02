@@ -1,0 +1,61 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "session",
+    "dateExported": "2024-02-02T09:09:20.199Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "d7403e7f-5788-402f-b8f0-6172275634f8",
+            "colId": "a353d4a4-a8f3-475d-a9fb-e9e1821a1b43",
+            "containerId": "",
+            "name": "Session",
+            "url": "http://localhost:8083/session/login",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-01-23T18:00:15.267Z",
+            "modified": "2024-01-31T12:29:35.242Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"marmarzo\",\n  \"password\": \"e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f99fd174-b228-4eae-a815-f4672b84fd43",
+            "colId": "a353d4a4-a8f3-475d-a9fb-e9e1821a1b43",
+            "containerId": "",
+            "name": "prelogin",
+            "url": "http://localhost:8083/session/prelogin",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2024-01-31T16:50:44.387Z",
+            "modified": "2024-01-31T16:50:44.387Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e892f60e-b014-4ade-976b-0172ea808e8e",
+            "colId": "a353d4a4-a8f3-475d-a9fb-e9e1821a1b43",
+            "containerId": "",
+            "name": "pelogin",
+            "url": "http://localhost:8083/session/prelogin",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-01-31T16:50:46.097Z",
+            "modified": "2024-01-31T18:42:11.148Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"lauraferrer\",\n  \"password\": \"e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e\",\n  \"token\": \"8ae78953a52cd33e0b9349e3ba55937d1cf7dc42559deef4008f1179af84d027\",\n  \"answer\": \"a76dn\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

@@ -1,0 +1,117 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "product",
+    "dateExported": "2024-02-02T09:09:54.292Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "7bc43d20-5455-4dba-a0f8-18f160012933",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "GetProduct",
+            "url": "http://localhost:8083/product/15",
+            "method": "GET",
+            "sortNum": 12500,
+            "created": "2024-01-23T18:01:33.157Z",
+            "modified": "2024-02-01T11:36:21.489Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c9b532eb-86b1-4e66-a484-0e23a79f3353",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "GetAllProducts",
+            "url": "http://localhost:8083/product",
+            "method": "GET",
+            "sortNum": 15000,
+            "created": "2024-01-23T18:01:33.156Z",
+            "modified": "2024-01-26T11:52:55.507Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bbe44485-95e8-40b5-861c-9115f07273a5",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "InsertProduct",
+            "url": "http://localhost:8083/product",
+            "method": "POST",
+            "sortNum": 22500,
+            "created": "2024-01-23T18:01:33.161Z",
+            "modified": "2024-02-01T09:16:08.596Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Lápiz 2HB\",\n  \"description\": \"Lápiz marca staedtler \",\n  \"price\": \"0.70\",\n  \"stock\": \"200\",\n  \"category\": {\n    \"id\": 4,\n    \"category\": \"Mochila\"\n  }\n}\n",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "b983cb96-a957-409f-9ca4-47d7c239a4fe",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "Populate",
+            "url": "http://localhost:8083/product/populate/5",
+            "method": "POST",
+            "sortNum": 28750,
+            "created": "2024-01-26T11:56:20.182Z",
+            "modified": "2024-02-01T11:14:42.015Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "275bff1a-a6c4-4fe5-8db4-649b805d3b02",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "UpdateProduct",
+            "url": "http://localhost:8083/product",
+            "method": "PUT",
+            "sortNum": 35000,
+            "created": "2024-01-23T18:01:33.165Z",
+            "modified": "2024-02-01T11:36:58.871Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": \"15\",\n  \"name\": \"Lápiz 2HB\",\n  \"description\": \"Lápiz \",\n  \"price\": \"0.90\",\n  \"stock\": \"200\",\n  \"category\": {\n    \"id\": 5,\n    \"category\": \"Mochila\"\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ab9a71d0-777b-4d6a-b9ad-3cbac019250d",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "DeleteProduct",
+            "url": "http://localhost:8083/product/15",
+            "method": "DELETE",
+            "sortNum": 45000,
+            "created": "2024-01-25T13:33:20.896Z",
+            "modified": "2024-02-01T11:37:05.379Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9eaa302a-c022-46c2-a386-34f1ffa11d4c",
+            "colId": "374cd5ac-f0b7-475e-8ca4-841bd9789768",
+            "containerId": "",
+            "name": "Empty",
+            "url": "http://localhost:8083/product/empty",
+            "method": "DELETE",
+            "sortNum": 55000,
+            "created": "2024-01-26T11:54:47.746Z",
+            "modified": "2024-01-26T11:55:12.031Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

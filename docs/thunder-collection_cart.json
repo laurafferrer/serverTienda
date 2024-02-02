@@ -1,0 +1,47 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "cart",
+    "dateExported": "2024-02-02T09:09:58.313Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "07ffa9d5-5c64-4dde-9cf0-8c2d64f9634b",
+            "colId": "74e186c6-2a1b-4db4-b627-404ad712027a",
+            "containerId": "",
+            "name": "InsertCart",
+            "url": "http://localhost:8083/cart",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-25T17:57:32.013Z",
+            "modified": "2024-02-01T11:40:00.302Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"amount\": 17,\n  \"product\": {\n    \"id\": 16\n  },\n  \"user\": {\n    \"id\": 2\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c67eccc-3981-4bb1-98cc-40e8fae88488",
+            "colId": "74e186c6-2a1b-4db4-b627-404ad712027a",
+            "containerId": "",
+            "name": "UpdateCart",
+            "url": "http://localhost:8083/cart",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2024-01-25T17:57:32.014Z",
+            "modified": "2024-02-01T11:40:21.409Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 5,\n  \"amount\": 17,\n  \"product\": {\n    \"id\": 14\n  },\n  \"user\": {\n    \"id\": 2\n  }\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
