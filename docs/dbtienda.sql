@@ -94,7 +94,7 @@ CREATE TABLE `product` (
   `description` varchar(255) NOT NULL,
   `price` double NOT NULL,
   `stock` int NOT NULL,
-  `image` longblob,
+  `image` varchar(255) DEFAULT NULL,
   `category_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

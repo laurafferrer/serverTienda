@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -41,8 +40,7 @@ public class ProductEntity {
     @NotNull
     private int stock;
 
-    @Lob
-    private byte[] image;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -65,7 +63,7 @@ public class ProductEntity {
      * @param image         Product image.
      * @param category      Product category.
      */
-    public ProductEntity(Long id, String name, String description, Double price, int stock, byte[] image, CategoryEntity category) {
+    public ProductEntity(Long id, String name, String description, Double price, int stock, String image, CategoryEntity category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -85,7 +83,7 @@ public class ProductEntity {
      * @param image         Product image.
      * @param category      Product category.
      */
-    public ProductEntity(String name, String description, Double price, int stock, byte[] image, CategoryEntity category) {
+    public ProductEntity(String name, String description, Double price, int stock, String image, CategoryEntity category) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -121,7 +119,7 @@ public class ProductEntity {
      * @param image         Product image.
      * @param category      Product category.
      */
-    public ProductEntity(String name, String description, Double price, int stock, byte[] image) {
+    public ProductEntity(String name, String description, Double price, int stock, String image) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -241,7 +239,7 @@ public class ProductEntity {
      * 
      * @return The product image.
      */
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -250,7 +248,7 @@ public class ProductEntity {
      * 
      * @param image The product image to set.
      */
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
