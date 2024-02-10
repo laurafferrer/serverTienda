@@ -37,8 +37,19 @@ public class ProductService {
     }
 
     // Get a page of products
-    public Page<ProductEntity> getPage(Pageable oPageable) {
-        return oProductRepository.findAll(oPageable);
+    public Page<ProductEntity> getPage(Pageable oPageable, Long category_id, String filter) {
+        if (category_id != null) {
+            return oProductRepository.findByCategoryId(category_id, oPageable);
+        } else {
+            Page<ProductEntity> page;
+
+            if (filter == null || filter.isEmpty() || filter.trim().isEmpty()) {
+                page = oProductRepository.findAll(oPageable);
+            } else {
+                page = oProductRepository.findByName(filter, oPageable);
+            }
+            return page;
+        }
     }
     
     // Get random product

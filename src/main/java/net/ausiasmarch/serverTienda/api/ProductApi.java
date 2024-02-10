@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,7 +44,8 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.get(id));
     }
 
-    /*
+    product api
+/*
      * Get all products.
      * 
      * @param oPageable Pageable object.
@@ -54,8 +55,9 @@ public class ProductApi {
     @GetMapping("")
     public ResponseEntity<Page<ProductEntity>> getPage(
         Pageable oPageable,
-        @RequestParam(name = "filter", required = false) String strFilter) {
-        return ResponseEntity.ok(oProductService.getPage(oPageable));
+        @RequestParam(name = "filter", required = false) String strFilter,
+        @RequestParam(name = "category", required = false) Long category_id) {
+        return new ResponseEntity<>(oProductService.getPage(oPageable, category_id, strFilter), HttpStatus.OK);
     }
 
     /*
