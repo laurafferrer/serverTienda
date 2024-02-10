@@ -44,7 +44,6 @@ public class ProductApi {
         return ResponseEntity.ok(oProductService.get(id));
     }
 
-    product api
 /*
      * Get all products.
      * 
