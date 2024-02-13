@@ -57,6 +57,15 @@ public class ProductGenerationHelper {
     };
 
     /*
+     * 
+     */
+    private static final String[] aImages = {
+        "../../../../../../../img/boligrafoAzul.jpg",
+        "../../../../../../../img/cartulinaBlanca.jpeg",
+        "../../../../../../../img/lapicero119hb.jpg"
+    };
+
+    /*
      * Generate random description.
      * 
      * @return A random description.
@@ -83,6 +92,15 @@ public class ProductGenerationHelper {
      */
     public static int getRandomStock() {
         return (int) (Math.random() * 10000);
+    }
+
+    /*
+     * 
+     */
+    public static String getRandomImage() {
+        Random random = new Random();
+        int randomImage = random.nextInt(aImages.length);
+        return aImages[randomImage];
     }
     
 }

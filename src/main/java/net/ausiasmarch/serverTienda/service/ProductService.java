@@ -114,7 +114,8 @@ public class ProductService {
             String description = ProductGenerationHelper.getRandomDescription();
             Double price = ProductGenerationHelper.getRandomPrice();
             Integer stock = ProductGenerationHelper.getRandomStock();
-            oProductRepository.save(new ProductEntity(name, description, price, stock, oCategoryService.getOneRandom()));
+            String image = ProductGenerationHelper.getRandomImage();
+            oProductRepository.save(new ProductEntity(name, description, price, stock, image, oCategoryService.getOneRandom()));
         }
         return oProductRepository.count();
     }
