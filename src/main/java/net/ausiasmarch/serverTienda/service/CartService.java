@@ -60,7 +60,7 @@ public class CartService {
 
     // Get all carts for a specific user
     public List<CartEntity> getAllByIdUser(Long user_id) {
-        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oCartRepository.findAllByIdUser(user_id);
     }
 
@@ -76,7 +76,7 @@ public class CartService {
 
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
-        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId();
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId());
         UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
@@ -95,7 +95,7 @@ public class CartService {
 
     // Populate the cart table with random data
     public Long populate(Integer amount) {
-        //oSessionService.onlyAdmins();
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             int amountInCart = CartGenerationHelper.getRandomAmount();
             UserEntity randomUser = oUserService.getOneRandom();
@@ -108,7 +108,7 @@ public class CartService {
     // Update an existing cart
     public CartEntity update(CartEntity oCartEntity) {
         CartEntity oCartEntityFromDatabase = this.get(oCartEntity.getId());
-        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
         oCartEntity.setUser(oCartEntityFromDatabase.getUser());
         oCartEntity.setProduct(oCartEntityFromDatabase.getProduct());
 
@@ -117,8 +117,8 @@ public class CartService {
 
     // Delete an existing cart by ID
     public Long delete(Long id) {
-        //CartEntity oCartEntityFromDatabase = this.get(id);
-        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
+        CartEntity oCartEntityFromDatabase = this.get(id);
+        oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntityFromDatabase.getUser().getId());
         if (oCartRepository.existsById(id)) {
             oCartRepository.deleteById(id);
             return id;
@@ -130,7 +130,7 @@ public class CartService {
     // Remove all carts for a specific user
     @Transactional
     public void deleteByUserId(Long user_id) {
-        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         oCartRepository.deleteByUserId(user_id);
     }
 

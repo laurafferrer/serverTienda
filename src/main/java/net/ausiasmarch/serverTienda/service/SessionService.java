@@ -85,7 +85,7 @@ public class SessionService {
     }
 
     // Methos for role checks and access control
-/* 
+
     // Admins y Users.
     public Boolean isAdmin() {
         if (this.getSessionUsername() != null) {
@@ -151,7 +151,7 @@ public class SessionService {
             throw new UnauthorizedException("You must log in to perform this action");
         }
     }
-*/
+
 
     @Transactional
     public CaptchaResponseBean prelogin() {

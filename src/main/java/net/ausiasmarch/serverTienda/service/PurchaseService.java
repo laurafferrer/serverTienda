@@ -71,7 +71,7 @@ public class PurchaseService {
 
     // Create a new purchase
     public PurchaseEntity create(PurchaseEntity oPurchaseEntity) {
-        // oSessionService.onlyAdmins();
+        oSessionService.onlyAdmins();
 
         // Validation num of bill are more than 0
         if (oPurchaseEntity.getNum_bill() <= 0) {
@@ -92,13 +92,13 @@ public class PurchaseService {
 
     // Update an existing purchase
     public PurchaseEntity update(PurchaseEntity oPurchaseEntity) {
-        // oSessionService.onlyAdmins();
+        oSessionService.onlyAdmins();
         return oPurchaseRepository.save(oPurchaseEntity);
     }
 
     // Delete an existing purchase
     public Long delete(Long id) {
-        // oSessionService.onlyAdmins();
+        oSessionService.onlyAdmins();
         oPurchaseRepository.deleteById(id);
         return id;
     }
@@ -125,7 +125,7 @@ public class PurchaseService {
 
     // Populate the product Purchase
     public Long populate(int amount) {
-        //oSessionService.onlyAdmins();
+        oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             UserEntity oUserEntity = oUserService.getOneRandom();
             LocalDate date_purchase = PurchaseGenartionHelper.getRandomDatePurchase();
@@ -147,7 +147,7 @@ public class PurchaseService {
     @Transactional
     public PurchaseEntity makePurchaseSingleCart(CartEntity oCartEntity, UserEntity oUserEntity) {
 
-        // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
@@ -177,7 +177,7 @@ public class PurchaseService {
     @Transactional
     public PurchaseEntity makePurchaseAllCarts (List<CartEntity> carts, UserEntity oUserEntity) {
         
-        // oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+        oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
@@ -212,8 +212,8 @@ public class PurchaseService {
     }
 
     public Long cancelPurchase(Long id) {
-        //PurchaseEntity purchase = oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Purchase not found."));
-        //oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
+        PurchaseEntity purchase = oPurchaseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Error: Purchase not found."));
+        oSessionService.onlyAdminsOrUsersWithTheirData(purchase.getUser().getId());
         if (oPurchaseRepository.existsById(id)) {
             Page<PurchaseDetailEntity> purchasesDetail = oPurchaseDetailRepository.findByPurchaseId(id, PageRequest.of(0, 1000));
             for (PurchaseDetailEntity purchaseDetail : purchasesDetail) {
