@@ -108,7 +108,7 @@ public class ProductService {
 
     // Populate the database with random products
     public Long populate(Long amount) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             String name = ProductGenerationHelper.getRandomName();
             String description = ProductGenerationHelper.getRandomDescription();
@@ -122,13 +122,13 @@ public class ProductService {
 
     // Update existing product
     public ProductEntity update(ProductEntity oProductEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oProductRepository.save(oProductEntity);
     }
 
     // Delete existing product
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oProductRepository.deleteById(id);
         return id;
     }

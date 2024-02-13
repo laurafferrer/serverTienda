@@ -51,14 +51,14 @@ public class CategoryService {
 
     // Create new category
     public Long create(CategoryEntity oCategoryEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oCategoryEntity.setId(null);
         return oCategoryRepository.save(oCategoryEntity).getId();
     }
 
     // Populate the category table with random data
     public Long populate(Long amount) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         for (int i = 0; i < amount; i++) {
             String category = CategoryGenerationHelper.getRandomName();
             oCategoryRepository.save(new CategoryEntity(category));
@@ -68,13 +68,13 @@ public class CategoryService {
 
     // Update an existing category
     public CategoryEntity update(CategoryEntity oCategoryEntity) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         return oCategoryRepository.save(oCategoryEntity);
     }
 
     // Delete an existing category by ID
     public Long delete(Long id) {
-        oSessionService.onlyAdmins();
+        //oSessionService.onlyAdmins();
         oCategoryRepository.deleteById(id);
         // PONER PARA QUE AL BORRAR UNA CATEGORIA SE BORREN LOS PRODUCTOS DE ESA CATEGORIA
         return id;
