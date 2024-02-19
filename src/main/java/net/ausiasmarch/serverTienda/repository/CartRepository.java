@@ -10,6 +10,8 @@ package net.ausiasmarch.serverTienda.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +21,7 @@ import net.ausiasmarch.serverTienda.entity.CartEntity;
 public interface CartRepository extends JpaRepository<CartEntity, Long> {
 
     // Get page of cart for a specific user
-    List<CartEntity> findByUserId(Long user_id);
+    Page<CartEntity> findByUserId(Long user_id, Pageable oPageable);
 
     // Find specific item in the cart based on user Id and product Id
     Optional<CartEntity> findByUserIdAndProductId(Long user_id, Long product_id);

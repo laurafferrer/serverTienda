@@ -12,8 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import jakarta.validation.constraints.NotNull;
-
 @Entity
 @Table(name = "cart")
 public class CartEntity {
@@ -22,7 +20,6 @@ public class CartEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Amount cannot be null")
     private int amount;
 
     @ManyToOne

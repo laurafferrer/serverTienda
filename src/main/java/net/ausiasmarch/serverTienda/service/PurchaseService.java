@@ -2,7 +2,6 @@
 package net.ausiasmarch.serverTienda.service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -175,21 +174,24 @@ public class PurchaseService {
     }
 
     @Transactional
-    public PurchaseEntity makePurchaseAllCarts (List<CartEntity> carts, UserEntity oUserEntity) {
+    public PurchaseEntity makePurchaseAllCarts (Page<CartEntity> oCartsEntity, UserEntity oUserEntity) {
         
         //oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
 
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
         oPurchaseEntity.setUser(oUserEntity);
+
         oPurchaseEntity.setDate_purchase(LocalDate.now());
+
         oPurchaseEntity.setNum_bill(PurchaseGenartionHelper.getRandomNumBill());
+        oPurchaseEntity.setDate_bill(LocalDate.now());
 
         oPurchaseRepository.save(oPurchaseEntity);
 
-        carts = oCartService.getByUser(oUserEntity.getId());
+        oCartsEntity = oCartService.getCartByUser(oUserEntity.getId(), PageRequest.of(0, 1000));
         
-        for (CartEntity cart: carts) {
+        for (CartEntity cart: oCartsEntity) {
             PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
             oPurchaseDetailEntity.setId(null);
             oPurchaseDetailEntity.setAmount(cart.getAmount());
@@ -198,9 +200,6 @@ public class PurchaseService {
             oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
 
             oPurchaseDetailRepository.save(oPurchaseDetailEntity);
-        }
-
-        for (CartEntity cart : carts) {
             ProductEntity product = cart.getProduct();
             oProductService.updateStock(product, cart.getAmount());
         }

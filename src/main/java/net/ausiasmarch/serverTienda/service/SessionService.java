@@ -68,8 +68,8 @@ public class SessionService {
 
     // Methos to get the session user
     public UserEntity getSessionUser() {
-        if (this.getSessionUser() != null ) {
-            return oUserRepository.findByUsername(this.getSessionUsername()).orElse(null);
+        if (this.getSessionUsername() != null) {
+            return oUserRepository.findByUsername(this.getSessionUsername()).orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         } else {
             return null;
         }

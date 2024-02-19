@@ -4,11 +4,10 @@
 */
 package net.ausiasmarch.serverTienda.api;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -130,9 +129,9 @@ public class PurchaseApi {
      * @return ResponseEntity with purchaseEntity.
      */
     @PostMapping("/MakePurchaseAllCarts/{idUser}")
-    public ResponseEntity<PurchaseEntity> makePurchaseAllCarts(@PathVariable Long idUser) {
+    public ResponseEntity<PurchaseEntity> makePurchaseAllCarts(@PathVariable Long idUser, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         UserEntity oUserEntity = oUserService.get(idUser);
-        List<CartEntity> oCartsEntity = oCartService.getByUser(idUser);
+        Page<CartEntity> oCartsEntity = oCartService.getCartByUser(idUser, PageRequest.of(page, size));;
 
         PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseAllCarts(oCartsEntity, oUserEntity);
 

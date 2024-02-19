@@ -44,8 +44,9 @@ public class CartService {
     }
 
     // Get carts by user ID
-    public List<CartEntity> getByUser(Long user_id) {
-        return oCartRepository.findByUserId(user_id);
+    public Page<CartEntity> getCartByUser(Long user_id, Pageable oPageable) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
+        return oCartRepository.findByUserId(user_id, oPageable);
     }
 
     // Get cart by user ID and product ID
@@ -77,14 +78,15 @@ public class CartService {
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
         //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId());
-        UserEntity oUserEntity = oUserService.get(oCartEntity.getUser().getId());
+        UserEntity oUserEntity = oSessionService.getSessionUser();
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
         Optional<CartEntity> cartFromDatabase = oCartRepository.findByUserIdAndProductId(oUserEntity.getId(), oProductEntity.getId());
         if (cartFromDatabase.isPresent()) {
             CartEntity cart = cartFromDatabase.get();
             cart.setAmount(cart.getAmount() + oCartEntity.getAmount());
-            return oCartRepository.save(oCartEntity).getId();
+            oCartRepository.save(cart);
+            return cart.getId();
         } else {
             oCartEntity.setId(null);
             oCartEntity.setUser(oUserEntity);
@@ -136,9 +138,10 @@ public class CartService {
 
     // Empty the cart table
     public Long empty() {
+        //oSessionService.onlyAdmins();
         oCartRepository.deleteAll();
         oCartRepository.resetAutoIncrement();
-        oCartRepository.resetAutoIncrement();
+        oCartRepository.flush();
         return oCartRepository.count();
     }
 
