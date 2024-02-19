@@ -68,6 +68,26 @@ public class PurchaseService {
         return oPurchaseRepository.findAll(oPageable).getContent().get(0);
     }
 
+    // Find purchases by user Id
+    public Page<PurchaseEntity> findByUserId(Long user_id, Pageable oPageable) {
+        return oPurchaseRepository.findByUserId(user_id, oPageable);
+    }
+
+    // Find purchases by date order desc
+    public Page<PurchaseEntity> findPurchaseByDateOrderDesc(Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderDesc(pageable);
+    }
+
+    // Find purchases by date order asc
+    public Page<PurchaseEntity> findPurchaseByDateOrderAsc(Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderAsc(pageable);
+    }
+
+    // Find purchases by date order containing
+    public Page<PurchaseEntity> findPurchaseByDateOrderContaining(String date_purchase, Pageable pageable) {
+        return oPurchaseRepository.findPurchaseByDateOrderContaining(date_purchase, pageable);
+    }
+
     // Create a new purchase
     public PurchaseEntity create(PurchaseEntity oPurchaseEntity) {
         //oSessionService.onlyAdmins();
@@ -102,26 +122,6 @@ public class PurchaseService {
         return id;
     }
 
-    // Find purchases by user Id
-    public Page<PurchaseEntity> findByUserId(Long user_id, Pageable oPageable) {
-        return oPurchaseRepository.findByUserId(user_id, oPageable);
-    }
-
-    // Find purchases by date order desc
-    public Page<PurchaseEntity> findPurchaseByDateOrderDesc(Pageable pageable) {
-        return oPurchaseRepository.findPurchaseByDateOrderDesc(pageable);
-    }
-
-    // Find purchases by date order asc
-    public Page<PurchaseEntity> findPurchaseByDateOrderAsc(Pageable pageable) {
-        return oPurchaseRepository.findPurchaseByDateOrderAsc(pageable);
-    }
-
-    // Find purchases by date order containing
-    public Page<PurchaseEntity> findPurchaseByDateOrderContaining(String date_purchase, Pageable pageable) {
-        return oPurchaseRepository.findPurchaseByDateOrderContaining(date_purchase, pageable);
-    }
-
     // Populate the product Purchase
     public Long populate(int amount) {
         //oSessionService.onlyAdmins();
@@ -141,6 +141,30 @@ public class PurchaseService {
         oPurchaseRepository.resetAutoIncrement();
         oPurchaseRepository.flush();
         return oPurchaseRepository.count();
+    }
+
+    @Transactional
+    public PurchaseEntity makeProductPurchase(ProductEntity oProductEntity, UserEntity oUserEntity, int amount) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(oUserEntity.getId());
+        PurchaseEntity oPurchaseEntity = new PurchaseEntity();
+
+        oPurchaseEntity.setUser(oUserEntity);
+        oPurchaseEntity.setDate_purchase(LocalDate.now());
+
+        oPurchaseRepository.save(oPurchaseEntity);
+
+        PurchaseDetailEntity oPurchaseDetailEntity = new PurchaseDetailEntity();
+        oPurchaseDetailEntity.setId(null);
+        oPurchaseDetailEntity.setProduct(oProductEntity);
+        oPurchaseDetailEntity.setPurchase(oPurchaseEntity);
+        oPurchaseDetailEntity.setAmount(amount);
+        oPurchaseDetailEntity.setPrice(oProductEntity.getPrice());
+
+        oPurchaseDetailRepository.save(oPurchaseDetailEntity);
+
+        oProductService.updateStock(oProductEntity, amount);
+
+        return oPurchaseEntity;
     }
 
     @Transactional
