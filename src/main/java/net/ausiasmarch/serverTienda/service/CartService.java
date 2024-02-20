@@ -51,11 +51,13 @@ public class CartService {
 
     // Get cart by user ID and product ID
     public CartEntity getByUserAndProduct(Long user_id, Long product_id) {
+        //oSessionService.onlyAdminsOrUsersWithTheirData(user_id);
         return oCartRepository.findByUserIdAndProductId(user_id, product_id).orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
     }
 
     // Get a page or carts
     public Page<CartEntity> getPage(Pageable oPageable) {
+        //oSessionService.onlyAdminsOrUsers();
         return oCartRepository.findAll(oPageable);
     }
 
@@ -77,7 +79,7 @@ public class CartService {
 
     // Create new cart with validation
     public Long create(CartEntity oCartEntity) {
-        //oSessionService.onlyAdminsOrUsersWithTheirData(oCartEntity.getUser().getId());
+        //oSessionService.onlyAdminsOrUsersWithTheirData(oSessionService.getSessionUser()..getId());
         UserEntity oUserEntity = oSessionService.getSessionUser();
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 

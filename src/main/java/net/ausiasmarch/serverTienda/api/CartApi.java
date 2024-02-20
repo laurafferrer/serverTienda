@@ -152,7 +152,7 @@ public class CartApi {
      * @return ResponseEntity containing the id of the deleted cart.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Long> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(oCartService.delete(id));
     }
 
