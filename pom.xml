@@ -75,11 +75,6 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-		<!-- Java Mail Sender -->
-		<dependency>
-      		<groupId>org.springframework.boot</groupId>
-      		<artifactId>spring-boot-starter-mail</artifactId>
-   		</dependency>
 		<!-- ThymeLeaf -->
     	<dependency>
       		<groupId>org.springframework.boot</groupId>
@@ -96,6 +91,11 @@
     		<groupId>javax.xml.bind</groupId>
     		<artifactId>jaxb-api</artifactId>
     		<version>2.3.1</version> <!-- Utiliza la versión más reciente -->
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>2.4.4</version>
 		</dependency>
 	</dependencies>
 	
