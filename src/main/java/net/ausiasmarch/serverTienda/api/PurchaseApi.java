@@ -24,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.ausiasmarch.serverTienda.entity.CartEntity;
+import net.ausiasmarch.serverTienda.entity.ProductEntity;
 import net.ausiasmarch.serverTienda.entity.PurchaseEntity;
 import net.ausiasmarch.serverTienda.entity.UserEntity;
 import net.ausiasmarch.serverTienda.service.CartService;
+import net.ausiasmarch.serverTienda.service.ProductService;
 import net.ausiasmarch.serverTienda.service.PurchaseService;
 import net.ausiasmarch.serverTienda.service.UserService;
 
@@ -43,6 +45,9 @@ public class PurchaseApi {
 
     @Autowired
     CartService oCartService;
+
+    @Autowired
+    ProductService oProductService;
 
     /*
      * Get purchase by ID.
@@ -136,6 +141,22 @@ public class PurchaseApi {
         PurchaseEntity oPurchaseEntity = oPurchaseService.makePurchaseAllCarts(oCartsEntity, oUserEntity);
 
         return new ResponseEntity<>(oPurchaseEntity, HttpStatus.CREATED);
+    }
+
+    /*
+     * Make product purchase.
+     * 
+     * @param product_id Product's ID.
+     * @param user_id User's ID.
+     * @param amount Amount of product to purchase.
+     * @return ResponseEntity with purchaseEntity.
+     */
+    @PostMapping("/makeProductPurchase/{idProduct}/{idUser}/{amount}")
+    public ResponseEntity<PurchaseEntity> makeProductPurchase(@PathVariable Long idProduct, @PathVariable Long idUser, @PathVariable int amount) {
+        UserEntity user = oUserService.get(idUser);
+        ProductEntity product = oProductService.get(idProduct);
+        PurchaseEntity purchase = oPurchaseService.makeProductPurchase(product, user, amount);
+        return new ResponseEntity<>(purchase, HttpStatus.CREATED);
     }
 
     /*

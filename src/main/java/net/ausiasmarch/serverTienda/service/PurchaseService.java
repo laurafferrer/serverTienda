@@ -149,6 +149,7 @@ public class PurchaseService {
         PurchaseEntity oPurchaseEntity = new PurchaseEntity();
 
         oPurchaseEntity.setUser(oUserEntity);
+        oPurchaseEntity.setNum_bill(PurchaseGenartionHelper.getRandomNumBill());
         oPurchaseEntity.setDate_purchase(LocalDate.now());
 
         oPurchaseRepository.save(oPurchaseEntity);
