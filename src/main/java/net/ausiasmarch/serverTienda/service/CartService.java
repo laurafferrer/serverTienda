@@ -81,6 +81,7 @@ public class CartService {
     public Long create(CartEntity oCartEntity) {
         //oSessionService.onlyAdminsOrUsersWithTheirData(oSessionService.getSessionUser()..getId());
         UserEntity oUserEntity = oSessionService.getSessionUser();
+
         ProductEntity oProductEntity = oProductService.get(oCartEntity.getProduct().getId());
 
         Optional<CartEntity> cartFromDatabase = oCartRepository.findByUserIdAndProductId(oUserEntity.getId(), oProductEntity.getId());

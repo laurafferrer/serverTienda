@@ -46,6 +46,61 @@ public class SessionService {
     @Autowired
     PendentRepository oPendentRepository;
 
+    @Transactional
+    public CaptchaResponseBean prelogin() {
+        // Create a captcha for pre-login
+        CaptchaEntity oCaptchaEntity = oCaptchaService.createCaptcha();
+
+        // Create a new pendent entity associated with the captcha
+        PendentEntity pendentEntity = new PendentEntity();
+        pendentEntity.setCaptcha(oCaptchaEntity);
+        pendentEntity.setTimecode(LocalDateTime.now());
+        PendentEntity newPendentEntity = oPendentRepository.save(pendentEntity);
+
+        // Generate a token for the pendent entity
+        newPendentEntity.setToken(DataGenerationHelper.getSHA256(String.valueOf(newPendentEntity.getId()) + String.valueOf(oCaptchaEntity.getId()) + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
+        oPendentRepository.save(newPendentEntity);
+
+        // Prepare response with token and captcha image
+        CaptchaResponseBean captchaResponseBean = new CaptchaResponseBean();
+        captchaResponseBean.setToken(newPendentEntity.getToken());
+        captchaResponseBean.setCaptchaImage(oCaptchaEntity.getImage());
+
+        return captchaResponseBean;
+    }
+
+    public String loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
+         if (oCaptchaBean.getUsername() != null && oCaptchaBean.getPassword() != null) {
+            // Validate user credentials
+            UserEntity oUserEntity = oUserRepository.findByUsernameAndPassword(oCaptchaBean.getUsername(), oCaptchaBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Incorrect user or password"));
+
+            // Check if user entity is present
+            if (oUserEntity!=null) {
+                // Retrieve pendent entity using the provided token
+                PendentEntity oPendentEntity = oPendentRepository.findByToken(oCaptchaBean.getToken()).orElseThrow(() -> new ResourceNotFoundException("Incorrect token"));
+
+                LocalDateTime timecode = oPendentEntity.getTimecode();
+
+                // Check if the captcha is still valid (within 120s)
+                if (LocalDateTime.now().isAfter(timecode.plusSeconds(180))) {
+                    throw new UnauthorizedException("Captcha expired");
+                }
+
+                // Validate the captcha answer
+                if (oPendentEntity.getCaptcha().getText().equals(oCaptchaBean.getAnswer())) {
+                    // Generate and return a JWT token upon successful validation
+                    return JWTHelper.generateJWT(oCaptchaBean.getUsername());
+                } else {
+                    throw new UnauthorizedException("Incorrect captcha");
+                }
+            } else {
+                throw new UnauthorizedException("Wrong User or password");
+            }        
+        } else {
+            throw new UnauthorizedException("User not found");
+        }
+    }
+
     // Method to login without captcha
     public String login(UserBean oUserBean) {
         oUserRepository.findByUsernameAndPassword(oUserBean.getUsername(), oUserBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Usuario o contraseña incorrectos"));
@@ -64,8 +119,7 @@ public class SessionService {
     // Methos to get the session user
     public UserEntity getSessionUser() {
         if (this.getSessionUsername() != null) {
-            return oUserRepository.findByUsername(this.getSessionUsername())
-                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            return oUserRepository.findByUsername(this.getSessionUsername()).orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         } else {
             return null;
         }
@@ -145,62 +199,6 @@ public class SessionService {
             }
         } else {
             throw new UnauthorizedException("You must log in to perform this action");
-        }
-    }
-
-
-    @Transactional
-    public CaptchaResponseBean prelogin() {
-        // Create a captcha for pre-login
-        CaptchaEntity oCaptchaEntity = oCaptchaService.createCaptcha();
-
-        // Create a new pendent entity associated with the captcha
-        PendentEntity pendentEntity = new PendentEntity();
-        pendentEntity.setCaptcha(oCaptchaEntity);
-        pendentEntity.setTimecode(LocalDateTime.now());
-        PendentEntity newPendentEntity = oPendentRepository.save(pendentEntity);
-
-        // Generate a token for the pendent entity
-        newPendentEntity.setToken(DataGenerationHelper.getSHA256(String.valueOf(newPendentEntity.getId()) + String.valueOf(oCaptchaEntity.getId()) + String.valueOf(DataGenerationHelper.getRandomInt(0, 9999))));
-        oPendentRepository.save(newPendentEntity);
-
-        // Prepare response with token and captcha image
-        CaptchaResponseBean captchaResponseBean = new CaptchaResponseBean();
-        captchaResponseBean.setToken(newPendentEntity.getToken());
-        captchaResponseBean.setCaptchaImage(oCaptchaEntity.getImage());
-
-        return captchaResponseBean;
-    }
-
-    public String loginCaptcha(@RequestBody CaptchaBean oCaptchaBean) {
-         if (oCaptchaBean.getUsername() != null && oCaptchaBean.getPassword() != null) {
-            // Validate user credentials
-            UserEntity oUserEntity = oUserRepository.findByUsernameAndPassword(oCaptchaBean.getUsername(), oCaptchaBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Incorrect user or password"));
-
-            // Check if user entity is present
-            if (oUserEntity!=null) {
-                // Retrieve pendent entity using the provided token
-                PendentEntity oPendentEntity = oPendentRepository.findByToken(oCaptchaBean.getToken()).orElseThrow(() -> new ResourceNotFoundException("Incorrect token"));
-
-                LocalDateTime timecode = oPendentEntity.getTimecode();
-
-                // Check if the captcha is still valid (within 120s)
-                if (LocalDateTime.now().isAfter(timecode.plusSeconds(180))) {
-                    throw new UnauthorizedException("Captcha expired");
-                }
-
-                // Validate the captcha answer
-                if (oPendentEntity.getCaptcha().getText().equals(oCaptchaBean.getAnswer())) {
-                    // Generate and return a JWT token upon successful validation
-                    return JWTHelper.generateJWT(oCaptchaBean.getUsername());
-                } else {
-                    throw new UnauthorizedException("Incorrect captcha");
-                }
-            } else {
-                throw new UnauthorizedException("Wrong User or password");
-            }        
-        } else {
-            throw new UnauthorizedException("User not found");
         }
     }
 
