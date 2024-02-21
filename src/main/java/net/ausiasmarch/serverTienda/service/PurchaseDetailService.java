@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 import net.ausiasmarch.serverTienda.entity.PurchaseDetailEntity;
 import net.ausiasmarch.serverTienda.exception.ResourceNotFoundException;
@@ -88,6 +89,7 @@ public class PurchaseDetailService {
     }
 
     // Empty the purchase detail table
+    @Transactional
     public Long empty() {
         oPurchaseDetailRepository.deleteAll();
         oPurchaseDetailRepository.resetAutoIncrement();

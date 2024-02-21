@@ -3,7 +3,6 @@ package net.ausiasmarch.serverTienda.service;
 
 import java.time.LocalDate;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,6 @@ public class PurchaseService {
 
     @Autowired
     PurchaseRepository oPurchaseRepository;
-
-    @Autowired
-    HttpServletRequest oHttpServletRequest;
 
     @Autowired
     SessionService oSessionService;

@@ -32,12 +32,10 @@ public class UserEntity {
     private Long id;
 
     @NotNull
-    @NotBlank
     private String dni;
 
     @NotNull
-    @NotBlank
-    @Size(max = 255)
+    @Size(min = 4, max = 15)
     private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -50,12 +48,10 @@ public class UserEntity {
     private String tokenPassword;
 
     @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String name;
 
     @NotNull
-    @NotBlank
     @Size(min = 3,  max = 255)
     private String surname;
 
@@ -68,17 +64,14 @@ public class UserEntity {
     private String phone_number;
 
     @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String email;
 
     @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String address;
 
     @NotNull
-    @NotBlank
     @Size(min = 3, max = 255)
     private String city;
 
@@ -234,7 +227,7 @@ public class UserEntity {
      * 
      * @param username  User's username.
      */
-    public void setUsername (String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

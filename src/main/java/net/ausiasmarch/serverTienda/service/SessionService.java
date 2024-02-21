@@ -73,7 +73,11 @@ public class SessionService {
 
     // Methos to check if the session is active
     public boolean isSessionActive() {
-        return this.getSessionUsername() != null && oUserRepository.findByUsername(this.getSessionUsername()).isPresent();
+        if (this.getSessionUsername() != null) {
+            return oUserRepository.findByUsername(this.getSessionUsername()).isPresent();
+        } else {
+            return false;
+        } 
     }
 
     // Methos for role checks and access control
