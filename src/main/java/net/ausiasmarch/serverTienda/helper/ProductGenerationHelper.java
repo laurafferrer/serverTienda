@@ -60,7 +60,10 @@ public class ProductGenerationHelper {
      * 
      */
     private static final String[] aImages = {
-        "http://localhost:8083/media/logo-lays.png",
+        "http://localhost:8083/media/bol.jpg",
+        "http://localhost:8083/media/boligrafoRojo.jpg",
+        "http://localhost:8083/media/libreta.jpg",
+        "http://localhost:8083/media/lapiz.jpg"
     };
 
     /*

@@ -123,7 +123,7 @@ public class UserService {
             String address = UserGenerationHelper.getRandomAddress();
             String city = UserGenerationHelper.getRandomCity();
             int postal_code = UserGenerationHelper.getRandompostal_code();
-            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, surname, last_name, birth_date, phone_number, email, address, city, postal_code, true));
+            oUserRepository.save(new UserEntity(dni, username, "e2cac5c5f7e52ab03441bb70e89726ddbd1f6e5b683dde05fb65e0720290179e", name, surname, last_name, birth_date, phone_number, email, address, city, postal_code, false));
         }
         return oUserRepository.count();
     }
